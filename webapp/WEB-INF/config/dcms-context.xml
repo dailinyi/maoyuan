@@ -251,9 +251,13 @@
 	<bean id="cmsTaskDao" class="com.dcms.cms.dao.assist.impl.CmsTaskDaoImpl"/>
 
     <!-- ext manage -->
-    <bean class="com.dcms.cms.manager.ext.impl.CmsRaffleMngImpl" id="cmsRaffleMng"></bean>
+    <bean class="com.dcms.cms.manager.ext.impl.CmsRaffleMngImpl" id="cmsRaffleMng"/>
+    <bean class="com.dcms.cms.manager.ext.impl.CmsActivityRecordMngImpl" id="cmsActivityRecordMng"/>
+    <bean class="com.dcms.cms.manager.ext.impl.CmsScoreRecordMngImpl" id="cmsScoreRecordMng"/>
 
     <!-- ext DAO -->
     <bean class="com.dcms.cms.dao.ext.impl.CmsOrderDaoImpl" id="cmsOrderDao"/>
-	
+    <bean class="com.dcms.cms.dao.ext.impl.CmsActivityRecordDaoImpl" id="cmsActivityRecordDao"/>
+    <bean class="com.dcms.cms.dao.ext.impl.CmsScoreRecordDaoImpl" id="cmsScoreRecordDao"/>
+
 	</beans>

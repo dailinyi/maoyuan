@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dcms.cms.entity.ext">
+	<class name="CmsActivityRecord" table="jc_ext_activity_record">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="activity_record_id"><generator class="identity"/></id>
+		<property name="activityType" column="activity_type" type="byte" not-null="true" length="50"/>
+		<property name="recordTime" column="record_time" type="timestamp" not-null="false" length="19"/>
+		<property name="isOffer" column="is_offer" type="boolean" not-null="true"/>
+		<many-to-one name="activityUser" column="activity_user" class="com.dcms.cms.entity.main.CmsUser" not-null="false"></many-to-one>
+		<many-to-one name="activityContent" column="activity_content" class="com.dcms.cms.entity.main.Content" not-null="true"></many-to-one>
+	</class>
+</hibernate-mapping>

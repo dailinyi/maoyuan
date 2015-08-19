@@ -1,20 +1,21 @@
 package com.dcms.cms.action.member.ext;
 
+import com.dcms.cms.entity.ext.CmsActivityRecord;
+import com.dcms.cms.entity.ext.CmsScoreRecord;
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.cms.entity.main.Content;
 import com.dcms.cms.entity.main.MemberConfig;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
-import com.dcms.cms.manager.ext.CmsRaffleMng;
+import com.dcms.cms.manager.ext.CmsActivityRecordMng;
+import com.dcms.cms.manager.ext.CmsScoreRecordMng;
+import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.manager.main.ContentMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
-import com.dcms.common.page.Pagination;
-import com.dcms.common.web.CookieUtils;
-import com.dcms.common.web.springmvc.MessageResolver;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,6 @@ import java.util.List;
 import java.util.Random;
 
 import static com.dcms.cms.Constants.TPLDIR_RAFFLE;
-import static com.dcms.common.page.SimplePage.cpn;
 
 /**
  * Created by dailinyi on 15/8/18.
@@ -60,8 +60,22 @@ public class RaffleAct {
         if (user == null) {
             return FrontUtils.showLogin(request, model, site);
         }
+        user = userMng.findById(user.getId());
 
         //先扣除用户积分
+        int cost = Integer.valueOf(dicMng.findValue("raffle","consumeScore").getValue());
+        if (user.getScoreCount() == null ||user.getScoreCount() < cost){
+            return FrontUtils.showMessage(request, model, "raffle.scoreNotEnough");
+        }
+        user.setScoreCount(user.getScoreCount() - cost);
+        userMng.updateUser(user);
+
+        //增加一条消耗积分的记录
+        CmsScoreRecord record  = new CmsScoreRecord(CmsScoreRecord.ScoreTypeEnum.EGG_RAFFLE_COST.getValue().byteValue(),0-cost,userMng.findById(1),user);
+        scoreRecordMng.save(record);
+
+        //在抽奖表中增加一条抽奖记录
+
 
 
         //获取活动奖品
@@ -89,13 +103,35 @@ public class RaffleAct {
         //拼抽奖号
         int number = new Random().nextInt(1000);
         Integer prize = null;
+        Content gift = null;
         if (number < rafflePool.size() - 1 ){
             prize = rafflePool.get(number);
-            Content gift = contentMng.findById(prize);
+            gift = contentMng.findById(prize);
+
+            //记录抽奖状态
+            CmsActivityRecord cmsActivityRecord = new CmsActivityRecord(user, gift);
+
+            String scoreCount = gift.getAttr().get("scoreCount");
+            if (StringUtils.isNotBlank(scoreCount)){
+                CmsScoreRecord win  = new CmsScoreRecord(CmsScoreRecord.ScoreTypeEnum.EGG_RAFFLE_REWARDS.getValue().byteValue(),Integer.valueOf(scoreCount),userMng.findById(1),user);
+                scoreRecordMng.save(win);
+                user.setScoreCount(user.getScoreCount() + Integer.valueOf(scoreCount));
+                userMng.updateUser(user);
+                cmsActivityRecord.setIsOffer(true);
+            }
+
+            cmsActivityRecordMng.save(cmsActivityRecord);
+
+
             model.addAttribute("raffle",gift.getTitle());
         } else {
+            //记录抽奖状态
+            CmsActivityRecord cmsActivityRecord = new CmsActivityRecord(user);
+            cmsActivityRecordMng.save(cmsActivityRecord);
             model.addAttribute("raffle","0");
         }
+
+
 
         FrontUtils.frontData(request, model, site);
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
@@ -103,14 +139,14 @@ public class RaffleAct {
     }
 
     @Resource
-    private CmsRaffleMng cmsRaffleMng;
+    private CmsUserMng userMng;
     @Resource
     private ContentMng contentMng;
     @Resource
     private CmsDictionaryMng dicMng;
+    @Resource
+    private CmsScoreRecordMng scoreRecordMng;
+    @Resource
+    private CmsActivityRecordMng cmsActivityRecordMng;
 
-    public static void main(String[] args) {
-        List<Integer> list = new ArrayList<Integer>(1000);
-        System.out.println(list.get(999));
-    }
 }
