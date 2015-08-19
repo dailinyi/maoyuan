@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="application/javascript">
+    var raffle = "${raffle!}";
+    if (raffle != null && raffle != ""){
+        if (raffle != "0"){
+            alert("恭喜你抽中"+raffle+"了");
+        } else {
+            alert("对不起,您尚未中奖,请再接再厉!")
+        }
+    }
+
+
+</script>
+<form action="/raffle/egg.jspx" method="post">
+    <input type="submit" value="砸蛋"/>
+</form>
+</body>
+</html>

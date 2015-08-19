@@ -68,6 +68,14 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		return find(f, pageNo, pageSize);
 	}
+
+    public List<Content> getContentByChnId(Integer chnId,int total){
+        Finder f = Finder.create("select bean from Content bean join bean.channel channel where channel.id =:channelId order by bean.topLevel desc, bean.sortDate desc ");
+        f.setParam("channelId",chnId);
+        f.setFirstResult(0);
+        f.setMaxResults(total);
+        return find(f);
+    }
 	
 	public Pagination getPageForCollection(Integer siteId, Integer memberId, int pageNo, int pageSize){
 		Finder f = Finder.create("select bean from Content bean join bean.collectUsers user where user.id=:userId").setParam("userId", memberId);
@@ -508,6 +516,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		appendOrder(f, orderBy);
 		return f;
 	}
+
+
 
 	private Finder byTopicId(Integer topicId, Integer[] siteIds,
 			Integer[] channelIds, Integer[] typeIds, Boolean titleImg,

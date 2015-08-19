@@ -20,6 +20,11 @@
 		<property name="viewonlyAdmin" column="is_viewonly_admin" type="java.lang.Boolean" not-null="true"/>
 		<property name="selfAdmin" column="is_self_admin" type="java.lang.Boolean" not-null="true"/>
 		<property name="disabled" column="is_disabled" type="java.lang.Boolean" not-null="true"/>
+        <property name="checkStatus" column="check_status" type="java.lang.Byte" not-null="true" length="1"/>
+        <property name="scoreCount" column="score_count" type="integer" length="11"/>
+        <property name="userQR" column="user_qr" type="string"  length="255"/>
+        <property name="rate" column="rate" type="java.lang.Byte"  length="5"/>
+        <many-to-one name="recommendUser" column="recommend_user" class="CmsUser" not-null="false"></many-to-one>
 		<many-to-one name="group" column="group_id" class="CmsGroup" not-null="true"></many-to-one>
 		<set name="userExtSet" inverse="true" cascade="delete-orphan">
 			<cache usage="read-write"/>

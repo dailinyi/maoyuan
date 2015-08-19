@@ -16,6 +16,8 @@ public interface CmsDictionaryMng {
 	
 	public CmsDictionary findByValue(String type,String value);
 
+    public CmsDictionary findValue(String type,String name);
+
 	public CmsDictionary save(CmsDictionary bean);
 
 	public CmsDictionary update(CmsDictionary bean);

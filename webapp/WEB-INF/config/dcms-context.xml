@@ -183,6 +183,8 @@
 	<bean id="cmsJobApplyMng" class="com.dcms.cms.manager.assist.impl.CmsJobApplyMngImpl"/>
 	<bean id="cmsUserResumeMng" class="com.dcms.cms.manager.main.impl.CmsUserResumeMngImpl"/>
 	<bean id="cmsTaskMng" class="com.dcms.cms.manager.assist.impl.CmsTaskMngImpl"/>
+
+
 	
 	<!--DAO-->
 	<bean id="channelDao" class="com.dcms.cms.dao.main.impl.ChannelDaoImpl"/>
@@ -247,5 +249,11 @@
 	<bean id="cmsJobApplyDao" class="com.dcms.cms.dao.assist.impl.CmsJobApplyDaoImpl"/>
 	<bean id="cmsUserResumeDao" class="com.dcms.cms.dao.main.impl.CmsUserResumeDaoImpl"/>
 	<bean id="cmsTaskDao" class="com.dcms.cms.dao.assist.impl.CmsTaskDaoImpl"/>
+
+    <!-- ext manage -->
+    <bean class="com.dcms.cms.manager.ext.impl.CmsRaffleMngImpl" id="cmsRaffleMng"></bean>
+
+    <!-- ext DAO -->
+    <bean class="com.dcms.cms.dao.ext.impl.CmsOrderDaoImpl" id="cmsOrderDao"/>
 	
 	</beans>

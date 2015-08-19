@@ -12,7 +12,7 @@
 	<bean id="searchAct" class="com.dcms.cms.action.front.SearchAct"/>
 	<bean id="voteAct" class="com.dcms.cms.action.front.VoteAct"/>
 	<bean id="friendlinkAct" class="com.dcms.cms.action.front.FriendlinkAct"/>
-	
+
 	<bean id="contentCountAct" class="com.dcms.cms.action.front.ContentCountAct"/>
 	<bean id="attachmentAct" class="com.dcms.cms.action.front.AttachmentAct"/>
 	<bean id="commentAct" class="com.dcms.cms.action.front.CommentAct"/>
@@ -20,7 +20,7 @@
 	<bean id="rssAct" class="com.dcms.cms.action.front.RssAct"/>
 	<bean id="csiCustomAct" class="com.dcms.cms.action.front.CsiCustomAct"/>
 	<bean id="advertisingAct" class="com.dcms.cms.action.front.AdvertisingAct"/>
-	
+
 	<bean id="casLoginAct" class="com.dcms.cms.action.member.CasLoginAct"/>
 	<bean id="loginAct" class="com.dcms.cms.action.member.LoginAct"/>
 	<bean id="memberAct" class="com.dcms.cms.action.member.MemberAct"/>
@@ -36,4 +36,9 @@
 	<bean id="messageAct" class="com.dcms.cms.action.member.MessageAct"/>
 	<bean id="siteFlowAct" class="com.dcms.cms.action.front.CmsSiteFlowAct"/>
 	<bean id="resumeAct" class="com.dcms.cms.action.member.ResumeAct"/>
+
+
+    <bean id="buyerRegisterAct" class="com.dcms.cms.action.member.ext.BuyerRegisterAct"/>
+    <bean id="sellerRegisterAct" class="com.dcms.cms.action.member.ext.SellerRegisterAct"/>
+    <bean id="raffleAct" class="com.dcms.cms.action.member.ext.RaffleAct"/>
 </beans>

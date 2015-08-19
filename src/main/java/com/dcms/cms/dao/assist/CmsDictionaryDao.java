@@ -24,4 +24,6 @@ public interface CmsDictionaryDao {
 	public CmsDictionary deleteById(Integer id);
 
 	public int countByValue(String value, String type);
+
+    public CmsDictionary findValue(String type,String name);
 }

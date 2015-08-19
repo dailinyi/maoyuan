@@ -29,6 +29,18 @@ public class Constants {
 	 * 会员中心模板
 	 */
 	public static final String TPLDIR_MEMBER = "member";
+    /**
+     * 买家会员中心模板
+     */
+    public static final String TPLDIR_BUYER_MEMBER = "buyer";
+    /**
+     * 抽奖模板
+     */
+    public static final String TPLDIR_RAFFLE = "raffle";
+    /**
+     * 卖家会员中心模板
+     */
+    public static final String TPLDIR_SELLER_MEMBER = "seller";
 	/**
 	 * 专用模板
 	 */

@@ -149,4 +149,7 @@ public interface ContentMng {
 	public Pagination getPageForCollection(Integer siteId, Integer memberId, int pageNo, int pageSize);
 	
 	public void updateFileByContent(Content bean,Boolean valid);
+
+    public List<Content> getContentByChnId(Integer channelId,int total);
+
 }

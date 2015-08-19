@@ -638,7 +638,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		}
 	}
 
-	public String checkForChannelDelete(Integer channelId) {
+    @Override
+    public List<Content> getContentByChnId(Integer channelId, int total) {
+        return dao.getContentByChnId(channelId,total);
+    }
+
+    public String checkForChannelDelete(Integer channelId) {
 		int count = dao.countByChannelId(channelId);
 		if (count > 0) {
 			return "content.error.cannotDeleteChannel";

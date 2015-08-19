@@ -1,6 +1,10 @@
 package com.dcms.cms.entity.main.base;
 
+import com.dcms.cms.entity.main.CmsGroup;
+import com.dcms.cms.entity.main.CmsUser;
+
 import java.io.Serializable;
+import java.util.Date;
 
 
 /**
@@ -81,7 +85,33 @@ public abstract class BaseCmsUser  implements Serializable {
 		initialize();
 	}
 
-	protected void initialize () {}
+    public BaseCmsUser(Integer id, String username, String email, Date registerTime, String registerIp, Date lastLoginTime, String lastLoginIp, Integer loginCount, Integer rank, Long uploadTotal, Integer uploadSize, java.sql.Date uploadDate, Boolean admin, Boolean viewonlyAdmin, Boolean selfAdmin, Boolean disabled, Byte checkStatus, Integer scoreCount, String userQR, Byte rate, CmsGroup group, CmsUser recommendUser) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.registerTime = registerTime;
+        this.registerIp = registerIp;
+        this.lastLoginTime = lastLoginTime;
+        this.lastLoginIp = lastLoginIp;
+        this.loginCount = loginCount;
+        this.rank = rank;
+        this.uploadTotal = uploadTotal;
+        this.uploadSize = uploadSize;
+        this.uploadDate = uploadDate;
+        this.admin = admin;
+        this.viewonlyAdmin = viewonlyAdmin;
+        this.selfAdmin = selfAdmin;
+        this.disabled = disabled;
+        this.checkStatus = checkStatus;
+        this.scoreCount = scoreCount;
+        this.userQR = userQR;
+        this.rate = rate;
+        this.group = group;
+        this.recommendUser = recommendUser;
+        initialize();
+    }
+
+    protected void initialize () {}
 
 
 
@@ -106,9 +136,14 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.Boolean viewonlyAdmin;
 	private java.lang.Boolean selfAdmin;
 	private java.lang.Boolean disabled;
+	private java.lang.Byte checkStatus;
+	private java.lang.Integer scoreCount;
+	private java.lang.String userQR;
+	private java.lang.Byte rate;
 
 	// many to one
 	private com.dcms.cms.entity.main.CmsGroup group;
+	private com.dcms.cms.entity.main.CmsUser recommendUser;
 
 	// collections
 	private java.util.Set<com.dcms.cms.entity.main.CmsUserExt> userExtSet;
@@ -528,7 +563,47 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.receivReceiverMessages = receivReceiverMessages;
 	}
 
-	public boolean equals (Object obj) {
+    public CmsUser getRecommendUser() {
+        return recommendUser;
+    }
+
+    public void setRecommendUser(CmsUser recommendUser) {
+        this.recommendUser = recommendUser;
+    }
+
+    public Integer getScoreCount() {
+        return scoreCount;
+    }
+
+    public void setScoreCount(Integer scoreCount) {
+        this.scoreCount = scoreCount;
+    }
+
+    public String getUserQR() {
+        return userQR;
+    }
+
+    public void setUserQR(String userQR) {
+        this.userQR = userQR;
+    }
+
+    public Byte getRate() {
+        return rate;
+    }
+
+    public void setRate(Byte rate) {
+        this.rate = rate;
+    }
+
+    public Byte getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(Byte checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    public boolean equals (Object obj) {
 		if (null == obj) return false;
 		if (!(obj instanceof com.dcms.cms.entity.main.CmsUser)) return false;
 		else {
@@ -548,6 +623,8 @@ public abstract class BaseCmsUser  implements Serializable {
 		}
 		return this.hashCode;
 	}
+
+
 
 
 	public String toString () {

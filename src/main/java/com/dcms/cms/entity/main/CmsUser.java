@@ -453,6 +453,10 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 				disabled);
 	}
 
-	/* [CONSTRUCTOR MARKER END] */
+    public CmsUser(Integer id, String username, String email, Date registerTime, String registerIp, Date lastLoginTime, String lastLoginIp, Integer loginCount, Integer rank, Long uploadTotal, Integer uploadSize, java.sql.Date uploadDate, Boolean admin, Boolean viewonlyAdmin, Boolean selfAdmin, Boolean disabled, Byte checkStatus, Integer scoreCount, String userQR, Byte rate, CmsGroup group, CmsUser recommendUser) {
+        super(id, username, email, registerTime, registerIp, lastLoginTime, lastLoginIp, loginCount, rank, uploadTotal, uploadSize, uploadDate, admin, viewonlyAdmin, selfAdmin, disabled, checkStatus, scoreCount, userQR, rate, group, recommendUser);
+    }
+
+    /* [CONSTRUCTOR MARKER END] */
 
 }

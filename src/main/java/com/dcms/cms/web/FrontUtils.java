@@ -305,7 +305,7 @@ public class FrontUtils {
 	 * 为前台模板设置公用数据
 	 * 
 	 * @param request
-	 * @param model
+	 * @param request
 	 */
 	public static void frontData(HttpServletRequest request,
 			Map<String, Object> map, CmsSite site) {

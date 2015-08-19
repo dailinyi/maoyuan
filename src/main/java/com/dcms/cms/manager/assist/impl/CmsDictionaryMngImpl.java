@@ -46,6 +46,12 @@ public class CmsDictionaryMngImpl implements CmsDictionaryMng {
 		return entity;
 	}
 
+    @Transactional(readOnly = true)
+    public CmsDictionary findValue(String type,String name){
+        CmsDictionary entity = dao.findValue(type,name);
+        return entity;
+    }
+
 	public CmsDictionary save(CmsDictionary bean) {
 		dao.save(bean);
 		return bean;

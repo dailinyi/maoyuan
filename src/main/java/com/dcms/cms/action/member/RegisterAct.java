@@ -128,7 +128,6 @@ public class RegisterAct {
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),
 					TPLDIR_MEMBER, LOGIN_INPUT);
 		}
-		
 	}
 
 	@RequestMapping(value = "/active.jspx", method = RequestMethod.GET)

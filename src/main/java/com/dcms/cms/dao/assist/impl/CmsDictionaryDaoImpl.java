@@ -61,6 +61,23 @@ public class CmsDictionaryDaoImpl extends HibernateBaseDao<CmsDictionary, Intege
 		}
 	}
 
+    @Override
+    public CmsDictionary findValue(String type,String name){
+        Criterion cron_type=null,cron_value=null;
+        if(StringUtils.isNotBlank(type)){
+            cron_type = Restrictions.like("type",type);
+        }
+        if(StringUtils.isNotBlank(name)){
+            cron_value = Restrictions.like("name",name);
+        }
+        List<CmsDictionary>li=findByCriteria(cron_type,cron_value);
+        if(li!=null&&li.size()>0){
+            return li.get(0);
+        }else{
+            return null;
+        }
+    }
+
 	public CmsDictionary save(CmsDictionary bean) {
 		getSession().save(bean);
 		return bean;

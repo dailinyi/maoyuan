@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dcms.cms.entity.ext">
+	<class name="CmsScoreRecord" table="jc_ext_score_record">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="score_record_id"><generator class="identity"/></id>
+		<property name="recordType" column="record_type" type="byte" not-null="true" length="50"/>
+		<property name="recordTime" column="record_time" type="timestamp" not-null="false" length="19"/>
+		<property name="scoreNum" column="score_num" type="integer" not-null="true"/>
+		<many-to-one name="order" column="order_id" class="com.dcms.cms.entity.ext.CmsOrder" not-null="false"></many-to-one>
+		<many-to-one name="receiveUser" column="receive_user" class="com.dcms.cms.entity.main.CmsUser" not-null="false"></many-to-one>
+		<many-to-one name="sendUser" column="send_user" class="com.dcms.cms.entity.main.CmsUser" not-null="true"></many-to-one>
+	</class>
+</hibernate-mapping>

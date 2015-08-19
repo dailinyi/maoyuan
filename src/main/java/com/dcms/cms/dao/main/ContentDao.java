@@ -226,4 +226,6 @@ public interface ContentDao {
 	public Content updateByUpdater(Updater<Content> updater);
 
 	public Content deleteById(Integer id);
+
+    public List<Content> getContentByChnId(Integer chnId,int total);
 }
