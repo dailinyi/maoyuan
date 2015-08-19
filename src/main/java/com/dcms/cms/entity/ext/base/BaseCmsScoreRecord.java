@@ -74,6 +74,16 @@ public class BaseCmsScoreRecord {
         this.sendUser = sendUser;
     }
 
+    public BaseCmsScoreRecord(Integer id, Byte recordType, Date recordTime, Integer scoreNum, CmsOrder order, CmsUser receiveUser, CmsUser sendUser) {
+        this.id = id;
+        this.recordType = recordType;
+        this.recordTime = recordTime;
+        this.scoreNum = scoreNum;
+        this.order = order;
+        this.receiveUser = receiveUser;
+        this.sendUser = sendUser;
+    }
+
     public BaseCmsScoreRecord(Byte recordType, Date recordTime, Integer scoreNum, CmsOrder order, CmsUser receiveUser, CmsUser sendUser) {
         this.recordType = recordType;
         this.recordTime = recordTime;

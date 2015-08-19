@@ -8,4 +8,6 @@ import com.dcms.cms.entity.ext.CmsActivityRecord;
 
 public interface CmsActivityRecordMng {
     CmsActivityRecord save(CmsActivityRecord record);
+
+    CmsActivityRecord findById(Integer id);
 }

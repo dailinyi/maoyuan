@@ -7,4 +7,6 @@ import com.dcms.cms.entity.ext.CmsActivityRecord;
  */
 public interface CmsActivityRecordDao {
     CmsActivityRecord save(CmsActivityRecord bean);
+
+    CmsActivityRecord findById(Integer i);
 }

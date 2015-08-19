@@ -76,4 +76,13 @@ public class BaseCmsActivityRecord {
 
     public BaseCmsActivityRecord() {
     }
+
+    public BaseCmsActivityRecord(Integer id, Byte activityType, Date recordTime, Boolean isOffer, CmsUser activityUser, Content activityContent) {
+        this.id = id;
+        this.activityType = activityType;
+        this.recordTime = recordTime;
+        this.isOffer = isOffer;
+        this.activityUser = activityUser;
+        this.activityContent = activityContent;
+    }
 }

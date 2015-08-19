@@ -37,12 +37,13 @@
 				<value>classpath*:/com/dcms/core/entity/hbm/*.hbm.xml</value>
 				<value>classpath*:/com/dcms/cms/entity/main/hbm/*.hbm.xml</value>
 				<value>classpath*:/com/dcms/cms/entity/assist/hbm/*.hbm.xml</value>
+				<value>classpath*:/com/dcms/cms/entity/ext/hbm/*.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<value>
 			hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
-			hibernate.show_sql=false
+			hibernate.show_sql=true
 			hibernate.format_sql=false
 			hibernate.query.substitutions=true 1, false 0
 			hibernate.jdbc.batch_size=20

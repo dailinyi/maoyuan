@@ -15,8 +15,12 @@ public class CmsActivityRecordDaoImpl extends HibernateBaseDao<CmsActivityRecord
         return CmsActivityRecord.class;
     }
     @Override
-    public CmsActivityRecord save(CmsActivityRecord bean) {
+     public CmsActivityRecord save(CmsActivityRecord bean) {
         getSession().save(bean);
         return bean;
+    }
+    @Override
+    public CmsActivityRecord findById(Integer i ){
+        return super.get(i);
     }
 }

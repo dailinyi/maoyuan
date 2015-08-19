@@ -60,6 +60,7 @@ public class RaffleAct {
         if (user == null) {
             return FrontUtils.showLogin(request, model, site);
         }
+        CmsActivityRecord record1 = activityRecordMng.findById(1);
         user = userMng.findById(user.getId());
 
         //先扣除用户积分
@@ -120,14 +121,14 @@ public class RaffleAct {
                 cmsActivityRecord.setIsOffer(true);
             }
 
-            cmsActivityRecordMng.save(cmsActivityRecord);
+            activityRecordMng.save(cmsActivityRecord);
 
 
             model.addAttribute("raffle",gift.getTitle());
         } else {
             //记录抽奖状态
             CmsActivityRecord cmsActivityRecord = new CmsActivityRecord(user);
-            cmsActivityRecordMng.save(cmsActivityRecord);
+            activityRecordMng.save(cmsActivityRecord);
             model.addAttribute("raffle","0");
         }
 
@@ -147,6 +148,6 @@ public class RaffleAct {
     @Resource
     private CmsScoreRecordMng scoreRecordMng;
     @Resource
-    private CmsActivityRecordMng cmsActivityRecordMng;
+    private CmsActivityRecordMng activityRecordMng;
 
 }

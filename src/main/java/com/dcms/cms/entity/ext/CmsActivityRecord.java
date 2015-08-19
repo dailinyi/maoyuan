@@ -50,4 +50,7 @@ public class CmsActivityRecord extends BaseCmsActivityRecord{
         super(ScoreTypeEnum.EGG.getValue().byteValue(), new Date(), true, activityUser, null);
     }
 
+    public CmsActivityRecord(Integer id, Byte activityType, Date recordTime, Boolean isOffer, CmsUser activityUser, Content activityContent) {
+        super(id, activityType, recordTime, isOffer, activityUser, activityContent);
+    }
 }
