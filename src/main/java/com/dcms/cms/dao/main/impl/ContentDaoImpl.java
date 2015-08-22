@@ -56,7 +56,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.setParam("checkStep", checkStep);
 		} else if (rejected == status) {
 			//退回只有本级可以查看
-			f.append(" and check.checkStep=:checkStep");
+			f.append(" and check.checkStep<:checkStep");
 			f.append(" and check.rejected=true");
 			f.setParam("checkStep", checkStep);
 		}

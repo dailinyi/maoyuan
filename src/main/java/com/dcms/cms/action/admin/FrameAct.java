@@ -126,4 +126,49 @@ public class FrameAct {
 	public String statisticRight(){
 		return "frame/statistic_right";
 	}
+
+	@RequestMapping("/frame/order_main.do")
+	public String orderMain(ModelMap model) {
+		return "frame/order_main";
+	}
+
+	@RequestMapping("/frame/order_left.do")
+	public String orderLeft(){
+		return "frame/order_left";
+	}
+
+	@RequestMapping("/frame/order_right.do")
+	public String orderRight(){
+		return "frame/order_right";
+	}
+
+	@RequestMapping("/frame/check_main.do")
+	public String checkMain(ModelMap model) {
+		return "frame/check_main";
+	}
+
+	@RequestMapping("/frame/check_left.do")
+	public String checkLeft(){
+		return "frame/check_left";
+	}
+
+	@RequestMapping("/frame/check_right.do")
+	public String checkRight(){
+		return "frame/check_right";
+	}
+
+	@RequestMapping("/frame/system_main.do")
+	public String systemMain(ModelMap model) {
+		return "frame/system_main";
+	}
+
+	@RequestMapping("/frame/system_left.do")
+	public String systemLeft(){
+		return "frame/system_left";
+	}
+
+	@RequestMapping("/frame/system_right.do")
+	public String systemRight(){
+		return "frame/system_right";
+	}
 }

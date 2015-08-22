@@ -1,7 +1,6 @@
 package com.dcms.cms.action.member.ext;
 
 import com.dcms.cms.entity.ext.CmsActivityRecord;
-import com.dcms.cms.entity.ext.CmsScoreRecord;
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.cms.entity.main.Content;
@@ -9,27 +8,18 @@ import com.dcms.cms.entity.main.MemberConfig;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.ext.CmsActivityRecordMng;
 import com.dcms.cms.manager.ext.CmsRaffleMng;
-import com.dcms.cms.manager.ext.CmsScoreRecordMng;
 import com.dcms.cms.manager.main.CmsUserMng;
-import com.dcms.cms.manager.main.ContentMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import static com.dcms.cms.Constants.TPLDIR_RAFFLE;
 
@@ -89,11 +79,7 @@ public class RaffleAct {
     @Resource
     private CmsUserMng userMng;
     @Resource
-    private ContentMng contentMng;
-    @Resource
     private CmsDictionaryMng dicMng;
-    @Resource
-    private CmsScoreRecordMng scoreRecordMng;
     @Resource
     private CmsActivityRecordMng activityRecordMng;
     @Resource
