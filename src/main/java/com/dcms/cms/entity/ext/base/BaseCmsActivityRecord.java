@@ -4,12 +4,13 @@ import com.dcms.cms.entity.ext.CmsOrder;
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.cms.entity.main.Content;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by dailinyi on 15/8/18.
  */
-public class BaseCmsActivityRecord {
+public class BaseCmsActivityRecord implements Serializable {
     private Integer id;
     private Byte activityType;
     private Date recordTime;

@@ -298,12 +298,12 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-            <!--<resource>-->
-                <!--<directory>src/main/java</directory>-->
-                <!--<includes>-->
-                    <!--<include>**/*.hbm.xml</include>-->
-                <!--</includes>-->
-            <!--</resource>-->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.hbm.xml</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
@@ -321,6 +321,7 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+
         </plugins>
 	</build>
 </project>
