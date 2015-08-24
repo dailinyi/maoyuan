@@ -7,4 +7,5 @@ import com.dcms.cms.entity.ext.CmsScoreRecord;
  */
 public interface CmsScoreRecordMng {
     CmsScoreRecord save(CmsScoreRecord record);
+
 }

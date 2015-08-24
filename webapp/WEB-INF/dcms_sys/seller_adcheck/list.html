@@ -148,7 +148,7 @@ function chgStatus() {
 </head>
 <body>
 <div class="box-positon">
-	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsSellerCheck.function"/> - <@s.m "global.list"/></div>
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsSellerAdCheck.function"/> - <@s.m "global.list"/></div>
 
 	<div class="clear"></div>
 </div>
@@ -157,15 +157,15 @@ function chgStatus() {
 <div class="body-box">
 <form action="v_list.do" method="post" style="padding-top:5px;">
 <div>
-商家名称: <input type="text" name="queryTitle" value="${queryTitle!}" style="width:100px"/>
+<@s.m "content.title"/>: <input type="text" name="queryTitle" value="${queryTitle!}" style="width:100px"/>
 <input type="hidden" name="cid" value="${cid!}"/>
 <input class="query" type="submit" value="<@s.m "global.query"/>"/>
 </div>
 <div style="padding-top:5px">
-<label><input type="radio" name="queryStatus" value="all" onclick="chgStatus();"<#if !status?? || queryStatus="all"> checked="checked"</#if>/><@s.m "cmsSellerCheck.status.all"/></label>
-<label><input type="radio" name="queryStatus" value="prepared" onclick="chgStatus();"<#if queryStatus?? && queryStatus=="prepared"> checked="checked"</#if>/><@s.m "cmsSellerCheck.status.prepared"/></label>
-<label><input type="radio" name="queryStatus" value="checked" onclick="chgStatus();"<#if queryStatus?? && queryStatus=="checked"> checked="checked"</#if>/><@s.m "cmsSellerCheck.status.checked"/></label>
-<label><input type="radio" name="queryStatus" value="rejected" onclick="chgStatus();"<#if queryStatus?? && queryStatus=="rejected"> checked="checked"</#if>/><@s.m "cmsSellerCheck.status.rejected"/></label>
+<label><input type="radio" name="queryStatus" value="all" onclick="chgStatus();"<#if !status?? || queryStatus="all"> checked="checked"</#if>/><@s.m "cmsSellerAdCheck.status.all"/></label>
+<label><input type="radio" name="queryStatus" value="prepared" onclick="chgStatus();"<#if queryStatus?? && queryStatus=="prepared"> checked="checked"</#if>/><@s.m "cmsSellerAdCheck.status.prepared"/></label>
+<label><input type="radio" name="queryStatus" value="checked" onclick="chgStatus();"<#if queryStatus?? && queryStatus=="checked"> checked="checked"</#if>/><@s.m "cmsSellerAdCheck.status.checked"/></label>
+<label><input type="radio" name="queryStatus" value="rejected" onclick="chgStatus();"<#if queryStatus?? && queryStatus=="rejected"> checked="checked"</#if>/><@s.m "cmsSellerAdCheck.status.rejected"/></label>
 </div>
 </form>
 <form id="tableForm" method="post">
@@ -182,7 +182,7 @@ function chgStatus() {
 		<input type='checkbox' name='ids' value='${content.id}'/><#t/>
 	</@p.column><#t/>
 	<@p.column title="ID">${content.id}</@p.column><#t/>
-	<@p.column title="申请商家">
+	<@p.column title="广告标题">
 
 		<#if content.topLevel gt 0><span style="color:red">[<@s.m "content.topLevel.short"/>${content.topLevel}]</span></#if>
 		<#if content.recommend><span style="color:red">[<@s.m "content.recommend.short"/>]</span></#if>
@@ -190,11 +190,11 @@ function chgStatus() {
 		<a href="${content.url}" target="_blank"><@text_cut s=content.title?html len=25 append="..."/></a>
 
 	</@p.column><#t/>
-	<@p.column title="申请人" align="center">${content.user.username}</@p.column><#t/>
+	<@p.column title="申请商家" align="center">${content.user.username}</@p.column><#t/>
 
 	<@p.column title="申请时间" align="center">${content.releaseDate?string('yyyy-MM-dd')}</@p.column><#t/>
 	<@p.column code="content.status" align="center">
-		<@s.m "cmsSellerCheck.status."+content.status/>
+		<@s.m "cmsSellerAdCheck.status."+content.status/>
 		<#if content.status==1> ${content.checkStep}<#if content.rejected> <span style="color:red"><@s.m "content.status.rejected"/></span></#if></#if>
 		<#if content.checkOpinion??>
 			<br/><span style="color:red">[${content.checkOpinion}]</span>
@@ -202,17 +202,17 @@ function chgStatus() {
 	</@p.column><#t/>
 	<@p.column code="global.operate" align="center">
 		<#assign params>&cid=${cid!}&pageNo=${pageNo!}&queryTitle=${queryTitle!?url}&queryInputUsername=${queryInputUsername!?url}&queryTopLevel=${(queryTopLevel!false)?string}&queryRecommend=${(queryRecommend!false)?string}&queryTypeId=${queryTypeId!}&queryStatus=${queryStatus!}&queryOrderBy=${queryOrderBy!}</#assign>
-		<@cms_perm url="/sellerCheck/v_view.do">
+		<@cms_perm url="/sellerAdCheck/v_view.do">
 		<a href="v_edit.do?id=${content.id}${params}" class="pn-opt"><@s.m "content.opt.view"/></a>
 		</@cms_perm>
 	<#t/>
 	</@p.column><#t/>
 </@p.table>
 <div style="margin-top:15px;">
-	<@cms_perm url="/sellerCheck/o_check.do">
+	<@cms_perm url="/sellerAdCheck/o_check.do">
 	<input type="button" value="<@s.m "content.opt.check"/>" onclick="optCheck();" class="check"/>
 	</@cms_perm>
-	<@cms_perm url="/sellerCheck/o_reject.do">
+	<@cms_perm url="/sellerAdCheck/o_reject.do">
 	<input id="rejectButton" type="button" value="拒绝" onclick="optReject();" class="reject"/>
 	</@cms_perm>
 

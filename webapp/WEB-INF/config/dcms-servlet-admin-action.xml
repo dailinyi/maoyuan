@@ -68,5 +68,14 @@
 
 	<!-- ext -->
 	<bean id="sellerCheckAct" class="com.dcms.cms.action.admin.ext.CmsSellerCheckAct"/>
+	<bean id="sellerAdCheckAct" class="com.dcms.cms.action.admin.ext.CmsSellerAdCheckAct"/>
+	<bean id="buyerAct" class="com.dcms.cms.action.admin.ext.CmsBuyerAct"/>
+	<bean id="sellerAct" class="com.dcms.cms.action.admin.ext.CmsSellerAct"/>
+	<bean id="awardAct" class="com.dcms.cms.action.admin.ext.CmsAwardAct"/>
+	<bean id="chargeScore" class="com.dcms.cms.action.admin.ext.CmsChargeScore"/>
+	<bean id="manageAdAct" class="com.dcms.cms.action.admin.ext.CmsManageAdAct"/>
+	<bean id="raffleAct" class="com.dcms.cms.action.admin.ext.CmsRaffleAct"/>
+	<bean id="scoreConsumeAct" class="com.dcms.cms.action.admin.ext.CmsScoreConsumeAct"/>
+	<bean id="orderAct" class="com.dcms.cms.action.admin.ext.CmsOrderAct"/>
 
 </beans>

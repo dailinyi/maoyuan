@@ -34,7 +34,7 @@ import static com.dcms.common.page.SimplePage.cpn;
 @Controller
 public class CmsSellerAdCheckAct {
 
-    protected Logger log = LoggerFactory.getLogger(CmsSellerAdCheckAct.class);
+    private static final Logger log = LoggerFactory.getLogger(CmsSellerAdCheckAct.class);
 
 
     @RequestMapping("/sellerAdCheck/v_list.do")
@@ -75,29 +75,25 @@ public class CmsSellerAdCheckAct {
         CmsUser user = CmsUtils.getUser(request);
         Integer userId = user.getId();
         byte currStep = user.getCheckStep(siteId);
-        Integer cid = Integer.valueOf(dicMng.findValue("sellerAdCheck","channelId").getValue());
+        Integer cid = Integer.valueOf(dicMng.findValue("sellerAdCheck","栏目ID").getValue());
         Pagination p = manager.getPageByRight(queryTitle, null,
                 queryInputUserId, queryTopLevel, queryRecommend, status, user
                         .getCheckStep(siteId), siteId, cid, userId,
                 queryOrderBy, cpn(pageNo), CookieUtils.getPageSize(request));
 
         List<ContentType> typeList = contentTypeMng.getList(true);
-        List<CmsModel>models=cmsModelMng.getList(false, true);
-        if(cid!=null){
-            Channel c=channelMng.findById(cid);
-            models=c.getModels(models);
-        }
+
         model.addAttribute("pagination", p);
         model.addAttribute("cid", cid);
         model.addAttribute("typeList", typeList);
         model.addAttribute("currStep", currStep);
         model.addAttribute("site", site);
-        model.addAttribute("models", models);
+
         addAttibuteForQuery(model, queryTitle, queryInputUsername, queryStatus,
                  queryTopLevel, queryRecommend, queryOrderBy,
                 pageNo);
 
-        return "seller_check/list";
+        return "seller_adcheck/list";
     }
 
     @RequestMapping("/sellerAdCheck/o_reject.do")
@@ -222,7 +218,7 @@ public class CmsSellerAdCheckAct {
         String queryInputUsername = RequestUtils.getQueryParam(request, "queryInputUsername");
         addAttibuteForQuery(model, queryTitle, queryInputUsername, queryStatus, queryTopLevel, queryRecommend, queryOrderBy, pageNo);
 
-        return "seller_check/edit";
+        return "seller_adcheck/edit";
     }
 
     @RequestMapping("/sellerAdCheck/o_update.do")

@@ -1,16 +1,15 @@
 package com.dcms.cms.manager.main;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
-import javax.mail.MessagingException;
-
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.cms.entity.main.CmsUserExt;
 import com.dcms.common.email.EmailSender;
 import com.dcms.common.email.MessageTemplate;
 import com.dcms.common.page.Pagination;
+
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 public interface CmsUserMng {
 	public Pagination getPage(String username, String email, Integer siteId,
@@ -59,7 +58,12 @@ public interface CmsUserMng {
 
 	public CmsUser updateMember(Integer id, String email, String password,
 			Boolean isDisabled, CmsUserExt ext, Integer groupId);
-	
+
+	CmsUser updateMemberScore(Integer id, Integer score);
+
+	CmsUser updateMember(Integer id, String email, String password,
+						 Boolean isDisabled, CmsUserExt ext, Integer groupId, Byte rate);
+
 	public CmsUser updateUserConllection(CmsUser user,Integer cid,Integer operate);
 
 	public void addSiteToUser(CmsUser user, CmsSite site, Byte checkStep);

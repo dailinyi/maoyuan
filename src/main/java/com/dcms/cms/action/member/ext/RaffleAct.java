@@ -59,7 +59,7 @@ public class RaffleAct {
         user = userMng.findById(user.getId());
 
         //先扣除用户积分
-        int cost = Integer.valueOf(dicMng.findValue("raffle","consumeScore").getValue());
+        int cost = Integer.valueOf(dicMng.findValue("raffle","消耗积分数").getValue());
         if (user.getScoreCount() == null ||user.getScoreCount() < cost){
             return FrontUtils.showMessage(request, model, "raffle.scoreNotEnough");
         }

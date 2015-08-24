@@ -30,6 +30,7 @@ public class CmsUserExtMngImpl implements CmsUserExtMng {
 			Updater<CmsUserExt> updater = new Updater<CmsUserExt>(ext);
 			updater.include("gender");
 			updater.include("birthday");
+			updater.include("rate");
 			ext = dao.updateByUpdater(updater);
 			ext.blankToNull();
 			return ext;

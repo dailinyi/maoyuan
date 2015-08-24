@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/dcms_sys/head.html"/>
+<script type="text/javascript">
+var timeout = 500;
+var closetimer = 0;
+var ddmenuitem = 0;
+function jsddm_open()
+{	
+	jsddm_canceltimer();
+	jsddm_close();
+	ddmenuitem = $(this).find('ul').eq(0).css('visibility', 'visible');
+}
+function jsddm_close()
+{	
+	if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');
+}
+function jsddm_timer()
+{	
+	closetimer = window.setTimeout(jsddm_close, timeout);
+}
+function jsddm_canceltimer()
+{	
+	if(closetimer){	
+		window.clearTimeout(closetimer);
+		closetimer = null;
+	}
+}
+document.onclick = jsddm_close;
+$(function() {
+	$('#jsddm > li').bind('mouseover', jsddm_open);
+	$('#jsddm > li').bind('mouseout',  jsddm_timer);
+
+	
+});
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+
+
+function getContentIds(){
+	var ids=new Array();
+	$("input[name='ids']").each(function() {
+		if($(this).attr("checked")){
+			ids.push($(this).val());
+			}
+	});
+	return ids;
+}
+function getChannelIds(){
+	var ids=new Array();
+	$("input[name='channels']").each(function() {
+		if($(this).attr("checked")){
+			ids.push($(this).val());
+			}
+	});
+	return ids;
+}
+
+function optDelete() {
+	if(Pn.checkedCount('ids')<=0) {
+		alert("<@s.m 'error.checkRecord'/>");
+		return;
+	}
+	if(!confirm("<@s.m 'global.confirm.delete'/>")) {
+		return;
+	}
+	var f = getTableForm();
+	f.action="o_delete.do";
+	f.submit();
+}
+
+
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsAward.function"/> - <@s.m "global.list"/></div>
+	<form class="ropt">
+		<@cms_perm url="/manageAd/v_add.do">
+		<input class="add" type="submit" value="<@s.m "global.add"/>" onclick="this.form.action='v_add.do';"/>
+		</@cms_perm>
+	</form>
+
+
+	<div class="clear"></div>
+</div>
+
+
+<div class="body-box">
+<form action="v_list.do" method="post" style="padding-top:5px;">
+<div>
+<@s.m "content.title"/>: <input type="text" name="queryTitle" value="${queryTitle!}" style="width:100px"/>
+<input type="hidden" name="cid" value="${cid!}"/>
+<input class="query" type="submit" value="<@s.m "global.query"/>"/>
+</div>
+
+</form>
+<form id="tableForm" method="post">
+<input type="hidden" name="pageNo" value="${pageNo!}"/>
+<input type="hidden" name="cid" value="${cid!}"/>
+<#list .data_model?keys as pkey>
+	<#if pkey?starts_with('query')><input type="hidden" name="${pkey}" value="${(.data_model[pkey])!?string}"/></#if><#t/>
+</#list>
+<input type="hidden" name="rejectStep"/>
+<input type="hidden" name="rejectOpinion"/>
+
+<@p.table value=pagination;content,i,has_next><#rt/>
+	<@p.column title="<input type='checkbox' onclick='Pn.checkbox(\"ids\",this.checked)'/>" width="20">
+		<input type='checkbox' name='ids' value='${content.id}'/><#t/>
+	</@p.column><#t/>
+	<@p.column title="ID">${content.id}</@p.column><#t/>
+	<@p.column title="广告标题">
+
+		<#if content.topLevel gt 0><span style="color:red">[<@s.m "content.topLevel.short"/>${content.topLevel}]</span></#if>
+		<#if content.recommend><span style="color:red">[<@s.m "content.recommend.short"/>]</span></#if>
+		<strong>[${content.channel.name}]</strong>
+		<a href="${content.url}" target="_blank"><@text_cut s=content.title?html len=25 append="..."/></a>
+
+	</@p.column><#t/>
+	<@p.column title="创建人" align="center">${content.user.username}</@p.column><#t/>
+
+	<@p.column title="申请时间" align="center">${content.releaseDate?string('yyyy-MM-dd')}</@p.column><#t/>
+
+	<@p.column code="global.operate" align="center">
+		<#assign params>&cid=${cid!}&pageNo=${pageNo!}&queryTitle=${queryTitle!?url}&queryInputUsername=${queryInputUsername!?url}&queryTopLevel=${(queryTopLevel!false)?string}&queryRecommend=${(queryRecommend!false)?string}&queryTypeId=${queryTypeId!}&queryStatus=${queryStatus!}&queryOrderBy=${queryOrderBy!}</#assign>
+		<@cms_perm url="/award/v_view.do">
+		<a href="v_edit.do?id=${content.id}${params}" class="pn-opt"><@s.m "global.edit"/></a> | <#rt/>
+		</@cms_perm>
+		<@cms_perm url="/award/o_delete.do">
+		<#if content.hasDeleteRight><a href="o_delete.do?ids=${content.id}${params}" onclick="if(!confirm('<@s.m "global.confirm.delete"/>')) {return false;}" class="pn-opt"><@s.m "global.delete"/></a>
+			<#else><span class="disabled"><@s.m "global.delete"/></span>
+		</#if>
+		</@cms_perm><#t/>
+	</@p.column><#t/>
+</@p.table>
+<div style="margin-top:15px;">
+	<@cms_perm url="//o_delete.do">
+	<input type="button" value="<@s.m "global.delete"/>" onclick="optDelete();" class="del-button"/>
+	</@cms_perm>
+
+</div>
+</form>
+</div>
+
+
+<#include "/common/alert_message.html"/>
+</body>
+</html>

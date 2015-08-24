@@ -10,14 +10,13 @@ import com.dcms.cms.manager.ext.CmsRaffleMng;
 import com.dcms.cms.manager.ext.CmsScoreRecordMng;
 import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.manager.main.ContentMng;
-import com.dcms.cms.web.FrontUtils;
+import com.dcms.cms.statistic.GiftPoolMng;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -38,25 +37,15 @@ public class CmsRaffleMngImpl implements CmsRaffleMng{
 
 
         //获取活动奖品
-        String channelId = dicMng.findValue("raffle","channelId").getValue();
-        String total = dicMng.findValue("raffle","total").getValue();
+        Integer giftTotal = Integer.valueOf(dicMng.findValue("raffle", "总份数").getValue());
 
-
-        List<Content> raffles = contentMng.getContentByChnId(Integer.valueOf(channelId),Integer.valueOf(total));
 
         //拼凑奖池
-        List<Integer> rafflePool = new ArrayList<Integer>(1000);
-        for (Content raffle : raffles){
-            String probability = raffle.getAttr().get("probability");
-            int i = Integer.valueOf(probability);
+        List<Integer> rafflePool = giftPoolMng.getPool();
 
-            for (int temp = 0 ; temp < i ; temp ++){
-                rafflePool.add(raffle.getId());
-            }
-        }
 
         //拼抽奖号
-        int number = new Random().nextInt(1000);
+        int number = new Random().nextInt(giftTotal);
         Integer prize = null;
         Content gift = null;
         if (number < rafflePool.size() - 1 ){
@@ -96,5 +85,7 @@ public class CmsRaffleMngImpl implements CmsRaffleMng{
     private CmsScoreRecordMng scoreRecordMng;
     @Resource
     private CmsActivityRecordMng activityRecordMng;
+    @Resource
+    private GiftPoolMng giftPoolMng;
 
 }

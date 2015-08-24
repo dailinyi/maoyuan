@@ -14,14 +14,16 @@ $(function(){
 <div class="left">
 <#include "/dcms_sys/date.html"/>
      <ul class="w-lful">
-		<li><a href="check_right.do" target="rightFrame"><@s.m "global.admin.index"/></a></li>
-		<@cms_perm url="/sellerCheck/v_list.do">
-		<li><a href="../sellerCheck/v_list.do" target="rightFrame"><@s.m "cmsSellerCheck.function"/></a></li>
+		<li><a href="system_right.do" target="rightFrame"><@s.m "global.admin.index"/></a></li>
+		<@cms_perm url="/seller/v_list.do">
+		<li><a href="../seller/v_list.do" target="rightFrame"><@s.m "cmsSeller.function"/></a></li>
 		</@cms_perm>
-		<@cms_perm url="/sellerAdvCheck/v_list.do">
-		<li><a href="../sellerAdCheck/v_list.do" target="rightFrame"><@s.m "cmsSellerAdCheck.function"/></a></li>
+		<@cms_perm url="/buyer/v_list.do">
+		<li><a href="../buyer/v_list.do" target="rightFrame"><@s.m "cmsBuyer.function"/></a></li>
 		</@cms_perm>
-
+		<@cms_perm url="/award/v_list.do">
+		<li><a href="../award/v_list.do" target="rightFrame"><@s.m "cmsAward.function"/></a></li>
+		</@cms_perm>
      </ul>
 </div>
 </body>

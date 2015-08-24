@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/dcms_sys/head.html"/>
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+
+
+
+function optReject(userId,userName) {
+	$("#userName").val(userName)
+	$("#userId").val(userId)
+	$("#rejectDialog").dialog("open");
+}
+$(function() {
+	$("#rejectDialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 380,
+		height: 200,
+		position: ["center",50],
+		buttons: {
+			"OK": function() {
+				chargeSubmit();
+			}
+		}
+	});
+});
+function chargeSubmit() {
+	$("input[name=userName]").val($("#userName").val());
+	$("input[name=chargeScoreCount]").val($("#chargeScoreCount").val());
+	$("input[name=userId]").val($("#userId").val());
+	var userName = $("input[name=userName]").val();
+	var userId = $("input[name=userId]").val();
+	var chargeScoreCount = $("input[name=chargeScoreCount]").val();
+	var r=confirm("请确认是否为:" + userName + "[id:"+userId+"]充值" + chargeScoreCount + "积分?")
+	if (r==false)
+	{
+		return;
+	}
+	$("#rejectDialog").dialog("close");
+	var f = getTableForm();
+	f.action="o_charge.do";
+	f.submit();
+}
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsBuyer.function"/> - <@s.m "global.list"/></div>
+
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<form action="v_list.do" method="post" style="padding-top:5px;">
+	<div>
+		<@s.m "cmsUser.username"/>: <input type="text" name="queryUsername" value="${queryUsername!}" style="width:100px"/>
+		Email: <input type="text" name="queryEmail" value="${queryEmail!}" style="width:100px"/>
+		<input class="query" type="submit" value="<@s.m "global.query"/>"/>
+	</div>
+
+</form>
+
+<form id="tableForm" method="post">
+<input type="hidden" name="pageNo" value="${pageNo!}"/>
+<input type="hidden" name="queryUsername" value="${queryUsername!}"/>
+<input type="hidden" name="userName" />
+<input type="hidden" name="userId" />
+<input type="hidden" name="chargeScoreCount" />
+<@p.table value=pagination;cmsUser,i,has_next><#rt/>
+
+	<@p.column title="ID">${cmsUser.id}</@p.column><#t/>
+	<@p.column code="cmsUser.username">${cmsUser.username}</@p.column><#t/>
+	<@p.column code="cmsUser.email">${cmsUser.email!}</@p.column><#t/>
+	<@p.column code="cmsUser.score" align="center">${cmsUser.scoreCount!0}</@p.column><#t/>
+	<@p.column code="cmsUser.lastLogin" align="center">${cmsUser.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}<br/>${cmsUser.lastLoginIp}</@p.column><#t/>
+	<@p.column code="global.operate" align="center">
+		<a href="###" onclick="optReject('${cmsUser.id}','${cmsUser.username}');" class="pn-opt">充值积分</a>
+	</@p.column><#t/>
+</@p.table>
+</form>
+</div>
+<div id="rejectDialog" style="display:none" title="充值积分">
+	<p>请输入要充值的积分数: <input type="text" id="chargeScoreCount" style="width:260px" onkeypress="if(event.keyCode==13){chargeSubmit();return false;}"/></p>
+	<input type="hidden"  id="userName"/>
+	<input type="hidden"  id="userId"/>
+</div>
+<#include "/common/alert_message.html"/>
+</body>
+</html>

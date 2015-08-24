@@ -1,38 +1,25 @@
 package com.dcms.cms.manager.main.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import javax.mail.MessagingException;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.dcms.cms.dao.main.CmsUserDao;
-import com.dcms.cms.entity.main.Channel;
-import com.dcms.cms.entity.main.CmsGroup;
-import com.dcms.cms.entity.main.CmsSite;
-import com.dcms.cms.entity.main.CmsUser;
-import com.dcms.cms.entity.main.CmsUserExt;
-import com.dcms.cms.manager.main.ChannelMng;
-import com.dcms.cms.manager.main.CmsGroupMng;
-import com.dcms.cms.manager.main.CmsRoleMng;
-import com.dcms.cms.manager.main.CmsSiteMng;
-import com.dcms.cms.manager.main.CmsUserExtMng;
-import com.dcms.cms.manager.main.CmsUserMng;
-import com.dcms.cms.manager.main.CmsUserSiteMng;
-import com.dcms.cms.manager.main.ContentMng;
+import com.dcms.cms.entity.main.*;
+import com.dcms.cms.manager.main.*;
 import com.dcms.common.email.EmailSender;
 import com.dcms.common.email.MessageTemplate;
 import com.dcms.common.hibernate3.Updater;
 import com.dcms.common.page.Pagination;
 import com.dcms.core.entity.UnifiedUser;
 import com.dcms.core.manager.UnifiedUserMng;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -277,6 +264,43 @@ public class CmsUserMngImpl implements CmsUserMng {
 		if (groupId != null) {
 			entity.setGroup(cmsGroupMng.findById(groupId));
 		}
+
+		cmsUserExtMng.update(ext, entity);
+		unifiedUserMng.update(id, password, email);
+		return entity;
+	}
+
+	@Override
+	public CmsUser updateMemberScore(Integer id,  Integer score) {
+		CmsUser entity = findById(id);
+
+		if (score != null) {
+			entity.setScoreCount(entity.getScoreCount() + score);
+		}
+
+		cmsUserExtMng.update(entity.getUserExt(), entity);
+
+		return entity;
+	}
+
+	@Override
+	public CmsUser updateMember(Integer id, String email, String password,
+								Boolean isDisabled, CmsUserExt ext, Integer groupId,Byte rate) {
+		CmsUser entity = findById(id);
+		if (!StringUtils.isBlank(email)) {
+			entity.setEmail(email);
+		}
+		if (isDisabled != null) {
+			entity.setDisabled(isDisabled);
+		}
+		if (groupId != null) {
+			entity.setGroup(cmsGroupMng.findById(groupId));
+		}
+		if (rate != null) {
+			entity.setRate(rate);
+		}
+
+
 		cmsUserExtMng.update(ext, entity);
 		unifiedUserMng.update(id, password, email);
 		return entity;

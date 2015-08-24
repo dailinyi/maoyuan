@@ -1,11 +1,11 @@
 package com.dcms.common.fck;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manages FCKeditor.Java properties files.
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class PropertiesLoader {
 	private static final Logger logger = LoggerFactory
 			.getLogger(PropertiesLoader.class);
-	private static final String DEFAULT_FILENAME = "default.properties";
+	private static final String DEFAULT_FILENAME = "/default.properties";
 	private static final String LOCAL_PROPERTIES = "/fckeditor.properties";
 	private static Properties properties = new Properties();
 

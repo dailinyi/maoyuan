@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/dcms_sys/head.html"/>
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+function optDelete() {
+	if(Pn.checkedCount('ids')<=0) {
+		alert("<@s.m 'error.checkRecord'/>");
+		return;
+	}
+	if(!confirm("<@s.m 'global.confirm.delete'/>")) {
+		return;
+	}
+	var f = getTableForm();
+	f.action="o_delete.do";
+	f.submit();
+}
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsBuyer.function"/> - <@s.m "global.list"/></div>
+
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<form action="v_list.do" method="post" style="padding-top:5px;">
+	<div>
+		<@s.m "cmsUser.username"/>: <input type="text" name="queryUsername" value="${queryUsername!}" style="width:100px"/>
+
+		<input class="query" type="submit" value="<@s.m "global.query"/>"/>
+	</div>
+
+</form>
+
+<form id="tableForm" method="post">
+<input type="hidden" name="pageNo" value="${pageNo!}"/>
+<input type="hidden" name="queryUsername" value="${queryUsername!}"/>
+<@p.table value=pagination;cmsUser,i,has_next><#rt/>
+	<@p.column title="<input type='checkbox' onclick='Pn.checkbox(\"ids\",this.checked)'/>" width="20">
+		<input type='checkbox' name='ids' value='${cmsUser.id}'/><#t/>
+	</@p.column><#t/>
+	<@p.column title="ID">${cmsUser.id}</@p.column><#t/>
+	<@p.column code="cmsUser.username">${cmsUser.username}</@p.column><#t/>
+	<@p.column code="cmsUser.email">${cmsUser.email!}</@p.column><#t/>
+	<@p.column code="cmsUser.score" align="center">${cmsUser.scoreCount!0}</@p.column><#t/>
+	<@p.column title="返现比率" align="center">${(cmsUser.rate+"%")!'-'}</@p.column><#t/>
+	<@p.column code="cmsUser.lastLogin" align="center">${cmsUser.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}<br/>${cmsUser.lastLoginIp}</@p.column><#t/>
+	<@p.column code="cmsUser.loginCountForList" align="right">${cmsUser.loginCount}</@p.column><#t/>
+	<@p.column code="global.operate" align="center">
+		<a href="v_edit.do?id=${cmsUser.id}&pageNo=${pageNo!}" class="pn-opt"><@s.m "global.edit"/></a>
+	</@p.column><#t/>
+</@p.table>
+</form>
+</div>
+<#include "/common/alert_message.html"/>
+</body>
+</html>
