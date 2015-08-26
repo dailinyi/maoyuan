@@ -6,18 +6,9 @@
     <title></title>
     [#include "../include/库.html"/]
 </head>
-<script type="application/javascript">
-$(function() {
-    $(".do").click(function(){
-        $("#doEgg").submit();
-    });
 
-});
-</script>
 <body class="egg-bg">
 <div class="egg-T">砸金蛋</div>
-<form id="doEgg" action="${base}/raffle/egg.jspx" method="post"/>
-
 <div class="egg-list">
     <div><a class="do" href="###"><img src="/${res}/img/egg.png" width="192" height="260" /></a></div>
     <div><a class="do" href="###"><img src="/${res}/img/egg.png" width="192" height="260" /></a></div>
@@ -35,5 +26,31 @@ $(function() {
         </div>
     </div>
 </div>
+<div id="div_mask" class="black-mask"></div>
+<div class="egg-result-box">
+    <div class="egg-result">
+
+
+            [#if raffle ?? && raffle != '0']
+                <div class="what-u-get">
+                    恭喜您获得了${raffle!}
+                </div>
+                <div class="mT20 textC"><a href="${base}/raffle/egg.jspx"><img src="/${res}/img/btn.png" width="260" height="60" /></a></div>
+            [#else]
+                <div class="what-u-get">
+                    很遗憾,此次您尚未中奖
+                </div>
+                <div class="mT20 textC"><a href="${base}/raffle/egg.jspx"><img src="/${res}/img/btn.png" width="260" height="60" /></a></div>
+
+            [/#if]
+
+
+    </div>
+</div>
 </body>
+<script>
+    var h = parseFloat($(document).height());
+    $("#div_mask").css("height", h + "px");
+    $("#div_mask").show();
+</script>
 </html>

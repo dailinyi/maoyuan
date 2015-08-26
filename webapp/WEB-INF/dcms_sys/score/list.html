@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/dcms_sys/head.html"/>
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+function chgStatus() {
+	var queryStatus = $("input[name=queryRecordType]:checked").val();
+	location.href="v_list.do?queryRecordType=" + queryStatus;
+}
+
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsScoreConsume.function"/> - <@s.m "global.list"/></div>
+
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<form action="v_list.do" method="post" style="padding-top:5px;">
+	<div>
+		订单ID: <input type="text" name="queryOrderId" value="${queryOrderId!}" style="width:100px"/>
+		发送人用户名: <input type="text" name="querySendUserName" value="${querySendUserName!}" style="width:100px"/>
+		接受人用户名: <input type="text" name="queryReceiveUserName" value="${queryReceiveUserName!}" style="width:100px"/>
+
+
+		<input class="query" type="submit" value="<@s.m "global.query"/>"/>
+	</div>
+	<div style="padding-top:5px">
+		<label><input type="radio" name="queryRecordType" value="" onclick="chgStatus();"<#if !queryRecordType?? > checked="checked"</#if>/><@s.m "content.status.all"/></label>
+		<label><input type="radio" name="queryRecordType" value="1" onclick="chgStatus();"<#if queryRecordType?? && queryRecordType==1> checked="checked"</#if>/><@s.m "cmsScoreConsume.type.1"/></label>
+		<label><input type="radio" name="queryRecordType" value="2" onclick="chgStatus();"<#if queryRecordType?? && queryRecordType==2> checked="checked"</#if>/><@s.m "cmsScoreConsume.type.2"/></label>
+		<label><input type="radio" name="queryRecordType" value="3" onclick="chgStatus();"<#if queryRecordType?? && queryRecordType==3> checked="checked"</#if>/><@s.m "cmsScoreConsume.type.3"/></label>
+		<label><input type="radio" name="queryRecordType" value="4" onclick="chgStatus();"<#if queryRecordType?? && queryRecordType==4> checked="checked"</#if>/><@s.m "cmsScoreConsume.type.4"/></label>
+		<label><input type="radio" name="queryRecordType" value="5" onclick="chgStatus();"<#if queryRecordType?? && queryRecordType==5> checked="checked"</#if>/><@s.m "cmsScoreConsume.type.5"/></label>
+		<label><input type="radio" name="queryRecordType" value="6" onclick="chgStatus();"<#if queryRecordType?? && queryRecordType==6> checked="checked"</#if>/><@s.m "cmsScoreConsume.type.6"/></label>
+		<label><input type="radio" name="queryRecordType" value="7" onclick="chgStatus();"<#if queryRecordType?? && queryRecordType==7> checked="checked"</#if>/><@s.m "cmsScoreConsume.type.7"/></label>
+	</div>
+
+</form>
+
+<form id="tableForm" method="post">
+<input type="hidden" name="pageNo" value="${pageNo!}"/>
+<input type="hidden" name="queryUsername" value="${queryUsername!}"/>
+<@p.table value=pagination;cmsScore,i,has_next><#rt/>
+
+	<@p.column title="ID">${cmsScore.id}</@p.column><#t/>
+	<@p.column title="订单ID" align="center">${cmsScore.orderId!'-'}</@p.column><#t/>
+	<@p.column title="操作类型" align="center"><@s.m "cmsScoreConsume.type.${cmsScore.recordType!0}"/></@p.column><#t/>
+	<@p.column title="操作积分数量" align="center">${cmsScore.scoreNum!0}</@p.column><#t/>
+	<@p.column title="发送方" align="center">${(cmsScore.sendUser.username)!}  <span style="color: RED;">[${(cmsScore.sendUser.id)!}]</span> </@p.column><#t/>
+	<@p.column title="接收方" align="center">${(cmsScore.receiveUser.username)!} <span style="color: RED;">[${(cmsScore.receiveUser.id)!}]</span> </@p.column><#t/>
+	<@p.column title="操作时间" align="center">${cmsScore.recordTime?string('yyyy-MM-dd HH:mm:ss')}</@p.column><#t/>
+
+</@p.table>
+</form>
+</div>
+<#include "/common/alert_message.html"/>
+</body>
+</html>

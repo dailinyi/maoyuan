@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/dcms_sys/head.html"/>
+<script type="text/javascript">
+function getTableForm() {
+	return document.getElementById('tableForm');
+}
+function chgStatus() {
+	var queryStatus = $("input[name=queryIsOffer]:checked").val();
+	location.href="v_list.do?queryIsOffer=" + queryStatus;
+}
+
+function chgWin() {
+	var queryStatus = $("input[name=queryIsWin]:checked").val();
+	location.href="v_list.do?queryIsWin=" + queryStatus;
+}
+
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsScoreConsume.function"/> - <@s.m "global.list"/></div>
+
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<form action="v_list.do" method="post" style="padding-top:5px;">
+	<div>
+		抽奖人: <input type="text" name="queryActivityUserName" value="${queryActivityUserName!}" style="width:100px"/>
+
+
+		<input class="query" type="submit" value="<@s.m "global.query"/>"/>
+	</div>
+	<div style="padding-top:5px">
+		<label><input type="radio" name="queryIsOffer" value="" onclick="chgStatus();"<#if !queryIsOffer?? > checked="checked"</#if>/><@s.m "content.status.all"/></label>
+
+		<label><input type="radio" name="queryIsOffer" value="0" onclick="chgStatus();"<#if queryIsOffer?? && queryIsOffer==0> checked="checked"</#if>/><@s.m "cmsRaffle.offer.0"/></label>
+		<label><input type="radio" name="queryIsOffer" value="1" onclick="chgStatus();"<#if queryIsOffer?? && queryIsOffer==1> checked="checked"</#if>/><@s.m "cmsRaffle.offer.1"/></label>
+
+		<label><input type="radio" name="queryIsWin" value="0" onclick="chgWin();"<#if queryIsWin?? && queryIsWin==0> checked="checked"</#if>/><@s.m "cmsRaffle.win.0"/></label>
+		<label><input type="radio" name="queryIsWin" value="1" onclick="chgWin();"<#if queryIsWin?? && queryIsWin==1> checked="checked"</#if>/><@s.m "cmsRaffle.win.1"/></label>
+	</div>
+
+</form>
+
+<form id="tableForm" method="post">
+<input type="hidden" name="pageNo" value="${pageNo!}"/>
+<input type="hidden" name="queryUsername" value="${queryUsername!}"/>
+<@p.table value=pagination;cmsActivity,i,has_next><#rt/>
+
+	<@p.column title="ID">${cmsActivity.id}</@p.column><#t/>
+	<@p.column title="活动类型" align="center"><@s.m "cmsRaffle.type.${cmsActivity.activityType!0}"/></@p.column><#t/>
+	<@p.column title="抽奖人" align="center">${(cmsActivity.activityUser.username)!}  <span style="color: RED;">[${(cmsActivity.activityUser.id)!}]</span> </@p.column><#t/>
+	<@p.column title="奖品" align="center">${(cmsActivity.activityContent.title)!'未中奖'} </@p.column><#t/>
+	<@p.column title="发放状态" align="center">
+		<#if (cmsActivity.activityContent.title)??>
+		<#if cmsActivity.isOffer??><#if cmsActivity.isOffer><@s.m "cmsRaffle.offer.1"/><#else><@s.m "cmsRaffle.offer.0"/></#if><#else>未知</#if>
+		</#if>
+	</@p.column><#t/>
+	<@p.column title="操作时间" align="center">${cmsActivity.recordTime?string('yyyy-MM-dd HH:mm:ss')}</@p.column><#t/>
+
+</@p.table>
+</form>
+</div>
+<#include "/common/alert_message.html"/>
+</body>
+</html>

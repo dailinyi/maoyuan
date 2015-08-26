@@ -1,10 +1,7 @@
 package com.dcms.cms.action.member.ext;
 
 import com.dcms.cms.entity.ext.CmsActivityRecord;
-import com.dcms.cms.entity.main.CmsSite;
-import com.dcms.cms.entity.main.CmsUser;
-import com.dcms.cms.entity.main.Content;
-import com.dcms.cms.entity.main.MemberConfig;
+import com.dcms.cms.entity.main.*;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.ext.CmsActivityRecordMng;
 import com.dcms.cms.manager.ext.CmsRaffleMng;
@@ -32,6 +29,7 @@ public class RaffleAct {
     private static final Logger log = LoggerFactory.getLogger(RaffleAct.class);
 
     public static final String EGG = "tpl.egg";
+    public static final String EGG_RESULT = "tpl.egg.result";
 
     @RequestMapping(value = "/raffle/egg.jspx" , method = RequestMethod.GET)
     public String toEggPage(HttpServletRequest request , ModelMap model){
@@ -48,6 +46,7 @@ public class RaffleAct {
     public String doEggRaffle(HttpServletRequest request , ModelMap model){
         CmsSite site = CmsUtils.getSite(request);
         CmsUser user = CmsUtils.getUser(request);
+
         MemberConfig mcfg = site.getConfig().getMemberConfig();
         // 没有开启会员功能
         if (!mcfg.isMemberOn()) {
@@ -73,7 +72,7 @@ public class RaffleAct {
 
         FrontUtils.frontData(request, model, site);
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_RAFFLE, EGG);
+                TPLDIR_RAFFLE, EGG_RESULT);
     }
 
     @Resource

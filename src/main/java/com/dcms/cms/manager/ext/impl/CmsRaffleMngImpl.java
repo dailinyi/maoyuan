@@ -1,5 +1,6 @@
 package com.dcms.cms.manager.ext.impl;
 
+import com.dcms.cms.dao.ext.CmsActivityRecordDao;
 import com.dcms.cms.entity.ext.CmsActivityRecord;
 import com.dcms.cms.entity.ext.CmsScoreRecord;
 import com.dcms.cms.entity.main.CmsUser;
@@ -11,6 +12,7 @@ import com.dcms.cms.manager.ext.CmsScoreRecordMng;
 import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.manager.main.ContentMng;
 import com.dcms.cms.statistic.GiftPoolMng;
+import com.dcms.common.page.Pagination;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,7 +29,7 @@ public class CmsRaffleMngImpl implements CmsRaffleMng{
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
     public Content doEggRaffle(CmsUser user){
-        int cost = Integer.valueOf(dicMng.findValue("raffle","consumeScore").getValue());
+        int cost = Integer.valueOf(dicMng.findValue("raffle","消耗积分数").getValue());
         user.setScoreCount(user.getScoreCount() - cost);
         userMng.updateUser(user);
 
@@ -75,6 +77,13 @@ public class CmsRaffleMngImpl implements CmsRaffleMng{
         }
     }
 
+    @Override
+    public Pagination getPage(Integer queryIsWin,Integer queryIsOffer, String queryActivityUserName, int cpn, int pageSize) {
+        return dao.getPage(queryIsWin,queryIsOffer,  queryActivityUserName,  cpn,  pageSize);
+    }
+
+    @Resource
+    private CmsActivityRecordDao dao;
     @Resource
     private CmsUserMng userMng;
     @Resource

@@ -3,6 +3,7 @@ package com.dcms.cms.manager.ext.impl;
 import com.dcms.cms.dao.ext.CmsScoreRecordDao;
 import com.dcms.cms.entity.ext.CmsScoreRecord;
 import com.dcms.cms.manager.ext.CmsScoreRecordMng;
+import com.dcms.common.page.Pagination;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,4 +20,11 @@ public class CmsScoreRecordMngImpl implements CmsScoreRecordMng {
     public CmsScoreRecord save(CmsScoreRecord record){
         return dao.save(record);
     }
+
+    @Override
+    public Pagination getPage(String queryOrderId, Integer queryRecordType, String querySendUserName, String queryReceiveUserName, int cpn, int pageSize) {
+
+        return dao.getPage(queryOrderId, queryRecordType, querySendUserName, queryReceiveUserName, cpn, pageSize);
+    }
+
 }

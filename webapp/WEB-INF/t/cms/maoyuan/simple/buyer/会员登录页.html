@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+</head>
+<script type="application/javascript">
+    $(function() {
+        $("#submitIt").click(function(){
+            $("#tableForm").submit();
+        });
+
+    });
+</script>
+<body>
+<div class="register-bg">用户登录</div>
+
+<div class="main-box">
+    <form id="tableForm" action="${base}/buyer/login.jspx" method="post">
+    <div class="input-box">
+        <ul>
+
+                <li><input name="username" value="" type="text" placeholder="手机号码"></li>
+                <li><input name="password" value="" type="password" placeholder="密码"></li>
+
+        </ul>
+    </div>
+    <div style="margin-top:50px"><a id="submitIt" class="btn-submit" href="###" >登录</a></div>
+    </form>
+    <div class="new-member"><a href="#">新用户注册</a>│<a href="#">忘记密码</a></div>
+</div>
+</body>
+</html>
