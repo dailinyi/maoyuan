@@ -58,14 +58,14 @@ public class CmsUserMngImpl implements CmsUserMng {
 		CmsUser entity = dao.findByUsername(username);
 		return entity;
 	}
-
+	@Override
 	public CmsUser registerMember(String username, String email,
-			String password, String ip, Integer groupId, CmsUserExt userExt){
+			String password, String ip, Integer groupId, CmsUserExt userExt,CmsUser recommendUser){
 		UnifiedUser unifiedUser = unifiedUserMng.save(username, email,
 				password, ip);
 		CmsUser user = new CmsUser();
 		user.forMember(unifiedUser);
-
+		user.setRecommendUser(recommendUser);
 		CmsGroup group = null;
 		if (groupId != null) {
 			group = cmsGroupMng.findById(groupId);
@@ -83,6 +83,44 @@ public class CmsUserMngImpl implements CmsUserMng {
 		return user;
 	}
 
+	@Override
+	public CmsUser updateQr(Integer userId ,String userQR,String shopQR,String shopCode){
+		CmsUser user = findById(userId);
+		if (StringUtils.isNotBlank(userQR)){
+			user.setUserQR(userQR);
+		}
+		if (StringUtils.isNotBlank(shopCode)){
+			user.setPromotionCode(shopCode);
+		}
+		if (StringUtils.isNotBlank(shopQR)){
+			user.setPromotionQR(shopQR);
+		}
+
+		return user;
+	}
+
+	public CmsUser registerMember(String username, String email,
+								  String password, String ip, Integer groupId, CmsUserExt userExt){
+		UnifiedUser unifiedUser = unifiedUserMng.save(username, email,
+				password, ip);
+		CmsUser user = new CmsUser();
+		user.forMember(unifiedUser);
+		CmsGroup group = null;
+		if (groupId != null) {
+			group = cmsGroupMng.findById(groupId);
+		} else {
+			group = cmsGroupMng.getRegDef();
+		}
+		if (group == null) {
+			throw new RuntimeException(
+					"register default member group not found!");
+		}
+		user.setGroup(group);
+		user.init();
+		dao.save(user);
+		cmsUserExtMng.save(userExt, user);
+		return user;
+	}
 	
 	public CmsUser registerMember(String username, String email,
 			String password, String ip, Integer groupId, CmsUserExt userExt,
@@ -332,6 +370,11 @@ public class CmsUserMngImpl implements CmsUserMng {
 			beans[i] = deleteById(ids[i]);
 		}
 		return beans;
+	}
+
+	@Override
+	public CmsUser getUserByRecommendCode(String recommendCode){
+		return dao.getUserByRecommendCode(recommendCode);
 	}
 
 	public boolean usernameNotExist(String username) {

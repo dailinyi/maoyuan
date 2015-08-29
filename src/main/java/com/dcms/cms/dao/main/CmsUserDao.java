@@ -1,10 +1,10 @@
 package com.dcms.cms.dao.main;
 
-import java.util.List;
-
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.common.hibernate3.Updater;
 import com.dcms.common.page.Pagination;
+
+import java.util.List;
 
 /**
  * 用户DAO接口
@@ -35,4 +35,6 @@ public interface CmsUserDao{
 	public CmsUser updateByUpdater(Updater<CmsUser> updater);
 
 	public CmsUser deleteById(Integer id);
+
+	CmsUser getUserByRecommendCode(String recommendCode);
 }

@@ -160,6 +160,18 @@ public class CmsUserDaoImpl extends HibernateBaseDao<CmsUser, Integer>
 	}
 
 	@Override
+	public CmsUser getUserByRecommendCode(String recommendCode) {
+		Finder finder = Finder.create("from CmsUser bean where bean.promotionCode = :promotionCode ");
+		finder.setParam("promotionCode",recommendCode);
+
+		List list = find(finder);
+		if (list == null || list.isEmpty()){
+			return null;
+		}
+		return (CmsUser)list.get(0);
+	}
+
+	@Override
 	protected Class<CmsUser> getEntityClass() {
 		return CmsUser.class;
 	}

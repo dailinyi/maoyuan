@@ -1,15 +1,14 @@
 package com.dcms.common.upload;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.servlet.ServletContext;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 本地文件存储
@@ -73,7 +72,7 @@ public class FileRepository implements ServletContextAware {
 		return new File(ctx.getRealPath(name));
 	}
 	
-	private String getRealPath(String name){
+	public String getRealPath(String name){
 		String realpath=ctx.getRealPath(name);
 		if(realpath==null){
 			realpath=ctx.getRealPath("/")+name;

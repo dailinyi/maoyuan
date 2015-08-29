@@ -11,31 +11,26 @@
         $("#submitIt").click(function(){
             $("#tableForm").submit();
         });
-        [#if success??]
-        [#if success]
-                alert("注册成功!");
-        [/#if]
-        [/#if]
+
     });
 </script>
 <body>
-<div class="register-bg">用户登录</div>
+<div class="register-bg">商家登录</div>
 
 <div class="main-box">
-    <form id="tableForm" action="${base}/buyer/login.jspx" method="post">
+    <form id="tableForm" action="${base}/seller/login.jspx" method="post">
     <div class="input-box">
         <ul>
 
                 <li><input name="username" value="" type="text" placeholder="手机号码"></li>
                 <li><input name="password" value="" type="password" placeholder="密码"></li>
-            <li><input name="returnUrl" value="${returnUrl!}" type="hidden"></li>
+                <li><input name="returnUrl" value="${returnUrl!}" type="hidden"></li>
 
         </ul>
     </div>
     <div style="margin-top:50px"><a id="submitIt" class="btn-submit" href="###" >登录</a></div>
     </form>
-    <div class="new-member"><a href="${base}/buyer/register.jspx">新用户注册</a>│<a href="#">忘记密码</a>│<a href="${base}/seller/login.jspx">商家登陆</a></div>
+    <div class="new-member"><a href="${base}/seller/login.jspx">新用户注册</a>│<a href="#">忘记密码</a>│<a href="${base}/buyer/login.jspx">用户登陆</a></div>
 </div>
 </body>
-
 </html>

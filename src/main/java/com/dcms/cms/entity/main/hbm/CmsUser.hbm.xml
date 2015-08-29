@@ -23,6 +23,8 @@
         <property name="checkStatus" column="check_status" type="java.lang.Byte" not-null="false" length="1"/>
         <property name="scoreCount" column="score_count" type="integer" length="11"/>
         <property name="userQR" column="user_qr" type="string"  length="255"/>
+		<property name="promotionCode" column="promotion_code" type="string" not-null="false" length="16"/>
+		<property name="promotionQR" column="promotion_qr" type="string" not-null="false" length="255"/>
         <property name="rate" column="rate" type="java.lang.Byte"  length="5"/>
         <many-to-one name="recommendUser" column="recommend_user" class="CmsUser" not-null="false"></many-to-one>
 		<many-to-one name="group" column="group_id" class="CmsGroup" not-null="true"></many-to-one>

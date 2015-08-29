@@ -26,6 +26,11 @@ public interface CmsUserMng {
 
 	public CmsUser findByUsername(String username);
 
+	CmsUser registerMember(String username, String email,
+						   String password, String ip, Integer groupId, CmsUserExt userExt, CmsUser recommendUser);
+
+	CmsUser updateQr(Integer userId, String userQR, String shopQR, String shopCode);
+
 	public CmsUser registerMember(String username, String email,
 			String password, String ip, Integer groupId, CmsUserExt userExt);
 	
@@ -71,6 +76,8 @@ public interface CmsUserMng {
 	public CmsUser deleteById(Integer id);
 
 	public CmsUser[] deleteByIds(Integer[] ids);
+
+	CmsUser getUserByRecommendCode(String recommendCode);
 
 	public boolean usernameNotExist(String username);
 	

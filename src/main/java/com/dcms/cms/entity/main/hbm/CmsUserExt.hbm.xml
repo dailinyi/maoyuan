@@ -17,8 +17,7 @@
 		<property name="phone" column="phone" type="string" not-null="false" length="50"/>
 		<property name="mobile" column="mobile" type="string" not-null="false" length="50"/>
 		<property name="userImg" column="user_img" type="string" not-null="false" length="255"/>
-		<property name="promotionCode" column="promotion_code" type="string" not-null="false" length="16"/>
-		<property name="promotionQR" column="promotion_qr" type="string" not-null="false" length="255"/>
+
 		<property name="userSignature" column="user_signature" type="string" not-null="false" length="255"/>
 		<one-to-one name="user" class="CmsUser" constrained="true"/>
 	</class>

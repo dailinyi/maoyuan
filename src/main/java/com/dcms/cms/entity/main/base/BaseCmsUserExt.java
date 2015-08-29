@@ -62,8 +62,7 @@ public abstract class BaseCmsUserExt  implements Serializable {
 	private java.lang.String mobile;
 	private java.lang.String userImg;
 	private java.lang.String userSignature;
-    private java.lang.String promotionCode;
-    private java.lang.String promotionQR;
+
 
 	// one to one
 	private com.dcms.cms.entity.main.CmsUser user;
@@ -250,21 +249,6 @@ public abstract class BaseCmsUserExt  implements Serializable {
 		this.userSignature = userSignature;
 	}
 
-    public String getPromotionCode() {
-        return promotionCode;
-    }
-
-    public void setPromotionCode(String promotionCode) {
-        this.promotionCode = promotionCode;
-    }
-
-    public String getPromotionQR() {
-        return promotionQR;
-    }
-
-    public void setPromotionQR(String promotionQR) {
-        this.promotionQR = promotionQR;
-    }
 
     /**
 	 * Return the value associated with the column: user

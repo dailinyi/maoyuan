@@ -1,6 +1,5 @@
 package com.dcms.cms.action.member.ext;
 
-import com.dcms.cms.action.member.CasLoginAct;
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.cms.manager.main.CmsUserMng;
@@ -34,7 +33,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.dcms.cms.Constants.*;
+import static com.dcms.cms.Constants.TPLDIR_BUYER_MEMBER;
+import static com.dcms.cms.Constants.TPLDIR_INDEX;
 import static com.dcms.core.action.front.LoginAct.*;
 import static com.dcms.core.manager.AuthenticationMng.AUTH_KEY;
 
@@ -65,11 +65,13 @@ public class BuyerLoginAct {
 		if (!StringUtils.isBlank(message)) {
 			model.addAttribute(MESSAGE, message);
 		}
+		String returnUrl = RequestUtils.getQueryParam(request, RETURN_URL);
+		model.addAttribute("returnUrl",returnUrl);
 		return FrontUtils.getTplPath(request, sol, TPLDIR_BUYER_MEMBER, LOGIN_INPUT);
 	}
 
 	@RequestMapping(value = "/buyer/login.jspx", method = RequestMethod.POST)
-	public String submit(String username, String password, String captcha, String message,
+	public String submit(String username, String password, String captcha, String message,String returnUrl,
 						 HttpServletRequest request, HttpServletResponse response,
 						 ModelMap model) {
 		Integer errorRemaining = unifiedUserMng.errorRemaining(username);
@@ -94,9 +96,15 @@ public class BuyerLoginAct {
 				removeCookieErrorRemaining(request, response);
 				FrontUtils.frontData(request, model, site);
 				if(user!=null){
+
+					String processUrl = RequestUtils.getQueryParam(request, PROCESS_URL);
+					String view = getView(processUrl, returnUrl.replaceAll("：",":"), auth.getId());
+					if (view != null) {
+						return view;
+					}
 					return FrontUtils.getTplPath(request, site.getSolutionPath(),
 							TPLDIR_INDEX, TPL_INDEX);
-				}else{
+				} else{
 					return "redirect:login.jspx";
 				}
 			} catch (UsernameNotFoundException e) {
@@ -114,7 +122,7 @@ public class BuyerLoginAct {
 		if (!StringUtils.isBlank(message)) {
 			model.addAttribute(MESSAGE, message);
 		}
-		return FrontUtils.getTplPath(request, sol, TPLDIR_MEMBER, LOGIN_INPUT);
+		return FrontUtils.getTplPath(request, sol, TPLDIR_BUYER_MEMBER, LOGIN_INPUT);
 	}
 
 	@RequestMapping(value = "/buyer/logout.jspx")

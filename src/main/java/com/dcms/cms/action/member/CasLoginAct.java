@@ -1,5 +1,6 @@
 package com.dcms.cms.action.member;
 
+import static com.dcms.cms.Constants.TPLDIR_BUYER_MEMBER;
 import static com.dcms.cms.Constants.TPLDIR_INDEX;
 import static com.dcms.cms.Constants.TPLDIR_MEMBER;
 import static com.dcms.core.action.front.LoginAct.MESSAGE;
@@ -69,7 +70,7 @@ public class CasLoginAct {
 		if (!StringUtils.isBlank(message)) {
 			model.addAttribute(MESSAGE, message);
 		}
-		return FrontUtils.getTplPath(request, sol, TPLDIR_MEMBER, LOGIN_INPUT);
+		return FrontUtils.getTplPath(request, sol, TPLDIR_BUYER_MEMBER, LOGIN_INPUT);
 	}
 
 	@RequestMapping(value = "/login.jspx", method = RequestMethod.POST)

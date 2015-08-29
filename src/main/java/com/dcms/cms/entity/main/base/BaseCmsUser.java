@@ -140,6 +140,8 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.Integer scoreCount;
 	private java.lang.String userQR;
 	private java.lang.Byte rate;
+	private java.lang.String promotionCode;
+	private java.lang.String promotionQR;
 
 	// many to one
 	private com.dcms.cms.entity.main.CmsGroup group;
@@ -467,6 +469,21 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.userSites = userSites;
 	}
 
+	public String getPromotionCode() {
+		return promotionCode;
+	}
+
+	public void setPromotionCode(String promotionCode) {
+		this.promotionCode = promotionCode;
+	}
+
+	public String getPromotionQR() {
+		return promotionQR;
+	}
+
+	public void setPromotionQR(String promotionQR) {
+		this.promotionQR = promotionQR;
+	}
 
 	/**
 	 * Return the value associated with the column: roles

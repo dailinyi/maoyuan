@@ -255,6 +255,7 @@
     <bean class="com.dcms.cms.manager.ext.impl.CmsActivityRecordMngImpl" id="cmsActivityRecordMng"/>
     <bean class="com.dcms.cms.manager.ext.impl.CmsScoreRecordMngImpl" id="cmsScoreRecordMng"/>
     <bean class="com.dcms.cms.statistic.GiftPoolMng" id="giftPoolMng"/>
+    <bean class="com.dcms.cms.statistic.QRMng" id="qrMng"/>
 
     <!-- ext DAO -->
     <bean class="com.dcms.cms.dao.ext.impl.CmsOrderDaoImpl" id="cmsOrderDao"/>

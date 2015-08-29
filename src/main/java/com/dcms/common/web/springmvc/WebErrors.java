@@ -1,15 +1,5 @@
 package com.dcms.common.web.springmvc;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.ModelMap;
@@ -17,6 +7,15 @@ import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * WEB错误信息
@@ -236,6 +235,14 @@ public abstract class WebErrors {
 		Matcher m = EMAIL_PATTERN.matcher(email);
 		if (!m.matches()) {
 			addErrorCode("error.email", field);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean ifNotRemmondCode(String remmondCode, String field, int minLength,
+								 int maxLength) {
+		if (ifOutOfLength(remmondCode, field, minLength, maxLength)) {
 			return true;
 		}
 		return false;
