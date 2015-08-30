@@ -7,19 +7,7 @@
     [#include "../include/库.html"/]
     <script src="/${res}/js/jquery.validate.js" type="text/javascript"></script>
 </head>
-<script type="application/javascript">
-    $(function() {
-        $("#tableForm").validate();
-        $("#submitIt").click(function(){
-            $("#tableForm").submit();
-        });
-        [#if success??]
-        [#if success]
-                alert("注册成功!");
-        [/#if]
-        [/#if]
-    });
-</script>
+
 <body>
 <div class="register-bg">用户登录</div>
 
@@ -28,9 +16,7 @@
     <div class="input-box">
         <ul>
 
-                <li><input id="username" name="username" required value="" type="text" placeholder="手机号码"></li>
-                <li>
-                    <label for="username" class="error"></label>
+                <li><input id="username" name="username" required value="" type="text" placeholder="手机号码">
                 </li>
                 <li><input name="password" value="" type="password" placeholder="密码"></li>
                 <li><input name="returnUrl" value="${returnUrl!}" type="hidden"></li>
@@ -42,5 +28,29 @@
     <div class="new-member"><a href="${base}/buyer/register.jspx">新用户注册</a>│<a href="#">忘记密码</a>│<a href="${base}/seller/login.jspx">商家登陆</a></div>
 </div>
 </body>
+<script type="application/javascript">
+    $(function() {
+        $("#tableForm").validate();
+        $("#submitIt").click(function(){
+            $("#tableForm").submit();
+        });
+        [#if success??]
+        [#if success]
+        alert("注册成功!");
+        [/#if]
+        [/#if]
+
+        [#if message??]
+        [#if message=="true"]alert("您必须登录后才能继续刚才的操作");
+        [#else]alert('${message}');
+        [/#if]
+        [/#if]
+        var errorAlert = "";
+        [#if errors??]
+        [#list errors as error]errorAlert = errorAlert + "${error}" [/#list]
+        alert(errorAlert);
+        [/#if]
+    });
+</script>
 
 </html>

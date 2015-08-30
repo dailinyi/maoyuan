@@ -1,24 +1,5 @@
 package com.dcms.core.manager.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.dcms.common.email.EmailSendTool;
 import com.dcms.common.email.EmailSender;
 import com.dcms.common.email.MessageTemplate;
@@ -27,10 +8,26 @@ import com.dcms.common.security.BadCredentialsException;
 import com.dcms.common.security.UsernameNotFoundException;
 import com.dcms.common.security.encoder.PwdEncoder;
 import com.dcms.core.dao.UnifiedUserDao;
-import com.dcms.core.entity.UnifiedUser;
 import com.dcms.core.entity.Config.ConfigLogin;
+import com.dcms.core.entity.UnifiedUser;
 import com.dcms.core.manager.ConfigMng;
 import com.dcms.core.manager.UnifiedUserMng;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -132,15 +129,15 @@ public class UnifiedUserMngImpl implements UnifiedUserMng {
 			throws UsernameNotFoundException, BadCredentialsException {
 		UnifiedUser user = getByUsername(username);
 		if (user == null) {
-			throw new UsernameNotFoundException("username not found: "
+			throw new UsernameNotFoundException("用户名不存在: "
 					+ username);
 		}
 		if (!pwdEncoder.isPasswordValid(user.getPassword(), password)) {
 			updateLoginError(user.getId(), ip);
-			throw new BadCredentialsException("password invalid");
+			throw new BadCredentialsException("密码错误");
 		}
 		if (!user.getActivation()) {
-			throw new BadCredentialsException("account not activated");
+			throw new BadCredentialsException("账户未激活");
 		}
 		updateLoginSuccess(user.getId(), ip);
 		return user;
@@ -256,6 +253,16 @@ public class UnifiedUserMngImpl implements UnifiedUserMng {
 		} else {
 			user.setEmail(null);
 		}
+		if (!StringUtils.isBlank(password)) {
+			user.setPassword(pwdEncoder.encodePassword(password));
+		}
+		return user;
+	}
+
+	@Override
+	public UnifiedUser update(Integer id, String password) {
+		UnifiedUser user = findById(id);
+
 		if (!StringUtils.isBlank(password)) {
 			user.setPassword(pwdEncoder.encodePassword(password));
 		}

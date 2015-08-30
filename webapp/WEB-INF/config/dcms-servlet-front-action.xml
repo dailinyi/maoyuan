@@ -43,4 +43,5 @@
     <bean id="sellerRegisterAct" class="com.dcms.cms.action.member.ext.SellerRegisterAct"/>
     <bean id="sellerLoginAct" class="com.dcms.cms.action.member.ext.SellerLoginAct"/>
     <bean id="raffleAct" class="com.dcms.cms.action.member.ext.RaffleAct"/>
+    <bean id="buyerMemberAct" class="com.dcms.cms.action.member.ext.BuyerMemberAct"/>
 </beans>

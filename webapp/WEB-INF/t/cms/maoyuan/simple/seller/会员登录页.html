@@ -11,7 +11,22 @@
         $("#submitIt").click(function(){
             $("#tableForm").submit();
         });
+        [#if success??]
+        [#if success]
+        alert("注册成功!");
+        [/#if]
+        [/#if]
 
+        [#if message??]
+        [#if message=="true"]alert("您必须登录后才能继续刚才的操作");
+        [#else]alert('${message}');
+        [/#if]
+        [/#if]
+        var errorAlert = "";
+        [#if errors??]
+        [#list errors as error]errorAlert = errorAlert + "${error}" [/#list]
+        alert(errorAlert);
+        [/#if]
     });
 </script>
 <body>

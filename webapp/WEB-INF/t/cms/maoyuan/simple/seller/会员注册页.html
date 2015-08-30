@@ -1,11 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>注册新帐号 - ${site.name}</title>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
 </head>
+<script type="application/javascript">
+    function submitForm(){
+        $('#tableForm').submit();
+    }
+</script>
 <body>
-    卖家用户注册页
+<div class="register-bg">商家注册</div>
+<div class="main-box">
+    <form id="tableForm" action="${base}/seller/register.jspx" method="post">
+        <div class="input-box">
+            <ul>
+                <li>
+                    <input name="username"  id="username"  type="text" placeholder="手机号码(手机号码将作为您的登陆名)" />
+                </li>
+                <li>
+                    <input id="password" name="password" type="password" placeholder="密码">
+                </li>
+                <li><input type="password" placeholder="确认密码" equalto="#password" ></li>
+                <li><input name="realname" type="text" placeholder="联系人"></li>
+                <li><input name="comefrom" type="text" placeholder="商家名称"></li>
+                <li><input name="intro" type="text" placeholder="详细地址"></li>
+
+            </ul>
+        </div>
+        <div class="mT20"><a class="btn-submit" href="###" onclick="submitForm()">注册</a></div>
+    </form>
+</div>
 </body>
 </html>

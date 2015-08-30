@@ -71,6 +71,8 @@ public interface UnifiedUserMng {
 	 */
 	public UnifiedUser update(Integer id, String password, String email);
 
+	UnifiedUser update(Integer id, String password);
+
 	/**
 	 * 密码是否正确
 	 * 

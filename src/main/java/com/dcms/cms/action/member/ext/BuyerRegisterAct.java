@@ -124,7 +124,6 @@ public class BuyerRegisterAct {
         //生成二维码
             String template = cmsDictionaryMng.findValue("buyer", "URL模板").getValue();
             String userQrUrl = qrMng.stringToQR(request.getContextPath() + site.getUploadPath(),template.replace("#{buyerId}", cmsUser.getId().toString()));
-        System.out.println(userQrUrl);
             cmsUserMng.updateQr(cmsUser.getId(),userQrUrl,null,null);
             log.info("member register success. username={}", username);
             FrontUtils.frontData(request, model, site);

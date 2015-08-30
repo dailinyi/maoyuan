@@ -99,6 +99,17 @@ public class CmsUserMngImpl implements CmsUserMng {
 		return user;
 	}
 
+	@Override
+	public CmsUser updateEmail(Integer userId, String email){
+		CmsUser user = findById(userId);
+		if (StringUtils.isNotBlank(email)){
+			user.setEmail(email);
+		}
+
+
+		return user;
+	}
+
 	public CmsUser registerMember(String username, String email,
 								  String password, String ip, Integer groupId, CmsUserExt userExt){
 		UnifiedUser unifiedUser = unifiedUserMng.save(username, email,
@@ -186,6 +197,12 @@ public class CmsUserMngImpl implements CmsUserMng {
 			user.setEmail(null);
 		}
 		unifiedUserMng.update(id, password, email);
+	}
+
+	public void updatePwd(Integer id, String password) {
+		CmsUser user = findById(id);
+
+		unifiedUserMng.update(id, password);
 	}
 
 	public CmsUser saveAdmin(String username, String email, String password,

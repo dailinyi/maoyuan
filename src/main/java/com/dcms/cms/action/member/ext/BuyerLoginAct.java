@@ -47,6 +47,7 @@ public class BuyerLoginAct {
 	public static final String TPL_INDEX = "tpl.index";
 	public static final String LOGIN_INPUT = "tpl.loginInput";
 
+
 	@RequestMapping(value = "/buyer/login.jspx", method = RequestMethod.GET)
 	public String input(HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
@@ -59,6 +60,7 @@ public class BuyerLoginAct {
 			// 存在认证信息，且未过期
 			if (auth != null) {
 				return "redirect:/";
+
 			}
 		}
 		FrontUtils.frontData(request, model, site);
@@ -74,8 +76,10 @@ public class BuyerLoginAct {
 	public String submit(String username, String password, String captcha, String message,String returnUrl,
 						 HttpServletRequest request, HttpServletResponse response,
 						 ModelMap model) {
+
 		Integer errorRemaining = unifiedUserMng.errorRemaining(username);
 		CmsSite site = CmsUtils.getSite(request);
+
 		String sol = site.getSolutionPath();
 		WebErrors errors = validateSubmit(username, password, captcha,
 				errorRemaining, request, response);
@@ -91,7 +95,7 @@ public class BuyerLoginAct {
 					// 如果已经禁用，则推出登录。
 					authMng.deleteById(auth.getId());
 					session.logout(request, response);
-					throw new DisabledException("user disabled");
+					throw new DisabledException("用户已被禁用");
 				}
 				removeCookieErrorRemaining(request, response);
 				FrontUtils.frontData(request, model, site);
@@ -102,8 +106,8 @@ public class BuyerLoginAct {
 					if (view != null) {
 						return view;
 					}
-					return FrontUtils.getTplPath(request, site.getSolutionPath(),
-							TPLDIR_INDEX, TPL_INDEX);
+
+					return "redirect:index.jspx";
 				} else{
 					return "redirect:login.jspx";
 				}
@@ -153,24 +157,24 @@ public class BuyerLoginAct {
 		if (errors.ifOutOfLength(password, "password", 1, 32)) {
 			return errors;
 		}
-		// 如果输入了验证码，那么必须验证；如果没有输入验证码，则根据当前用户判断是否需要验证码。
-		if (!StringUtils.isBlank(captcha)
-				|| (errorRemaining != null && errorRemaining < 0)) {
-			if (errors.ifBlank(captcha, "captcha", 100)) {
-				return errors;
-			}
-			try {
-				if (!imageCaptchaService.validateResponseForID(session
-						.getSessionId(request, response), captcha)) {
-					errors.addErrorCode("error.invalidCaptcha");
-					return errors;
-				}
-			} catch (CaptchaServiceException e) {
-				errors.addErrorCode("error.exceptionCaptcha");
-				log.warn("", e);
-				return errors;
-			}
-		}
+//		// 如果输入了验证码，那么必须验证；如果没有输入验证码，则根据当前用户判断是否需要验证码。
+//		if (!StringUtils.isBlank(captcha)
+//				|| (errorRemaining != null && errorRemaining < 0)) {
+//			if (errors.ifBlank(captcha, "captcha", 100)) {
+//				return errors;
+//			}
+//			try {
+//				if (!imageCaptchaService.validateResponseForID(session
+//						.getSessionId(request, response), captcha)) {
+//					errors.addErrorCode("error.invalidCaptcha");
+//					return errors;
+//				}
+//			} catch (CaptchaServiceException e) {
+//				errors.addErrorCode("error.exceptionCaptcha");
+//				log.warn("", e);
+//				return errors;
+//			}
+//		}
 		return errors;
 	}
 

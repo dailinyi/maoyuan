@@ -29,17 +29,17 @@ $(function() {
 <@p.td width="50" colspan="1" label="cmsUser.loginCount">${cmsMember.loginCount}</@p.td><@p.tr/>
 <@p.td width="50" colspan="1" label="cmsUser.register">${cmsMember.registerTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsMember.registerIp}</@p.td>
 <@p.td width="50" colspan="1" label="cmsUser.lastLogin">${cmsMember.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsMember.lastLoginIp}</@p.td><@p.tr/>
-<@p.td width="50" colspan="1" label="cmsUser.score">${cmsMember.scoreCount!}</@p.td>
+<@p.td width="50" colspan="1" label="cmsUser.score">${cmsMember.scoreCount!0}</@p.td>
 <@p.text width="50" colspan="1" label="cmsUser.rate" name="rate" help="%" value=cmsMember.rate maxlength="2" size="3"/><@p.tr/>
-<@p.text width="50" colspan="1" label="cmsUser.realname" name="realname" value=cmsMember.realname maxlength="100"/>
+<@p.text width="50" colspan="1" label="联系人" name="realname" value=cmsMember.realname maxlength="100"/>
 <@p.radio width="50" colspan="1" label="cmsUser.gender" name="gender" value=cmsMember.gender list={"true":"cmsUser.male","false":"cmsUser.female","":"cmsUser.secrecy"}/><@p.tr/>
 <@p.text width="50" colspan="1" label="cmsUser.birthday" name="birthday" value=(cmsMember.birthday?string('yyyy-MM-dd'))! onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
-<@p.text width="50" colspan="1" label="cmsUser.comefrom" name="comefrom" value=cmsMember.comefrom maxlength="150"/><@p.tr/>
+<@p.text width="50" colspan="1" label="商家名称" name="comefrom" value=cmsMember.comefrom maxlength="150"/><@p.tr/>
 <@p.text width="50" colspan="1" label="cmsUser.qq" name="qq" value=cmsMember.qq maxlength="100"/>
 <@p.text width="50" colspan="1" label="cmsUser.msn" name="msn" value=cmsMember.msn maxlength="100"/><@p.tr/>
 <@p.text width="50" colspan="1" label="cmsUser.phone" name="phone" value=cmsMember.phone maxlength="50"/>
 <@p.text width="50" colspan="1" label="cmsUser.mobile" name="mobile" value=cmsMember.mobile maxlength="50"/><@p.tr/>
-<@p.textarea colspan="2" label="cmsUser.intro" name="intro" value=cmsMember.intro maxlength="255" cols="70" rows="5"/><@p.tr/>
+<@p.textarea colspan="2" label="商铺地址" name="intro" value=cmsMember.intro maxlength="255" cols="70" rows="5"/><@p.tr/>
 <@p.td colspan="2">
 	<@p.hidden name="id" value=cmsMember.id/>
 	<@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/>

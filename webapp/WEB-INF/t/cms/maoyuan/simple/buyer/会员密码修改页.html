@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+    <script src="/${res}/js/jquery.validate.js" type="text/javascript"></script>
+</head>
+<script type="application/javascript">
+    $(function() {
+        $("#tableForm").validate();
+        [#if success??]
+        [#if success]
+        alert("修改成功!");
+        [/#if]
+        [/#if]
+    })
+    function submitForm(){
+        $('#tableForm').submit();
+    }
+</script>
+<body>
+<div class="register-bg my-bg">
+    <div>修改密码</div>
+    <div class="player-head">
+        <div><img id="imgPre" src="/${res}/img/tx.jpg" width="120" height="120"></div>
+    </div>
+</div>
+<div class="head-height"></div>
+<div class="card-num">会员卡号：${user.username}</div>
+<div class="main-box">
+    <form action="${base}/buyer/pwd.jspx" id="tableForm" method="post">
+    <div class="player-info">
+        <ul>
+            <li>
+                <p class="fL">旧密码</p>
+                <p class="fR">
+                    <input id="passwd" type="password" required name="origPwd" value="" placeholder="请输入">
+                    <label for="passwd"></label>
+                </p>
+            </li>
+            <li>
+                <p class="fL">新密码</p>
+                <p class="fR">
+                    <input id="newPwd" type="password" required name="newPwd" placeholder="请输入" value="">
+                </p>
+            </li>
+            <li>
+                <p class="fL">确认新密码</p>
+                <p class="fR">
+                    <input id="newPwdCon" type="password" required placeholder="请输入" value="" equalTo="#newPwd">
+                    <label for="newPwdCon"></label>
+                </p>
+            </li>
+        </ul>
+
+    </div>
+    <div class="mT20"><a class="btn-submit" href="###" onclick="submitForm()">保存</a></div>
+    </form>
+</div>
+</body>
+</html>

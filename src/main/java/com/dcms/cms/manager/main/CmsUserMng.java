@@ -31,6 +31,8 @@ public interface CmsUserMng {
 
 	CmsUser updateQr(Integer userId, String userQR, String shopQR, String shopCode);
 
+	CmsUser updateEmail(Integer userId, String email);
+
 	public CmsUser registerMember(String username, String email,
 			String password, String ip, Integer groupId, CmsUserExt userExt);
 	
@@ -84,4 +86,7 @@ public interface CmsUserMng {
 	public boolean usernameNotExistInMember(String username);
 
 	public boolean emailNotExist(String email);
+
+	void updatePwd(Integer id, String newPwd);
+
 }
