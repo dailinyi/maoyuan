@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
     <title></title>
     [#include "../include/库.html"/]
-    [#include "image_upload.html"/]
 </head>
 <script type="application/javascript">
     $(function() {
@@ -19,24 +18,16 @@
     function submitForm(){
         $('#tableForm').submit();
     }
-    function uploadMemberImg(value){
-        $('#uploadFileText1').val(this.value);
-        upload(1);
 
-    }
 
 </script>
 <body>
-<form id="tableForm" action="profile.jspx"  method="post">
+<form id="tableForm" action="profile.jspx" enctype="multipart/form-data" method="post">
 <div class="register-bg my-bg">
     <div>个人中心</div>
     <div class="player-head">
-        <input type='hidden' id='uploadFileText1' size="14"/>
-        <div><a href="#" ><input type="file" id="uploadFile1" name="file_upload_photo" style="position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0);" onchange="uploadMemberImg(this.value)"/>
-        <img id="preImg1" width="120" src="${user.userImg!'/${res}/img/tx.jpg'}"></a></div>
-        <input id="uploadImgPath1" name="userImg" style="width:220px" value="${user.userImg!}" type="hidden"/>
+        <div><a href="#" id="lk_upload_photo"><input type="file" id="file_upload_photo" name="file_upload_photo" style="position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0);" onchange="preImg(this.id,'imgPre');"/><img id="imgPre" src="/${res}/img/tx.jpg" width="120" height="120"></a></div>
         <div class="photo-icon"></div>
-
     </div>
 </div>
 <div class="head-height"></div>
@@ -97,6 +88,46 @@
 </div>
 </form>
 
+<script type="text/javascript">
+    function preImg(sourceId, targetId) {
+        if (typeof FileReader === 'undefined') {
+            alert('Your browser does not support FileReader...');
+            return;
+        }
+        var reader = new FileReader();
 
+        reader.onload = function (e) {
+            var oWidth = 0;
+            var oHeigth = 0;
+            var nWidth = 0;
+            var nHeigth = 0;
+            var ml = 0;
+            var mt = 0;
+            var img = document.getElementById(targetId);
+            img.src = this.result;
+            oWidth = img.naturalWidth;
+            oHeigth = img.naturalHeight;
+            if (oWidth >= oHeigth) {
+                nHeigth = 120;
+                nWidth = oWidth * nHeigth / oHeigth;
+                ml = (nWidth - 120) / 2;
+
+            }
+            else {
+                nWidth = 120;
+                nHeigth = oHeigth * nWidth / oWidth;
+                mt = (nHeigth - 120) / 2;
+            }
+            img.removeAttribute("width");
+            img.removeAttribute("height");
+            img.style.width = nWidth + "px";
+            img.style.height = nHeigth + "px";
+            img.style.marginLeft = -ml + "px";
+            img.style.marginTop = -mt + "px";
+        }
+        reader.readAsDataURL(document.getElementById(sourceId).files[0]);
+
+    }
+</script>
 </body>
 </html>

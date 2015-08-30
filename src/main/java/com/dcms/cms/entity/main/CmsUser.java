@@ -1,16 +1,13 @@
 package com.dcms.cms.entity.main;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.dcms.cms.entity.assist.CmsJobApply;
 import com.dcms.cms.entity.main.base.BaseCmsUser;
+import com.dcms.cms.statistic.ScoreUtils;
 import com.dcms.common.hibernate3.PriorityInterface;
 import com.dcms.common.util.DateUtils;
 import com.dcms.core.entity.UnifiedUser;
+
+import java.util.*;
 
 public class CmsUser extends BaseCmsUser implements PriorityInterface {
 	private static final long serialVersionUID = 1L;
@@ -31,6 +28,10 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 		} else {
 			return null;
 		}
+	}
+
+	public String getScoreCountShow(){
+		return ScoreUtils.intToStr(getScoreCount());
 	}
 
 	public Boolean getGender() {

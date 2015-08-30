@@ -29,7 +29,7 @@ $(function() {
 <@p.td width="50" colspan="1" label="cmsUser.loginCount">${cmsMember.loginCount}</@p.td><@p.tr/>
 <@p.td width="50" colspan="1" label="cmsUser.register">${cmsMember.registerTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsMember.registerIp}</@p.td>
 <@p.td width="50" colspan="1" label="cmsUser.lastLogin">${cmsMember.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsMember.lastLoginIp}</@p.td><@p.tr/>
-<@p.td width="50" colspan="1" label="cmsUser.score">${cmsMember.scoreCount!}</@p.td>
+<@p.td width="50" colspan="1" label="cmsUser.score">${(cmsMember.scoreCountShow)!0}</@p.td>
 <@p.td width="50" colspan="1" label="cmsUser.recommend.user">${(cmsMember.recommendUser.username)!'-'}</@p.td><@p.tr/>
 <@p.text width="50" colspan="1" label="cmsUser.realname" name="realname" value=cmsMember.realname maxlength="100"/>
 <@p.radio width="50" colspan="1" label="cmsUser.gender" name="gender" value=cmsMember.gender list={"true":"cmsUser.male","false":"cmsUser.female","":"cmsUser.secrecy"}/><@p.tr/>

@@ -4,6 +4,7 @@ import com.dcms.cms.entity.main.*;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.statistic.QRMng;
+import com.dcms.cms.statistic.ShopCodeMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
 import com.dcms.cms.web.WebErrors;
@@ -55,20 +56,17 @@ public class SellerRegisterAct {
 
 
     @RequestMapping(value = "/seller/register.jspx", method = RequestMethod.POST)
-    public String submit(String username, String email, String password, String recommendCode,
+    public String submit(String username, String email, String password,
                          CmsUserExt userExt, String captcha, String nextUrl,
                          HttpServletRequest request, HttpServletResponse response,
                          ModelMap model) throws IOException {
         CmsSite site = CmsUtils.getSite(request);
         CmsConfig config=site.getConfig();
-        WebErrors errors = validateSubmit(username, email, password, captcha,recommendCode,
+        WebErrors errors = validateSubmit(username, email, password, captcha,
                 site, request, response);
 
-        CmsUser recommendUser = cmsUserMng.getUserByRecommendCode(recommendCode);
 
-        if (recommendUser == null ){
-            errors.addErrorCode("error.invalidRecommend");
-        }
+
         userExt.setMobile(username);
         if (errors.hasErrors()) {
             return FrontUtils.showError(request, response, model, errors);
@@ -76,16 +74,17 @@ public class SellerRegisterAct {
 
         String ip = RequestUtils.getIpAddr(request);
         Integer sellerGroupId = Integer.valueOf(cmsDictionaryMng.findValue("seller", "用户组ID").getValue());
-        CmsUser cmsUser = cmsUserMng.registerMember(username, email, password, ip, sellerGroupId, userExt, recommendUser);
+        CmsUser cmsUser = cmsUserMng.registerMember(username, email, password, ip, sellerGroupId, userExt, null);
 
         //生成二维码
-        String template = cmsDictionaryMng.findValue("buyer", "URL模板").getValue();
+        String template = cmsDictionaryMng.findValue("seller", "URL模板").getValue();
         String userQrUrl = qrMng.stringToQR(request.getContextPath() + site.getUploadPath(),template.replace("#{buyerId}", cmsUser.getId().toString()));
 
         //生成推广链接
-        String promotionUrl = cmsDictionaryMng.findValue("seller", "URL模板").getValue().replace("#{sellerId}", cmsUser.getId().toString());
+        String shopCode = shopCodeMng.getNewCode();
+        String promotionUrl = cmsDictionaryMng.findValue("seller", "推广链接").getValue().replace("#{shopCode}", shopCode);
         String promotionQrUrl = qrMng.stringToQR(request.getContextPath() + site.getUploadPath(),promotionUrl);
-        cmsUserMng.updateQr(cmsUser.getId(),userQrUrl,promotionQrUrl,promotionQrUrl);
+        cmsUserMng.updateQr(cmsUser.getId(),userQrUrl,promotionQrUrl,shopCode);
         log.info("member register success. username={}", username);
         FrontUtils.frontData(request, model, site);
         FrontUtils.frontPageData(request, model);
@@ -95,15 +94,11 @@ public class SellerRegisterAct {
     }
 
     private WebErrors validateSubmit(String username, String email,
-                                     String password, String captcha,String remmondCode, CmsSite site,
+                                     String password, String captcha, CmsSite site,
                                      HttpServletRequest request, HttpServletResponse response) {
         MemberConfig mcfg = site.getConfig().getMemberConfig();
         WebErrors errors = WebErrors.create(request);
 
-
-        if (errors.ifNotRemmondCode(remmondCode, "remmondCode", 0, 100)){
-            return errors;
-        }
 
         if (errors.ifOutOfLength(username, "username",
                 mcfg.getUsernameMinLen(), 100)) {
@@ -143,4 +138,6 @@ public class SellerRegisterAct {
     private CmsDictionaryMng cmsDictionaryMng;
     @Autowired
     protected FileRepository fileRepository;
+    @Autowired
+    private ShopCodeMng shopCodeMng;
 }

@@ -32,12 +32,12 @@ $(function() {
 });
 function chargeSubmit() {
 	$("input[name=userName]").val($("#userName").val());
-	$("input[name=chargeScoreCount]").val($("#chargeScoreCount").val());
+	$("input[name=chargeScoreCount]").val($("#chargeScoreCount").val()* 100) ;
 	$("input[name=userId]").val($("#userId").val());
 	var userName = $("input[name=userName]").val();
 	var userId = $("input[name=userId]").val();
 	var chargeScoreCount = $("input[name=chargeScoreCount]").val();
-	var r=confirm("请确认是否为:" + userName + "[id:"+userId+"]充值" + chargeScoreCount + "积分?")
+	var r=confirm("请确认是否为:" + userName + "[id:"+userId+"]充值" + chargeScoreCount/100 + "积分?")
 	if (r==false)
 	{
 		return;
@@ -76,7 +76,7 @@ function chargeSubmit() {
 	<@p.column title="ID">${cmsUser.id}</@p.column><#t/>
 	<@p.column code="cmsUser.username">${cmsUser.username}</@p.column><#t/>
 	<@p.column code="cmsUser.email">${cmsUser.email!}</@p.column><#t/>
-	<@p.column code="cmsUser.score" align="center">${cmsUser.scoreCount!0}</@p.column><#t/>
+	<@p.column code="cmsUser.score" align="center">${(cmsUser.scoreCountShow)!0}</@p.column><#t/>
 	<@p.column code="cmsUser.lastLogin" align="center">${cmsUser.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}<br/>${cmsUser.lastLoginIp}</@p.column><#t/>
 	<@p.column code="global.operate" align="center">
 		<a href="###" onclick="optReject('${cmsUser.id}','${cmsUser.username}');" class="pn-opt">充值积分</a>

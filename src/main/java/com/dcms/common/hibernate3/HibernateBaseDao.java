@@ -5,6 +5,7 @@ import static org.hibernate.EntityMode.POJO;
 import java.io.Serializable;
 import java.util.List;
 
+import com.dcms.common.page.Pagination;
 import org.hibernate.Criteria;
 import org.hibernate.LockMode;
 import org.hibernate.criterion.Criterion;
@@ -164,4 +165,5 @@ public abstract class HibernateBaseDao<T, ID extends Serializable> extends
 	 * @return
 	 */
 	abstract protected Class<T> getEntityClass();
+
 }

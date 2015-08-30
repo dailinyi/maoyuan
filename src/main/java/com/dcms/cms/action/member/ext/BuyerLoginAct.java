@@ -1,7 +1,10 @@
 package com.dcms.cms.action.member.ext;
 
+import com.dcms.cms.action.directive.CmsAdvertisingDirective;
+import com.dcms.cms.entity.assist.CmsDictionary;
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
+import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
@@ -91,11 +94,12 @@ public class BuyerLoginAct {
 				// 是否需要在这里加上登录次数的更新？按正常的方式，应该在process里面处理的，不过这里处理也没大问题。
 				cmsUserMng.updateLoginInfo(auth.getUid(), ip);
 				CmsUser user = cmsUserMng.findById(auth.getUid());
-				if (user.getDisabled()) {
+				Integer buyerGroupId = Integer.valueOf(cmsDictionaryMng.findValue("buyer", "用户组ID").getValue());
+				if (user.getDisabled() || !user.getGroup().getId().equals(buyerGroupId)) {
 					// 如果已经禁用，则推出登录。
 					authMng.deleteById(auth.getId());
 					session.logout(request, response);
-					throw new DisabledException("用户已被禁用");
+					throw new DisabledException("用户不存在或被禁用");
 				}
 				removeCookieErrorRemaining(request, response);
 				FrontUtils.frontData(request, model, site);
@@ -258,4 +262,6 @@ public class BuyerLoginAct {
 	private ImageCaptchaService imageCaptchaService;
 	@Autowired
 	private SessionProvider session;
+	@Autowired
+	private CmsDictionaryMng cmsDictionaryMng;
 }

@@ -2,6 +2,7 @@ package com.dcms.cms.entity.ext;
 
 import com.dcms.cms.entity.ext.base.BaseCmsScoreRecord;
 import com.dcms.cms.entity.main.CmsUser;
+import com.dcms.cms.statistic.ScoreUtils;
 
 import java.util.Date;
 
@@ -58,6 +59,12 @@ public class CmsScoreRecord extends BaseCmsScoreRecord {
         }
 
     }
+
+    public String getScoreNoShow(){
+
+        return ScoreUtils.intToStr(getScoreNum());
+    }
+
     public CmsScoreRecord(Byte recordType, Date recordTime, Integer scoreNum, CmsOrder order, CmsUser receiveUser, CmsUser sendUser) {
         super(recordType, recordTime, scoreNum, order, receiveUser, sendUser);
     }

@@ -48,7 +48,7 @@ function optDelete() {
 	<@p.column title="ID">${cmsUser.id}</@p.column><#t/>
 	<@p.column code="cmsUser.username">${cmsUser.username}</@p.column><#t/>
 	<@p.column code="cmsUser.email">${cmsUser.email!}</@p.column><#t/>
-	<@p.column code="cmsUser.score" align="center">${cmsUser.scoreCount!0}</@p.column><#t/>
+	<@p.column code="cmsUser.score" align="center">${(cmsUser.scoreCountShow)!0}</@p.column><#t/>
 	<@p.column code="cmsUser.recommend.user" align="center">${(cmsUser.recommendUser.username)!'-'}</@p.column><#t/>
 	<@p.column code="cmsUser.lastLogin" align="center">${cmsUser.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}<br/>${cmsUser.lastLoginIp}</@p.column><#t/>
 	<@p.column code="cmsUser.loginCountForList" align="right">${cmsUser.loginCount}</@p.column><#t/>

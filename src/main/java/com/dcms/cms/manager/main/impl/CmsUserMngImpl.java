@@ -65,7 +65,9 @@ public class CmsUserMngImpl implements CmsUserMng {
 				password, ip);
 		CmsUser user = new CmsUser();
 		user.forMember(unifiedUser);
-		user.setRecommendUser(recommendUser);
+		if (recommendUser != null){
+			user.setRecommendUser(recommendUser);
+		}
 		CmsGroup group = null;
 		if (groupId != null) {
 			group = cmsGroupMng.findById(groupId);
@@ -330,10 +332,14 @@ public class CmsUserMngImpl implements CmsUserMng {
 		CmsUser entity = findById(id);
 
 		if (score != null) {
-			entity.setScoreCount(entity.getScoreCount() + score);
+			Integer scoreCount = entity.getScoreCount();
+			if (scoreCount == null){
+				scoreCount = 0;
+			}
+			entity.setScoreCount(scoreCount + score);
 		}
 
-		cmsUserExtMng.update(entity.getUserExt(), entity);
+
 
 		return entity;
 	}

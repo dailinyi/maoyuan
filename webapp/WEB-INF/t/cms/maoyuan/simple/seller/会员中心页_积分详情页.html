@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+</head>
+
+<body class="body-bg">
+<div class="register-bg my-bg">
+    <div>积分查询和购买</div>
+</div>
+<div class="main-box">
+    <div class="point-state">
+        <div>${user.scoreCountShow!0}分</div>
+        <div class="mT10 clear">
+            <!--<div class="fL"><a class="btn-2" href="#">购买积分</a></div>-->
+            <div class="fL "><a class="btn-2" href="#" onclick="maskShow()">花积分</a></div>
+        </div>
+    </div>
+    <div class="order-list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="70%"><strong>积分明细</strong></td>
+                <td width="30%" align="right">
+                    <!--<a href="#">[ 导出积分 ]</a>-->
+                </td>
+            </tr>
+
+
+            [#list pagination.list as c]
+            <tr>
+                <td>
+                    <p>
+                        [#if c.recordType?? ]
+                            [#if c.recordType == 1] 充值
+                            [#elseif c.recordType == 2]购买商品返积分
+                            [#elseif c.recordType == 3]购买商品返推荐人积分
+                            [#elseif c.recordType == 4]退回商品退还积分
+                            [#elseif c.recordType == 5]退回商品退回推荐人积分
+                            [#elseif c.recordType == 6]砸蛋活动抽奖消耗
+                            [#elseif c.recordType == 7]砸蛋活动抽奖奖励
+                            [#else]常规
+                            [/#if]
+                        [/#if]
+                    </p>
+                    <p class="time">${c.recordTime?string('yyyy-MM-dd HH:mm:ss')}</p></td>
+                <td align="right"><p class="point">
+                    [#if (c.sendUser.id)?? && user.id = c.sendUser.id] ${-((c.scoreNoShow)!0)?number}
+                    [#else] ${((c.scoreNoShow)!0)?number}
+                    [/#if]
+                </p></td>
+            </tr>
+            [/#list]
+            共 ${pagination.totalCount} 条&nbsp;
+            每页 ${pagination.pageSize} 条&nbsp;
+            <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+            <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+            <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
+            <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
+            当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" style="width:50px" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}"/>页
+            <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if]/>
+            <form action="scoreList.jspx" method="get" id="tableForm">
+                <input type="hidden" name="pageNo" value="${pagination.pageNo!}"/>
+            </form>
+        </table>
+        <script type="text/javascript">
+            function _gotoPage(pageNo) {
+                try{
+                    var tableForm = document.getElementById("tableForm");
+                    $("input[name=pageNo]").val(pageNo);
+                    tableForm.action="scoreList.jspx";
+                    tableForm.onsubmit=null;
+                    tableForm.submit();
+                } catch(e) {
+                    alert('_gotoPage(pageNo)方法出错');
+                }
+            }
+            var h = parseFloat($(document).height());
+            $("#div_mask").css("height", h + "px");
+            $("#div_mask").hide();
+            function maskShow(){
+                $("#div_mask").show();
+            }
+            function maskHide(){
+                $("#div_mask").hide();
+            }
+        </script>
+    </div>
+
+</div>
+<div  class="black-mask" ></div>
+<div class="tan tan1" id="div_mask" style="display: none;">
+    <ul>
+        <li><a href="${base}/raffle/egg.jspx">砸金蛋</a></li>
+        <li><a href="###">发布广告</a></li>
+        <li><a href="###" onclick="maskHide()">[ 关闭 ]</a></li>
+    </ul>
+</div>
+</body>
+</html>

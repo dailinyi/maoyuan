@@ -11,4 +11,5 @@ public interface CmsScoreRecordMng {
 
     Pagination getPage(String queryOrderId, Integer queryRecordType, String querySendUserName, String queryReceiveUserName, int cpn, int pageSize);
 
+    Pagination getPageByUser(String queryOrderId, Integer id, int cpn, int pageSize);
 }

@@ -10,12 +10,13 @@
 <body class="body-bg">
 <div class="register-bg my-bg">
     <div>我的二维码名片</div>
-    <div class="player-head">
-        <div><img id="imgPre" src="${user.userImg!'/${res}/img/tx.jpg'}" width="120" height="120"></div>
+    <div class="business-name">
+        <p>商家名称：${user.comefrom!}</p>
+        <p>商家卡号：${user.username}</p>
     </div>
 </div>
 <div class="head-height"></div>
 <div class="card-num">会员卡号：${user.username!}</div>
-<div class="qr-code textC mT20"><img src="${user.userQR!}" width="500" height="500" /></div>
+<div class="qr-code textC mT20"><img src="${user.promotionQR!}" width="500" height="500" /></div>
 </body>
 </html>

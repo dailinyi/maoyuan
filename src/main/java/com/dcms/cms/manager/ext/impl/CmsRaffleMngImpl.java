@@ -12,6 +12,7 @@ import com.dcms.cms.manager.ext.CmsScoreRecordMng;
 import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.manager.main.ContentMng;
 import com.dcms.cms.statistic.GiftPoolMng;
+import com.dcms.cms.statistic.ScoreUtils;
 import com.dcms.common.page.Pagination;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -59,9 +60,12 @@ public class CmsRaffleMngImpl implements CmsRaffleMng{
 
             String scoreCount = gift.getAttr().get("scoreCount");
             if (StringUtils.isNotBlank(scoreCount) && !Integer.valueOf(scoreCount).equals(0)){
-                CmsScoreRecord win  = new CmsScoreRecord(CmsScoreRecord.ScoreTypeEnum.EGG_RAFFLE_REWARDS.getValue().byteValue(),Integer.valueOf(scoreCount),userMng.findById(1),user);
+                CmsScoreRecord win  = new CmsScoreRecord(CmsScoreRecord.ScoreTypeEnum.EGG_RAFFLE_REWARDS.getValue().byteValue(), ScoreUtils.strToInt(scoreCount),userMng.findById(1),user);
                 scoreRecordMng.save(win);
-                user.setScoreCount(user.getScoreCount() + Integer.valueOf(scoreCount));
+                if (user.getScoreCount() == null){
+                    user.setScoreCount(0);
+                }
+                user.setScoreCount(user.getScoreCount() + ScoreUtils.strToInt(scoreCount));
                 userMng.updateUser(user);
                 cmsActivityRecord.setIsOffer(true);
             }

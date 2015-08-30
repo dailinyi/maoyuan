@@ -2,7 +2,6 @@ package com.dcms.cms.action.member.ext;
 
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
-import com.dcms.cms.entity.main.CmsUserExt;
 import com.dcms.cms.entity.main.MemberConfig;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsUserExtMng;
@@ -25,17 +24,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.dcms.cms.Constants.TPLDIR_BUYER_MEMBER;
+import static com.dcms.cms.Constants.TPLDIR_SELLER_MEMBER;
 
 /**
  * Created by Daily on 2015/8/30.
  */
 @Controller
-public class BuyerMemberAct {
-    Logger log = LoggerFactory.getLogger(BuyerMemberAct.class);
+public class SellerMemberAct {
+    private static final Logger log = LoggerFactory.getLogger(SellerMemberAct.class);
     public static final String MEMBER_CENTER = "tpl.memberCenter";
-    public static final String MEMBER_QR = "tpl.memberQr";
+    public static final String PROMOTION_QR = "tpl.memberPromotionQr";
     public static final String MEMBER_INFO = "tpl.memberInfo";
+    public static final String MEMBER_AUTH = "tpl.memberAuth";
     public static final String MEMBER_PASSWORD = "tpl.memberPassword";
     /**
      * 会员中心页
@@ -47,7 +47,7 @@ public class BuyerMemberAct {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/buyer/index.jspx", method = RequestMethod.GET)
+    @RequestMapping(value = "/seller/index.jspx", method = RequestMethod.GET)
      public String index(HttpServletRequest request,
                          HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
@@ -62,10 +62,10 @@ public class BuyerMemberAct {
             return FrontUtils.showLogin(request, model, site);
         }
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_BUYER_MEMBER, MEMBER_CENTER);
+                TPLDIR_SELLER_MEMBER, MEMBER_CENTER);
     }
 
-    @RequestMapping(value = "/buyer/qr.jspx", method = RequestMethod.GET)
+    @RequestMapping(value = "/seller/promotion.jspx", method = RequestMethod.GET)
     public String qrList(HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
@@ -80,16 +80,18 @@ public class BuyerMemberAct {
             return FrontUtils.showLogin(request, model, site);
         }
 
-        if (StringUtils.isEmpty(user.getUserQR())){
-            String template = cmsDictionaryMng.findValue("buyer", "URL模板").getValue();
-            String userQrUrl = qrMng.stringToQR(request.getContextPath() + site.getUploadPath(),template.replace("#{buyerId}", user.getId().toString()));
-            cmsUserMng.updateQr(user.getId(),userQrUrl,null,null);
+        if (StringUtils.isBlank(user.getPromotionQR())){
+            //生成推广链接
+            String promotionUrl = cmsDictionaryMng.findValue("seller", "推广链接").getValue().replace("#{shopCode}", user.getPromotionCode());
+            String promotionQrUrl = qrMng.stringToQR(request.getContextPath() + site.getUploadPath(),promotionUrl);
+            cmsUserMng.updateQr(user.getId(),null,promotionQrUrl,null);
         }
+
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_BUYER_MEMBER, MEMBER_QR);
+                TPLDIR_SELLER_MEMBER, PROMOTION_QR);
     }
 
-    @RequestMapping(value = "/buyer/info.jspx", method = RequestMethod.GET)
+    @RequestMapping(value = "/seller/auth.jspx", method = RequestMethod.GET)
     public String infoList(HttpServletRequest request,
                          HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
@@ -104,39 +106,10 @@ public class BuyerMemberAct {
             return FrontUtils.showLogin(request, model, site);
         }
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_BUYER_MEMBER, MEMBER_INFO);
+                TPLDIR_SELLER_MEMBER, MEMBER_AUTH);
     }
-    /**
-     * 个人资料提交页
-     *
-     * @param request
-     * @param response
-     * @param model
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping(value = "/buyer/profile.jspx", method = RequestMethod.POST)
-    public String profileSubmit(CmsUserExt ext, String nextUrl,String email,
-                                HttpServletRequest request, HttpServletResponse response,
-                                ModelMap model) throws IOException {
-        CmsSite site = CmsUtils.getSite(request);
-        CmsUser user = CmsUtils.getUser(request);
-        FrontUtils.frontData(request, model, site);
-        MemberConfig mcfg = site.getConfig().getMemberConfig();
-        // 没有开启会员功能
-        if (!mcfg.isMemberOn()) {
-            return FrontUtils.showMessage(request, model, "member.memberClose");
-        }
-        if (user == null) {
-            return FrontUtils.showLogin(request, model, site);
-        }
-        ext.setId(user.getId());
-        cmsUserMng.updateEmail(user.getId(),email);
-        cmsUserExtMng.update(ext, user);
-        log.info("update CmsUserExt success. id={}", user.getId());
-        model.addAttribute("success",true);
-        return index(request,response,model);
-    }
+
+
 
     /**
      * 密码修改输入页
@@ -146,7 +119,7 @@ public class BuyerMemberAct {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/buyer/pwd.jspx", method = RequestMethod.GET)
+    @RequestMapping(value = "/seller/pwd.jspx", method = RequestMethod.GET)
     public String passwordInput(HttpServletRequest request,
                                 HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
@@ -161,7 +134,7 @@ public class BuyerMemberAct {
             return FrontUtils.showLogin(request, model, site);
         }
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_BUYER_MEMBER, MEMBER_PASSWORD);
+                TPLDIR_SELLER_MEMBER, MEMBER_PASSWORD);
     }
 
     /**
@@ -181,7 +154,7 @@ public class BuyerMemberAct {
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "/buyer/pwd.jspx", method = RequestMethod.POST)
+    @RequestMapping(value = "/seller/pwd.jspx", method = RequestMethod.POST)
     public String passwordSubmit(String origPwd, String newPwd, String email,
                                  String nextUrl, HttpServletRequest request,
                                  HttpServletResponse response, ModelMap model) throws IOException {
@@ -216,7 +189,7 @@ public class BuyerMemberAct {
      * @param request
      * @param response
      */
-    @RequestMapping("/buyer/checkPwd.jspx")
+    @RequestMapping("/seller/checkPwd.jspx")
     public void checkPwd(String origPwd, HttpServletRequest request,
                          HttpServletResponse response) {
         CmsUser user = CmsUtils.getUser(request);
@@ -245,10 +218,10 @@ public class BuyerMemberAct {
     private CmsUserMng cmsUserMng;
     @Autowired
     private CmsUserExtMng cmsUserExtMng;
+
     @Autowired
     private QRMng qrMng;
 
     @Autowired
     private CmsDictionaryMng cmsDictionaryMng;
-
 }

@@ -1,7 +1,9 @@
 package com.dcms.cms.action.member.ext;
 
+import com.dcms.cms.entity.assist.CmsDictionary;
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
+import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
@@ -56,7 +58,7 @@ public class SellerLoginAct {
 			Authentication auth = authMng.retrieve(authId);
 			// 存在认证信息，且未过期
 			if (auth != null) {
-				return "redirect:/";
+				return "redirect:index.jspx";
 			}
 		}
 		FrontUtils.frontData(request, model, site);
@@ -85,11 +87,12 @@ public class SellerLoginAct {
 				// 是否需要在这里加上登录次数的更新？按正常的方式，应该在process里面处理的，不过这里处理也没大问题。
 				cmsUserMng.updateLoginInfo(auth.getUid(), ip);
 				CmsUser user = cmsUserMng.findById(auth.getUid());
-				if (user.getDisabled()) {
+				Integer sellerGroupId = Integer.valueOf(cmsDictionaryMng.findValue("seller", "用户组ID").getValue());
+				if (user.getDisabled() || !user.getGroup().getId().equals(sellerGroupId)) {
 					// 如果已经禁用，则推出登录。
 					authMng.deleteById(auth.getId());
 					session.logout(request, response);
-					throw new DisabledException("user disabled");
+					throw new DisabledException("此商家不存在或被禁用");
 				}
 				removeCookieErrorRemaining(request, response);
 				FrontUtils.frontData(request, model, site);
@@ -99,8 +102,7 @@ public class SellerLoginAct {
 					if (view != null) {
 						return view;
 					}
-					return FrontUtils.getTplPath(request, site.getSolutionPath(),
-							TPLDIR_INDEX, TPL_INDEX);
+					return "redirect:index.jspx";
 				}else{
 					return "redirect:login.jspx";
 				}
@@ -251,4 +253,6 @@ public class SellerLoginAct {
 	private ImageCaptchaService imageCaptchaService;
 	@Autowired
 	private SessionProvider session;
+	@Autowired
+	private CmsDictionaryMng cmsDictionaryMng;
 }

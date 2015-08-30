@@ -11,4 +11,6 @@ public interface CmsScoreRecordDao {
     CmsScoreRecord save(CmsScoreRecord bean);
 
     Pagination getPage(String queryOrderId, Integer queryRecordType, String querySendUserName, String queryReceiveUserName, int cpn, int pageSize);
+
+    Pagination getPageByUser(String queryOrderId, Integer queryUserId, int cpn, int pageSize);
 }

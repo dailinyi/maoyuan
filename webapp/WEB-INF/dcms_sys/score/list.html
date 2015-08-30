@@ -52,7 +52,7 @@ function chgStatus() {
 	<@p.column title="ID">${cmsScore.id}</@p.column><#t/>
 	<@p.column title="订单ID" align="center">${cmsScore.orderId!'-'}</@p.column><#t/>
 	<@p.column title="操作类型" align="center"><@s.m "cmsScoreConsume.type.${cmsScore.recordType!0}"/></@p.column><#t/>
-	<@p.column title="操作积分数量" align="center">${cmsScore.scoreNum!0}</@p.column><#t/>
+	<@p.column title="操作积分数量" align="center">${(cmsScore.scoreNoShow)!0}</@p.column><#t/>
 	<@p.column title="发送方" align="center">${(cmsScore.sendUser.username)!}  <span style="color: RED;">[${(cmsScore.sendUser.id)!}]</span> </@p.column><#t/>
 	<@p.column title="接收方" align="center">${(cmsScore.receiveUser.username)!} <span style="color: RED;">[${(cmsScore.receiveUser.id)!}]</span> </@p.column><#t/>
 	<@p.column title="操作时间" align="center">${cmsScore.recordTime?string('yyyy-MM-dd HH:mm:ss')}</@p.column><#t/>

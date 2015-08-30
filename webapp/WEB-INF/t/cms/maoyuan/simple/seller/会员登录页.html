@@ -45,7 +45,7 @@
     </div>
     <div style="margin-top:50px"><a id="submitIt" class="btn-submit" href="###" >登录</a></div>
     </form>
-    <div class="new-member"><a href="${base}/seller/login.jspx">新用户注册</a>│<a href="#">忘记密码</a>│<a href="${base}/buyer/login.jspx">用户登陆</a></div>
+    <div class="new-member"><a href="${base}/seller/login.jspx">新用户注册</a>│<a href="${base}/buyer/login.jspx[#if returnUrl??]?returnUrl=${returnUrl}?replace("：",":")[/#if]">用户登陆</a></div>
 </div>
 </body>
 </html>

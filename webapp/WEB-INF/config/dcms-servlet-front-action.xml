@@ -44,4 +44,8 @@
     <bean id="sellerLoginAct" class="com.dcms.cms.action.member.ext.SellerLoginAct"/>
     <bean id="raffleAct" class="com.dcms.cms.action.member.ext.RaffleAct"/>
     <bean id="buyerMemberAct" class="com.dcms.cms.action.member.ext.BuyerMemberAct"/>
+    <bean id="sellerMemberAct" class="com.dcms.cms.action.member.ext.SellerMemberAct"/>
+    <bean id="buyerScoreAct" class="com.dcms.cms.action.member.ext.BuyerScoreAct"/>
+    <bean id="sellerScoreAct" class="com.dcms.cms.action.member.ext.SellerScoreAct"/>
+    <bean id="buyerImageUploadAct" class="com.dcms.cms.action.member.ext.BuyerImageUploadAct"/>
 </beans>

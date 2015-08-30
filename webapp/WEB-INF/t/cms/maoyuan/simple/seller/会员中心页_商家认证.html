@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+</head>
+
+<body>
+<div class="register-bg my-bg">
+    <div>商家信息</div>
+</div>
+<div class="business-name">
+    <p>商家卡号：${user.username}</p>
+</div>
+<div class="main-box">
+    <div class="player-info">
+        <ul>
+            <li>
+                <p class="fL">商家名称</p>
+                <p class="fR">
+                    <input type="text" placeholder="请输入" value="${user.comefrom!}">
+                </p>
+            </li>
+
+            <li>
+                <p class="fL">详细地址</p>
+                <p class="fR">
+                    <input type="text" placeholder="请输入" value="${user.intro!}">
+                </p>
+            </li>
+            <li>
+                <p class="fL">主营介绍</p>
+                <p class="fR">
+                    <input type="text" placeholder="请输入" value="">
+                </p>
+            </li>
+            <li>
+                <p class="fL">营业执照（选填）</p>
+                <p class="fR">
+                    <input type="text" placeholder="">
+                </p>
+            </li>
+            <li>
+                <p class="fL">法人（选填）</p>
+                <p class="fR">
+                    <input type="text" placeholder="">
+                </p>
+            </li>
+            <li>
+                <p class="fL">联系人</p>
+                <p class="fR">
+                    <input type="text" placeholder="请输入" value="${user.realname!}">
+                </p>
+            </li>
+            <li>
+                <p class="fL">性别</p>
+                <p class="fR">
+                    <select dir="rtl">
+                        <option selected>男</option>
+                        <option>女</option>
+                    </select>
+                </p>
+            </li>
+            <li>
+                <p class="fL">手机号码</p>
+                <p class="fR">
+                    <input type="text" placeholder="请输入" value="${user.username!}">
+                </p>
+            </li>
+            <li>
+                <p class="fL">身份证号</p>
+                <p class="fR">
+                    <input type="text" placeholder="请输入" value="">
+                </p>
+            </li>
+            <li>
+                <p class="fL">出生日期</p>
+                <p class="fR">
+                    <input type="date" placeholder="请输入" value="">
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

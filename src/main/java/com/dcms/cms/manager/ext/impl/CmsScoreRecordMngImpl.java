@@ -27,4 +27,9 @@ public class CmsScoreRecordMngImpl implements CmsScoreRecordMng {
         return dao.getPage(queryOrderId, queryRecordType, querySendUserName, queryReceiveUserName, cpn, pageSize);
     }
 
+    @Override
+    public Pagination getPageByUser(String queryOrderId, Integer id, int pageNo, int pageSize) {
+        return dao.getPageByUser(queryOrderId, id, pageNo, pageSize);
+}
+
 }

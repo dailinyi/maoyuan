@@ -51,4 +51,22 @@ public class CmsScoreRecordDaoImpl extends HibernateBaseDao<CmsScoreRecord, Inte
         finder.append(" order by bean.id desc ");
         return find(finder,cpn,pageSize);
     }
+
+    @Override
+    public Pagination getPageByUser(String queryOrderId, Integer queryUserId, int cpn, int pageSize) {
+        Finder finder = Finder.create("from CmsScoreRecord bean where 1=1 ");
+
+        if (queryUserId != null) {
+            finder.append(" and ( bean.receiveUser.id = :userId or bean.sendUser.id = :userId ) ");
+            finder.setParam("userId", queryUserId);
+        }
+
+        if (StringUtils.isNotBlank(queryOrderId)){
+            finder.append(" and bean.orderId = :queryOrderId ");
+            finder.setParam("queryOrderId",queryOrderId);
+        }
+
+        finder.append(" order by bean.id desc ");
+        return find(finder,cpn,pageSize);
+    }
 }

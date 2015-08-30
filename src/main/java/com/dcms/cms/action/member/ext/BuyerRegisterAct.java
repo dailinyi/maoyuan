@@ -39,7 +39,7 @@ public class BuyerRegisterAct {
     public static final String LOGIN_INPUT = "tpl.loginInput";
 
     @RequestMapping(value = "/buyer/register.jspx", method = RequestMethod.GET)
-    public String buyerRegister(HttpServletRequest request,
+    public String buyerRegister(String code , HttpServletRequest request,
                         HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
         MemberConfig mcfg = site.getConfig().getMemberConfig();
@@ -53,6 +53,7 @@ public class BuyerRegisterAct {
         }
         FrontUtils.frontData(request, model, site);
         model.addAttribute("mcfg", mcfg);
+        model.addAttribute("code", code);
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
                 TPLDIR_BUYER_MEMBER, REGISTER);
     }
@@ -122,6 +123,7 @@ public class BuyerRegisterAct {
             CmsUser cmsUser = cmsUserMng.registerMember(username, email, password, ip, buyerGroupId, userExt, recommendUser);
 
         //生成二维码
+
             String template = cmsDictionaryMng.findValue("buyer", "URL模板").getValue();
             String userQrUrl = qrMng.stringToQR(request.getContextPath() + site.getUploadPath(),template.replace("#{buyerId}", cmsUser.getId().toString()));
             cmsUserMng.updateQr(cmsUser.getId(),userQrUrl,null,null);
