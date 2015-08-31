@@ -6,6 +6,21 @@
     <title></title>
     [#include "../include/库.html"/]
 </head>
+<script type="application/javascript">
+    $(function() {
+        $("#tableForm").validate();
+        [#if success??]
+        [#if success]
+        alert("提交成功!");
+        [/#if]
+        [/#if]
+    })
+    function submitForm(){
+        $('#tableForm').submit();
+    }
+
+
+</script>
 
 <body>
 <div class="register-bg my-bg">
@@ -14,26 +29,27 @@
 <div class="business-name">
     <p>商家卡号：${user.username}</p>
 </div>
+<form action="auth.jspx" id="tableForm" method="post">
 <div class="main-box">
     <div class="player-info">
         <ul>
             <li>
                 <p class="fL">商家名称</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" value="${user.comefrom!}">
+                    <input type="text" placeholder="请输入" name="title" value="${user.comefrom!}">
                 </p>
             </li>
 
             <li>
                 <p class="fL">详细地址</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" value="${user.intro!}">
+                    <input type="text" placeholder="请输入" name="description" value="${user.intro!}">
                 </p>
             </li>
             <li>
                 <p class="fL">主营介绍</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" value="">
+                    <input type="text" placeholder="请输入" name="txt" value="">
                 </p>
             </li>
             <li>
@@ -45,44 +61,53 @@
             <li>
                 <p class="fL">法人（选填）</p>
                 <p class="fR">
-                    <input type="text" placeholder="">
+                    <input type="text" name="author" placeholder="">
                 </p>
             </li>
             <li>
                 <p class="fL">联系人</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" value="${user.realname!}">
+                    <input type="text" name="attr_contactName" placeholder="请输入" value="${user.realname!}">
                 </p>
             </li>
             <li>
                 <p class="fL">性别</p>
                 <p class="fR">
-                    <select dir="rtl">
-                        <option selected>男</option>
-                        <option>女</option>
+                    <select dir="rtl" name="attr_contactSex">
+                        <option value="男" selected>男</option>
+                        <option value="女">女</option>
                     </select>
                 </p>
             </li>
             <li>
                 <p class="fL">手机号码</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" value="${user.username!}">
+                    <input type="text" placeholder="请输入" name="attr_contactTel" value="${user.username!}">
                 </p>
             </li>
             <li>
                 <p class="fL">身份证号</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" value="">
+                    <input type="text" name="attr_contactIdCard" placeholder="请输入" value="">
                 </p>
             </li>
             <li>
                 <p class="fL">出生日期</p>
                 <p class="fR">
-                    <input type="date" placeholder="请输入" value="">
+                    <input type="date" name="attr_contactBirth" placeholder="请输入" value="">
                 </p>
             </li>
+            <li>
+                <p class="fL">Email</p>
+                <p class="fR">
+                    <input type="text" name="attr_contactEmail" placeholder="请输入" value="">
+                </p>
+            </li>
+
         </ul>
+        <div class="mT20"><a class="btn-submit" href="###" onclick="submitForm()">提交认证</a></div>
     </div>
 </div>
+</form>
 </body>
 </html>

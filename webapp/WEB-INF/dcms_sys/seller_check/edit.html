@@ -275,10 +275,7 @@ function uploadAttachSuccess(file,data) {
 </@p.td>
 
 <#elseif item.field=="origin">
-<@p.td help=item.help helpPosition="${item.helpPosition!2}" label=item.label colspan=item.single?string("2","1") width="${item.single?string(100,50)}">
-<@p.text name=item.field value=content.origin maxlength="100" style="width:70px"/> &nbsp;
-<@s.m "content.originUrl"/>: <input type="text" name="originUrl" value="${content.originUrl!}" maxlength="255" style="width:100px"/>
-</@p.td>
+	<@p.hidden value=content.origin  name=item.field/>
 
 <#elseif item.field=="viewGroupIds">
 <#assign h><#if item.help??>${item.help}<#else><@s.m "content."+item.field+".help"/></#if></#assign>

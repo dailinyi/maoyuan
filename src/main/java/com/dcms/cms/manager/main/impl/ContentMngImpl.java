@@ -1,63 +1,30 @@
 package com.dcms.cms.manager.main.impl;
 
-import static com.dcms.cms.entity.main.ContentCheck.DRAFT;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.dcms.cms.dao.main.ContentDao;
+import com.dcms.cms.entity.assist.CmsFile;
+import com.dcms.cms.entity.main.*;
+import com.dcms.cms.entity.main.Channel.AfterCheckEnum;
+import com.dcms.cms.entity.main.Content.ContentStatus;
+import com.dcms.cms.manager.assist.CmsCommentMng;
+import com.dcms.cms.manager.assist.CmsFileMng;
+import com.dcms.cms.manager.main.*;
+import com.dcms.cms.service.ChannelDeleteChecker;
+import com.dcms.cms.service.ContentListener;
+import com.dcms.cms.staticpage.StaticPageSvc;
+import com.dcms.cms.staticpage.exception.*;
+import com.dcms.common.hibernate3.Updater;
+import com.dcms.common.page.Pagination;
+import freemarker.template.TemplateException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.dcms.cms.dao.main.ContentDao;
-import com.dcms.cms.entity.assist.CmsFile;
-import com.dcms.cms.entity.main.Channel;
-import com.dcms.cms.entity.main.CmsGroup;
-import com.dcms.cms.entity.main.CmsSite;
-import com.dcms.cms.entity.main.CmsTopic;
-import com.dcms.cms.entity.main.CmsUser;
-import com.dcms.cms.entity.main.CmsUserSite;
-import com.dcms.cms.entity.main.Content;
-import com.dcms.cms.entity.main.ContentCheck;
-import com.dcms.cms.entity.main.ContentCount;
-import com.dcms.cms.entity.main.ContentExt;
-import com.dcms.cms.entity.main.ContentTag;
-import com.dcms.cms.entity.main.ContentTxt;
-import com.dcms.cms.entity.main.Channel.AfterCheckEnum;
-import com.dcms.cms.entity.main.Content.ContentStatus;
-import com.dcms.cms.manager.assist.CmsCommentMng;
-import com.dcms.cms.manager.assist.CmsFileMng;
-import com.dcms.cms.manager.main.ChannelMng;
-import com.dcms.cms.manager.main.CmsGroupMng;
-import com.dcms.cms.manager.main.CmsModelMng;
-import com.dcms.cms.manager.main.CmsTopicMng;
-import com.dcms.cms.manager.main.CmsUserMng;
-import com.dcms.cms.manager.main.ContentCheckMng;
-import com.dcms.cms.manager.main.ContentCountMng;
-import com.dcms.cms.manager.main.ContentExtMng;
-import com.dcms.cms.manager.main.ContentMng;
-import com.dcms.cms.manager.main.ContentTagMng;
-import com.dcms.cms.manager.main.ContentTxtMng;
-import com.dcms.cms.manager.main.ContentTypeMng;
-import com.dcms.cms.service.ChannelDeleteChecker;
-import com.dcms.cms.service.ContentListener;
-import com.dcms.cms.staticpage.StaticPageSvc;
-import com.dcms.cms.staticpage.exception.ContentNotCheckedException;
-import com.dcms.cms.staticpage.exception.GeneratedZeroStaticPageException;
-import com.dcms.cms.staticpage.exception.StaticPageNotOpenException;
-import com.dcms.cms.staticpage.exception.TemplateNotFoundException;
-import com.dcms.cms.staticpage.exception.TemplateParseException;
-import com.dcms.common.hibernate3.Updater;
-import com.dcms.common.page.Pagination;
+import java.io.IOException;
+import java.util.*;
 
-import freemarker.template.TemplateException;
+import static com.dcms.cms.entity.main.ContentCheck.DRAFT;
 
 @Service
 @Transactional
@@ -643,7 +610,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
         return dao.getContentByChnId(channelId,total);
     }
 
-    public String checkForChannelDelete(Integer channelId) {
+	@Override
+	public List<Content> findUnfinishCheck(Integer id, Integer channelId) {
+		return dao.findUnfinishCheck( id,  channelId);
+	}
+
+	public String checkForChannelDelete(Integer channelId) {
 		int count = dao.countByChannelId(channelId);
 		if (count > 0) {
 			return "content.error.cannotDeleteChannel";

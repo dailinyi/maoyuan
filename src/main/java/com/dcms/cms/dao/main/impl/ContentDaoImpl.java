@@ -76,7 +76,14 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
         f.setMaxResults(total);
         return find(f);
     }
-	
+
+	@Override
+	public List<Content> findUnfinishCheck(Integer id, Integer channelId) {
+		Finder f = Finder.create("from Content bean where bean.channel.id = :channelId and bean.contentExt.origin = :userId and bean.status != 2");
+		f.setParam("channelId",channelId).setParam("userId",id.toString());
+		return find(f);
+	}
+
 	public Pagination getPageForCollection(Integer siteId, Integer memberId, int pageNo, int pageSize){
 		Finder f = Finder.create("select bean from Content bean join bean.collectUsers user where user.id=:userId").setParam("userId", memberId);
 		if (siteId != null) {

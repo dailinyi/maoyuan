@@ -1,11 +1,11 @@
 package com.dcms.cms.dao.main;
 
-import java.util.List;
-
 import com.dcms.cms.entity.main.Content;
 import com.dcms.cms.entity.main.Content.ContentStatus;
 import com.dcms.common.hibernate3.Updater;
 import com.dcms.common.page.Pagination;
+
+import java.util.List;
 
 /**
  * 内容DAO接口。
@@ -228,4 +228,6 @@ public interface ContentDao {
 	public Content deleteById(Integer id);
 
     public List<Content> getContentByChnId(Integer chnId,int total);
+
+	List<Content> findUnfinishCheck(Integer id, Integer channelId);
 }

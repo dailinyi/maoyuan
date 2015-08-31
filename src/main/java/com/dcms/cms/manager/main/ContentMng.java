@@ -1,19 +1,15 @@
 package com.dcms.cms.manager.main;
 
-import java.util.List;
-import java.util.Map;
-
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.cms.entity.main.Content;
+import com.dcms.cms.entity.main.Content.ContentStatus;
 import com.dcms.cms.entity.main.ContentExt;
 import com.dcms.cms.entity.main.ContentTxt;
-import com.dcms.cms.entity.main.Content.ContentStatus;
-import com.dcms.cms.staticpage.exception.ContentNotCheckedException;
-import com.dcms.cms.staticpage.exception.GeneratedZeroStaticPageException;
-import com.dcms.cms.staticpage.exception.StaticPageNotOpenException;
-import com.dcms.cms.staticpage.exception.TemplateNotFoundException;
-import com.dcms.cms.staticpage.exception.TemplateParseException;
+import com.dcms.cms.staticpage.exception.*;
 import com.dcms.common.page.Pagination;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ContentMng {
 	public Pagination getPageByRight(String title, Integer typeId,
@@ -151,5 +147,7 @@ public interface ContentMng {
 	public void updateFileByContent(Content bean,Boolean valid);
 
     public List<Content> getContentByChnId(Integer channelId,int total);
+
+	List<Content> findUnfinishCheck(Integer id, Integer channelId);
 
 }

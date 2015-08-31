@@ -91,24 +91,6 @@ public class SellerMemberAct {
                 TPLDIR_SELLER_MEMBER, PROMOTION_QR);
     }
 
-    @RequestMapping(value = "/seller/auth.jspx", method = RequestMethod.GET)
-    public String infoList(HttpServletRequest request,
-                         HttpServletResponse response, ModelMap model) {
-        CmsSite site = CmsUtils.getSite(request);
-        CmsUser user = CmsUtils.getUser(request);
-        FrontUtils.frontData(request, model, site);
-        MemberConfig mcfg = site.getConfig().getMemberConfig();
-        // 没有开启会员功能
-        if (!mcfg.isMemberOn()) {
-            return FrontUtils.showMessage(request, model, "member.memberClose");
-        }
-        if (user == null) {
-            return FrontUtils.showLogin(request, model, site);
-        }
-        return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_SELLER_MEMBER, MEMBER_AUTH);
-    }
-
 
 
     /**
