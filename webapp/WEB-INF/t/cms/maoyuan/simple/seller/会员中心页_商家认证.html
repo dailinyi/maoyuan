@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
     <title></title>
     [#include "../include/库.html"/]
+    [#include "image_upload.html"/]
 </head>
 <script type="application/javascript">
     $(function() {
@@ -14,9 +15,15 @@
         alert("提交成功!");
         [/#if]
         [/#if]
-    })
+    });
     function submitForm(){
         $('#tableForm').submit();
+    }
+
+    function uploadMemberImg(value){
+        $('#uploadFileText1').val(this.value);
+        upload(1);
+
     }
 
 
@@ -55,7 +62,10 @@
             <li>
                 <p class="fL">营业执照（选填）</p>
                 <p class="fR">
-                    <input type="text" placeholder="">
+                    <input type='hidden' id='uploadFileText1' size="14"/>
+                    <div><a href="#" ><input type="file" placeholder="" id="uploadFile1" name="file_upload_photo" style="" onchange="uploadMemberImg(this.value)"/>
+                    <img id="preImg1" width="120" src="${user.titleImg!}"></a></div>
+                <input id="uploadImgPath1" name="titleImg" style="width:220px" value="${user.titleImg!}" type="hidden" />
                 </p>
             </li>
             <li>

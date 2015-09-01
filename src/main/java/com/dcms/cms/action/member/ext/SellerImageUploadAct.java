@@ -50,7 +50,7 @@ public class SellerImageUploadAct {
 	 */
 	public static final String ERROR = "error";
 
-	@RequestMapping("/seller/o_upload_image.jspx")
+	@RequestMapping("/seller/o_upload_image.jspx" )
 	public String execute(
 			String filename,
 			Integer uploadNum,

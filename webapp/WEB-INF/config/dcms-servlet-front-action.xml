@@ -48,5 +48,6 @@
     <bean id="buyerScoreAct" class="com.dcms.cms.action.member.ext.BuyerScoreAct"/>
     <bean id="sellerScoreAct" class="com.dcms.cms.action.member.ext.SellerScoreAct"/>
     <bean id="buyerImageUploadAct" class="com.dcms.cms.action.member.ext.BuyerImageUploadAct"/>
+    <bean id="sellerImageUploadAct" class="com.dcms.cms.action.member.ext.SellerImageUploadAct"/>
     <bean id="sellerAuthAct" class="com.dcms.cms.action.member.ext.SellerAuthAct"/>
 </beans>
