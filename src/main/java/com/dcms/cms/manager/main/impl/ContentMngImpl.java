@@ -2,16 +2,19 @@ package com.dcms.cms.manager.main.impl;
 
 import com.dcms.cms.dao.main.ContentDao;
 import com.dcms.cms.entity.assist.CmsFile;
+import com.dcms.cms.entity.ext.CmsScoreRecord;
 import com.dcms.cms.entity.main.*;
 import com.dcms.cms.entity.main.Channel.AfterCheckEnum;
 import com.dcms.cms.entity.main.Content.ContentStatus;
 import com.dcms.cms.manager.assist.CmsCommentMng;
 import com.dcms.cms.manager.assist.CmsFileMng;
+import com.dcms.cms.manager.ext.CmsScoreRecordMng;
 import com.dcms.cms.manager.main.*;
 import com.dcms.cms.service.ChannelDeleteChecker;
 import com.dcms.cms.service.ContentListener;
 import com.dcms.cms.staticpage.StaticPageSvc;
 import com.dcms.cms.staticpage.exception.*;
+import com.dcms.cms.statistic.DateUtils;
 import com.dcms.common.hibernate3.Updater;
 import com.dcms.common.page.Pagination;
 import freemarker.template.TemplateException;
@@ -615,6 +618,37 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.findUnfinishCheck( id,  channelId);
 	}
 
+	@Override
+	public void saveCheckToUser(Integer userId,Content bean) {
+		CmsUser user = cmsUserMng.findById(userId);
+		user.setEmail(bean.getAttr().get("contactEmail"));
+		if (user.getCheckStatus() == null || user.getCheckStatus() == 0){
+			user.setCheckStatus((byte) 1);
+			//第一次审核通过 附送200积分
+			if (user.getScoreCount() == null){
+				user.setScoreCount(200);
+			} else {
+				user.setScoreCount(user.getScoreCount() + 200);
+			}
+			cmsScoreRecordMng.save(new CmsScoreRecord(CmsScoreRecord.ScoreTypeEnum.CHARGE_SCORE.getValue().byteValue(),200 ,user,cmsUserMng.findById(1)));
+		}
+
+		CmsUserExt ext = user.getUserExt();
+		ext.setRealname(bean.getAttr().get("contactName"));
+		ext.setBirthday(DateUtils.strToDate(bean.getAttr().get("contactBirth")));
+		ext.setComefrom(bean.getTitle());
+		if ("男".equals(bean.getAttr().get("contactSex"))){
+			ext.setGender(true);
+		} else if ("女".equals(bean.getAttr().get("contactSex"))){
+			ext.setGender(false);
+		}
+		ext.setMsn(bean.getAttr().get("contactIdCard"));
+		ext.setIntro(bean.getDescription());
+		ext.setMobile(bean.getAttr().get("contactTel"));
+
+		cmsUserMng.updateUser(user);
+	}
+
 	public String checkForChannelDelete(Integer channelId) {
 		int count = dao.countByChannelId(channelId);
 		if (count > 0) {
@@ -703,6 +737,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	private ContentDao dao;
 	private StaticPageSvc staticPageSvc;
 	private CmsFileMng fileMng;
+	@Autowired
+	private CmsScoreRecordMng cmsScoreRecordMng;
+
 	@Autowired
 	protected CmsModelMng cmsModelMng;
 

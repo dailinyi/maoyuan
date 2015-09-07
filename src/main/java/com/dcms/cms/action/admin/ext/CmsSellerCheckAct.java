@@ -131,7 +131,11 @@ public class CmsSellerCheckAct {
         Content[] beans = manager.check(ids, user);
         for (Content bean : beans) {
             log.info("check Content id={}", bean.getId());
+            manager.saveCheckToUser(user.getId(), bean);
         }
+
+
+
         return list(queryStatus, queryOrderBy,  pageNo, request, model);
     }
 
@@ -195,6 +199,11 @@ public class CmsSellerCheckAct {
         String tplContent = content.getTplContent();
         if (!StringUtils.isBlank(tplContent)) {
             tplContent = tplContent.substring(tplPathLength);
+        }
+
+        CmsUser authPerson = null;
+        if (StringUtils.isNotBlank(content.getOrigin())){
+            model.addAttribute("authPerson",cmsUserMng.findById(Integer.valueOf(content.getOrigin())));
         }
 
         model.addAttribute("content", content);

@@ -276,7 +276,9 @@ function uploadAttachSuccess(file,data) {
 
 <#elseif item.field=="origin">
 	<@p.hidden value=content.origin  name=item.field/>
-
+	<@p.td label="申请人" colspan=item.single?string("2","1") width="${item.single?string(100,50)}">
+	${authPerson.username!"-"} [id:${authPerson.id!"-"}]
+	</@p.td>
 <#elseif item.field=="viewGroupIds">
 <#assign h><#if item.help??>${item.help}<#else><@s.m "content."+item.field+".help"/></#if></#assign>
 <@p.checkboxlist list=groupList valueList=groupIds listKey="id" listValue="name" help="${h}" helpPosition="${item.helpPosition!2}" label=item.label name=item.field colspan=item.single?string("2","1") width="${item.single?string(100,50)}"/>
