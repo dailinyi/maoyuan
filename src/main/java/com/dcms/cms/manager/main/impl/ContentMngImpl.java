@@ -15,6 +15,7 @@ import com.dcms.cms.service.ContentListener;
 import com.dcms.cms.staticpage.StaticPageSvc;
 import com.dcms.cms.staticpage.exception.*;
 import com.dcms.cms.statistic.DateUtils;
+import com.dcms.cms.statistic.ScoreUtils;
 import com.dcms.common.hibernate3.Updater;
 import com.dcms.common.page.Pagination;
 import freemarker.template.TemplateException;
@@ -619,6 +620,11 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	@Override
+	public Content findAlreadyChecked(Integer userId, Integer channelId) {
+		return dao.findLastCheck(userId, channelId);
+	}
+
+	@Override
 	public void saveCheckToUser(Integer userId,Content bean) {
 		CmsUser user = cmsUserMng.findById(userId);
 		user.setEmail(bean.getAttr().get("contactEmail"));
@@ -626,12 +632,13 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			user.setCheckStatus((byte) 1);
 			//第一次审核通过 附送200积分
 			if (user.getScoreCount() == null){
-				user.setScoreCount(200);
+				user.setScoreCount(ScoreUtils.strToInt("200"));
 			} else {
 				user.setScoreCount(user.getScoreCount() + 200);
 			}
 			cmsScoreRecordMng.save(new CmsScoreRecord(CmsScoreRecord.ScoreTypeEnum.CHARGE_SCORE.getValue().byteValue(),200 ,user,cmsUserMng.findById(1)));
 		}
+		user.setRate(Byte.valueOf(bean.getAttr().get("rate")));
 
 		CmsUserExt ext = user.getUserExt();
 		ext.setRealname(bean.getAttr().get("contactName"));

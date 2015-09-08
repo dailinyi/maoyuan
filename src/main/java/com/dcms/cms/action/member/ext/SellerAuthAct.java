@@ -34,8 +34,10 @@ public class SellerAuthAct {
     public static final String MEMBER_CENTER = "tpl.memberCenter";
     public static final String PROMOTION_QR = "tpl.memberPromotionQr";
     public static final String MEMBER_INFO = "tpl.memberInfo";
+    public static final String MEMBER_EDIT = "tpl.memberEdit";
     public static final String MEMBER_AUTH = "tpl.memberAuth";
     public static final String MEMBER_PASSWORD = "tpl.memberPassword";
+    public static final String TPL_INDEX = "tpl.index";
 
 
     @RequestMapping(value = "/seller/auth.jspx", method = RequestMethod.GET)
@@ -56,10 +58,54 @@ public class SellerAuthAct {
                 TPLDIR_SELLER_MEMBER, MEMBER_AUTH);
     }
 
-    @RequestMapping(value = "/seller/auth.jspx", method = RequestMethod.POST)
-    public String auth(String title , String description ,String txt , String titleImg ,String author ,
+    @RequestMapping(value = "/seller/info.jspx", method = RequestMethod.GET)
+    public String info(HttpServletRequest request,
+                           HttpServletResponse response, ModelMap model) {
+        CmsSite site = CmsUtils.getSite(request);
+        CmsUser user = CmsUtils.getUser(request);
+        FrontUtils.frontData(request, model, site);
+        MemberConfig mcfg = site.getConfig().getMemberConfig();
+        // 没有开启会员功能
+        if (!mcfg.isMemberOn()) {
+            return FrontUtils.showMessage(request, model, "member.memberClose");
+        }
+        if (user == null) {
+            return FrontUtils.showLogin(request, model, site);
+        }
+        Integer channelId = Integer.valueOf(cmsDictionaryMng.findValue("sellerCheck","栏目ID").getValue());
+        Content userAuth = contentMng.findAlreadyChecked(user.getId(), channelId);
+
+        model.addAttribute("userAuth",userAuth);
+        return FrontUtils.getTplPath(request, site.getSolutionPath(),
+                TPLDIR_SELLER_MEMBER, MEMBER_INFO);
+    }
+
+    @RequestMapping(value = "/seller/edit.jspx", method = RequestMethod.GET)
+    public String edit(HttpServletRequest request,
+                       HttpServletResponse response, ModelMap model) {
+        CmsSite site = CmsUtils.getSite(request);
+        CmsUser user = CmsUtils.getUser(request);
+        FrontUtils.frontData(request, model, site);
+        MemberConfig mcfg = site.getConfig().getMemberConfig();
+        // 没有开启会员功能
+        if (!mcfg.isMemberOn()) {
+            return FrontUtils.showMessage(request, model, "member.memberClose");
+        }
+        if (user == null) {
+            return FrontUtils.showLogin(request, model, site);
+        }
+        Integer channelId = Integer.valueOf(cmsDictionaryMng.findValue("sellerCheck","栏目ID").getValue());
+        Content userAuth = contentMng.findAlreadyChecked(user.getId(), channelId);
+
+        model.addAttribute("userAuth",userAuth);
+        return FrontUtils.getTplPath(request, site.getSolutionPath(),
+                TPLDIR_SELLER_MEMBER, MEMBER_EDIT);
+    }
+
+    @RequestMapping(value = "/seller/edit.jspx", method = RequestMethod.POST)
+    public String merge(String title , String description ,String txt , String titleImg ,String author ,
                        String attr_contactName , String attr_contactSex , String attr_contactTel,String attr_contactEmail ,
-                       String attr_contactBirth,String attr_contactIdCard,HttpServletRequest request,
+                       String attr_contactBirth,String attr_contactIdCard,Integer attr_rate,HttpServletRequest request,
                        HttpServletResponse response, ModelMap model) {
         CmsSite site = CmsUtils.getSite(request);
         CmsUser user = CmsUtils.getUser(request);
@@ -74,8 +120,8 @@ public class SellerAuthAct {
         }
 
         WebErrors errors = validateSave( title ,  description , txt ,  titleImg , author ,
-                 attr_contactName ,  attr_contactSex ,  attr_contactTel, attr_contactEmail ,
-                 attr_contactBirth, attr_contactIdCard, request, response);
+                attr_contactName ,  attr_contactSex ,  attr_contactTel, attr_contactEmail ,
+                attr_contactBirth, attr_contactIdCard,attr_rate, request, response);
 
         if (errors.hasErrors()) {
             return FrontUtils.showError(request, response, model, errors);
@@ -119,21 +165,94 @@ public class SellerAuthAct {
                 null, null, null, channelId, typeId, null, user, true);
 
 
-        model.addAttribute("message", "global.success");
+        model.addAttribute("success",true);
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_SELLER_MEMBER, MEMBER_AUTH);
+                TPLDIR_SELLER_MEMBER, MEMBER_CENTER);
+    }
+
+    @RequestMapping(value = "/seller/auth.jspx", method = RequestMethod.POST)
+    public String auth(String title , String description ,String txt , String titleImg ,String author ,
+                       String attr_contactName , String attr_contactSex , String attr_contactTel,String attr_contactEmail ,
+                       String attr_contactBirth,String attr_contactIdCard,Integer attr_rate,HttpServletRequest request,
+                       HttpServletResponse response, ModelMap model) {
+        CmsSite site = CmsUtils.getSite(request);
+        CmsUser user = CmsUtils.getUser(request);
+        FrontUtils.frontData(request, model, site);
+        MemberConfig mcfg = site.getConfig().getMemberConfig();
+        // 没有开启会员功能
+        if (!mcfg.isMemberOn()) {
+            return FrontUtils.showMessage(request, model, "member.memberClose");
+        }
+        if (user == null) {
+            return FrontUtils.showLogin(request, model, site);
+        }
+
+        WebErrors errors = validateSave( title ,  description , txt ,  titleImg , author ,
+                 attr_contactName ,  attr_contactSex ,  attr_contactTel, attr_contactEmail ,
+                 attr_contactBirth, attr_contactIdCard, attr_rate,request, response);
+
+        if (errors.hasErrors()) {
+            return FrontUtils.showError(request, response, model, errors);
+        }
+
+        Integer channelId = Integer.valueOf(cmsDictionaryMng.findValue("sellerCheck","栏目ID").getValue());
+        Integer modelId = Integer.valueOf(cmsDictionaryMng.findValue("sellerCheck","模型ID").getValue());
+
+        //如果有未审核通过的数据,则删除此数据
+        List<Content> unfinishedCheck = contentMng.findUnfinishCheck(user.getId(),channelId);
+        if (unfinishedCheck != null && !unfinishedCheck.isEmpty()){
+            Integer[] willDelete = new Integer[unfinishedCheck.size()];
+            for (int i = 0 ;i < unfinishedCheck.size(); i++){
+                willDelete[i] = (unfinishedCheck.get(i).getId());
+            }
+            contentMng.deleteByIds(willDelete);
+        }
+
+
+        Content c = new Content();
+        c.setSite(site);
+        c.setModel(cmsModelMng.findById(modelId));;
+
+        ContentExt ext = new ContentExt();
+        ext.setTitle(title);
+        ext.setTitleImg(titleImg);
+        ext.setAuthor(author);
+        ext.setDescription(description);
+        ext.setOrigin(user.getId().toString());
+        ContentTxt t = new ContentTxt();
+        t.setTxt(txt);
+        ContentType type = contentTypeMng.getDef();
+        if (type == null) {
+            throw new RuntimeException("Default ContentType not found.");
+        }
+        Integer typeId = type.getId();
+
+        c.setAttr(RequestUtils.getRequestMap(request, "attr_"));
+
+        c = contentMng.save(c, ext, t, null, null, null, null, null, null,
+                null, null, null, channelId, typeId, null, user, true);
+
+
+        model.addAttribute("success",true);
+        return FrontUtils.getTplPath(request, site.getSolutionPath(),
+                TPLDIR_SELLER_MEMBER, MEMBER_CENTER);
     }
 
 
     private WebErrors validateSave(String title , String description ,String txt , String titleImg ,String author ,
                                    String contactName , String contactSex , String contactTel,String contactEmail ,
-                                   String contactBirth,String contactIdCard,
+                                   String contactBirth,String contactIdCard,Integer attrRate,
                                    HttpServletRequest request, HttpServletResponse response) {
         WebErrors errors = WebErrors.create(request);
 
         if (errors.ifBlank(title, "商家名称", 150)) {
             return errors;
         }
+
+        if (errors.ifOutOfRate(attrRate, "积分返现比率", 0,100) ) {
+            return errors;
+        }
+
         if (errors.ifMaxLength(author, "法人", 100)) {
             return errors;
         }
@@ -166,6 +285,10 @@ public class SellerAuthAct {
         if (!errors.ifBlank(contactBirth, "联系人生日", 50) && DateUtils.strToDate(contactBirth) == null) {
             return errors;
         }
+
+
+
+
 
         return errors;
     }

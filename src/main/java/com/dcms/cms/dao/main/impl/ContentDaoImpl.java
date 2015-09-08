@@ -84,6 +84,17 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		return find(f);
 	}
 
+	@Override
+	public Content findLastCheck(Integer userId, Integer channelId) {
+		Finder f = Finder.create("from Content bean where bean.channel.id = :channelId and bean.contentExt.origin = :userId and bean.status = 2 order by bean.id desc");
+		f.setParam("channelId",channelId).setParam("userId",userId.toString());
+		List<Content> userContent =  find(f);
+		if (userContent == null || userContent.size() == 0) {
+			return  null;
+		}
+		return userContent.get(0);
+	}
+
 	public Pagination getPageForCollection(Integer siteId, Integer memberId, int pageNo, int pageSize){
 		Finder f = Finder.create("select bean from Content bean join bean.collectUsers user where user.id=:userId").setParam("userId", memberId);
 		if (siteId != null) {

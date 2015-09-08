@@ -228,6 +228,19 @@ public abstract class WebErrors {
 		return false;
 	}
 
+	public boolean ifOutOfRate(Integer s, String field, int minLength,
+								 int maxLength) {
+		if (s == null) {
+			addErrorCode("error.required", field);
+			return true;
+		}
+		if (s < minLength || s > maxLength) {
+			addErrorCode("error.outOfLength", field, minLength, maxLength);
+			return true;
+		}
+		return false;
+	}
+
 	public boolean ifNotEmail(String email, String field, int maxLength) {
 		if (ifBlank(email, field, maxLength)) {
 			return true;

@@ -43,86 +43,83 @@
             <li>
                 <p class="fL">商家名称</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" name="title" value="${user.comefrom!}">
-                </p>
-            </li>
-
-            <li>
-                <p class="fL">积分返现比率</p>
-                <p class="fR">
-                    <input type="text" name="attr_rate" placeholder="请输入" value="${user.rate!}"> %
+                    ${user.comefrom!}
                 </p>
             </li>
 
             <li>
                 <p class="fL">详细地址</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" name="description" value="${user.intro!}">
+                    ${userAuth.description!}
                 </p>
             </li>
             <li>
                 <p class="fL">主营介绍</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" name="txt" value="">
+                    ${userAuth.txt!}
                 </p>
             </li>
             <li>
-                <p class="fL">营业执照（选填）</p>
+                <p class="fL">营业执照</p>
                 <p class="fR">
-                    <input type='hidden' id='uploadFileText1' size="14"/>
-                    <div><a href="#" ><input type="file" placeholder="" id="uploadFile1" name="file_upload_photo" style="" onchange="uploadMemberImg(this.value)"/>
-                    <img id="preImg1" width="120" src="${user.titleImg!}"></a></div>
-                <input id="uploadImgPath1" name="titleImg" style="width:220px" value="${user.titleImg!}" type="hidden" />
+                    <img id="preImg1" width="120" src="${userAuth.titleImg!}"></a></div>
                 </p>
             </li>
             <li>
                 <p class="fL">法人（选填）</p>
                 <p class="fR">
-                    <input type="text" name="author" placeholder="">
+                    ${userAuth.author!}
                 </p>
             </li>
             <li>
                 <p class="fL">联系人</p>
                 <p class="fR">
-                    <input type="text" name="attr_contactName" placeholder="请输入" value="${user.realname!}">
+                    ${user.realname!}
                 </p>
             </li>
             <li>
                 <p class="fL">性别</p>
                 <p class="fR">
-                    <select dir="rtl" name="attr_contactSex">
-                        <option value="男" selected>男</option>
-                        <option value="女">女</option>
-                    </select>
+                    [#if user.gender?? && user.gender]
+                        男
+                    [#elseif user.gender?? && !user.gender]
+                        女
+                    [/#if]
+
                 </p>
             </li>
             <li>
                 <p class="fL">手机号码</p>
                 <p class="fR">
-                    <input type="text" placeholder="请输入" name="attr_contactTel" value="${user.username!}">
+                    ${user.mobile!}
                 </p>
             </li>
             <li>
                 <p class="fL">身份证号</p>
                 <p class="fR">
-                    <input type="text" name="attr_contactIdCard" placeholder="请输入" value="">
+                    ${user.msn!}
                 </p>
             </li>
             <li>
                 <p class="fL">出生日期</p>
                 <p class="fR">
-                    <input type="date" name="attr_contactBirth" placeholder="请输入" value="">
+                    ${(user.birthday?string('yyyy-MM-dd'))!}
                 </p>
             </li>
             <li>
                 <p class="fL">Email</p>
                 <p class="fR">
-                    <input type="text" name="attr_contactEmail" placeholder="请输入" value="">
+                    ${(user.email)!}
+                </p>
+            </li>
+            <li>
+                <p class="fL">积分返现比率</p>
+                <p class="fR">
+                    ${(user.rate)!'-'} %
                 </p>
             </li>
 
         </ul>
-        <div class="mT20"><a class="btn-submit" href="###" onclick="submitForm()">提交认证</a></div>
     </div>
 </div>
 </form>

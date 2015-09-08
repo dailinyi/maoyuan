@@ -150,6 +150,8 @@ public interface ContentMng {
 
 	List<Content> findUnfinishCheck(Integer id, Integer channelId);
 
+	Content findAlreadyChecked(Integer userId, Integer channelId);
+
 	void saveCheckToUser(Integer userId,Content bean);
 
 }

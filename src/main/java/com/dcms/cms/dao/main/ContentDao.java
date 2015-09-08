@@ -214,7 +214,9 @@ public interface ContentDao {
 			Integer[] siteIds, Integer[] channelIds, Integer[] typeIds,
 			Integer excludeId, Boolean titleImg, Boolean recommend,
 			String title, int orderBy, Integer first, Integer count);
-	
+
+	Content findLastCheck(Integer userId, Integer channelId);
+
 	public Pagination getPageForCollection(Integer siteId, Integer memberId, int pageNo, int pageSize);
 
 	public int countByChannelId(int channelId);
