@@ -16,6 +16,7 @@ public class BaseCmsOrder {
     private String key;
     private CmsUser buyer;
     private CmsUser seller;
+    private CmsUser score;
 
     public String getId() {
         return id;
@@ -81,6 +82,15 @@ public class BaseCmsOrder {
         this.seller = seller;
     }
 
+    public CmsUser getScore() {
+        return score;
+    }
+
+    public BaseCmsOrder setScore(CmsUser score) {
+        this.score = score;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,5 +109,20 @@ public class BaseCmsOrder {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (key != null ? key.hashCode() : 0);
         return result;
+    }
+
+    public BaseCmsOrder() {
+    }
+
+    public BaseCmsOrder(String id, Date orderTime, Date lastUpdateTime, Integer price, Byte rate, String key, CmsUser buyer, CmsUser seller, CmsUser score) {
+        this.id = id;
+        this.orderTime = orderTime;
+        this.lastUpdateTime = lastUpdateTime;
+        this.price = price;
+        this.rate = rate;
+        this.key = key;
+        this.buyer = buyer;
+        this.seller = seller;
+        this.score = score;
     }
 }

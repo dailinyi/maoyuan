@@ -7,19 +7,7 @@
     [#include "../include/库.html"/]
 
 </head>
-<script type="application/javascript">
-    $(function() {
-        $("#tableForm").validate();
-        [#if success??]
-        [#if success]
-        alert("提交成功!");
-        [/#if]
-        [/#if]
-    });
 
-
-
-</script>
 <body>
 <div class="register-bg my-bg">
     <div>我的汇农</div>
@@ -34,7 +22,8 @@
 
             [#if user.checkStatus?? && user.checkStatus>0]
             <li><a href="${base}/seller/info.jspx">已认证商家信息</a></li>
-            <li><a href="${base}/seller/edit.jspx">修改商家信息</a></li>
+            <li><a href="${base}/seller/edit.jspx">修改商家信息[#if uncheck?? && uncheck]<span style="color: RED;"> (待审核)</span>[/#if]</a></li>
+            <li><a href="${base}/seller/consume.jspx">会员快速消费</a></li>
             <li><a href="#">订单流水单查询</a></li>
             <li><a href="${base}/seller/scoreList.jspx">积分查询</a></li>
             <li><a href="${base}/seller/promotion.jspx">推广链接</a></li>
@@ -42,10 +31,18 @@
             <li><a href="#">发布广告</a></li>
             <li><a href="#">平台广告</a></li>
             [#else]
-            <li><a href="${base}/seller/auth.jspx">商家认证</a></li>
+            <li><a href="${base}/seller/auth.jspx">商家认证[#if uncheck?? && uncheck]<span style="color: RED;"> (待审核)</span>[/#if]</a></li>
             [/#if]
         </ul>
     </div>
 </div>
 </body>
+<script type="application/javascript">
+        [#if success??]
+        [#if success]
+        alert("提交成功!");
+        [/#if]
+        [/#if]
+
+</script>
 </html>

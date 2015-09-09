@@ -2,15 +2,14 @@ package com.dcms.cms.action.member.ext;
 
 import com.dcms.cms.entity.main.*;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
-import com.dcms.cms.manager.main.*;
+import com.dcms.cms.manager.main.CmsModelMng;
+import com.dcms.cms.manager.main.ContentMng;
+import com.dcms.cms.manager.main.ContentTypeMng;
 import com.dcms.cms.statistic.DateUtils;
-import com.dcms.cms.statistic.QRMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
 import com.dcms.cms.web.WebErrors;
 import com.dcms.common.web.RequestUtils;
-import com.dcms.common.web.session.SessionProvider;
-import com.octo.captcha.service.image.ImageCaptchaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +31,9 @@ import static com.dcms.cms.Constants.TPLDIR_SELLER_MEMBER;
 public class SellerAuthAct {
     private static final Logger log = LoggerFactory.getLogger(SellerAuthAct.class);
     public static final String MEMBER_CENTER = "tpl.memberCenter";
-    public static final String PROMOTION_QR = "tpl.memberPromotionQr";
     public static final String MEMBER_INFO = "tpl.memberInfo";
     public static final String MEMBER_EDIT = "tpl.memberEdit";
     public static final String MEMBER_AUTH = "tpl.memberAuth";
-    public static final String MEMBER_PASSWORD = "tpl.memberPassword";
-    public static final String TPL_INDEX = "tpl.index";
 
 
     @RequestMapping(value = "/seller/auth.jspx", method = RequestMethod.GET)
@@ -54,6 +50,7 @@ public class SellerAuthAct {
         if (user == null) {
             return FrontUtils.showLogin(request, model, site);
         }
+
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
                 TPLDIR_SELLER_MEMBER, MEMBER_AUTH);
     }
@@ -164,10 +161,8 @@ public class SellerAuthAct {
         c = contentMng.save(c, ext, t, null, null, null, null, null, null,
                 null, null, null, channelId, typeId, null, user, true);
 
+        return "redirect:index.jspx";
 
-        model.addAttribute("success",true);
-        return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_SELLER_MEMBER, MEMBER_CENTER);
     }
 
     @RequestMapping(value = "/seller/auth.jspx", method = RequestMethod.POST)
@@ -295,11 +290,6 @@ public class SellerAuthAct {
 
 
 
-    @Autowired
-    private CmsUserExtMng cmsUserExtMng;
-
-    @Autowired
-    private QRMng qrMng;
 
     @Autowired
     private CmsDictionaryMng cmsDictionaryMng;
@@ -308,11 +298,6 @@ public class SellerAuthAct {
     @Autowired
     private ContentTypeMng contentTypeMng;
     @Autowired
-    private ChannelMng channelMng;
-    @Autowired
     protected CmsModelMng cmsModelMng;
-    @Autowired
-    private SessionProvider session;
-    @Autowired
-    private ImageCaptchaService imageCaptchaService;
+
 }

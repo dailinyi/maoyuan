@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+</head>
+<script type="application/javascript">
+
+    function submitForm(){
+
+        $('#tableForm').submit();
+    }
+
+
+
+</script>
+
+<body>
+<div class="register-bg my-bg">
+    <div>会员快速消费</div>
+</div>
+<div class="main-box">
+    <form id="tableForm" action="preConsume.jspx" method="get">
+    <div class="player-info">
+        <ul>
+
+            <li>
+                <p class="fL">会员手机号</p>
+                <p class="fR">
+                    <input type="text" name="buyerName" placeholder="请输入">
+                </p>
+            </li>
+            <li>
+                <p class="fL">消费金额</p>
+                <p class="fR">
+                    <input type="text" name="price" placeholder="请输入">
+                </p>
+            </li>
+            <li>
+                <p class="fL">会员使用积分（整数）</p>
+                <p class="fR">
+                    <input type="text" placeholder="请输入" name="useScore" value="0">
+                </p>
+            </li>
+
+
+            <li>
+                <p class="fL">返还比例:${user.rate!}%</p>
+                <p class="fR">剩余积分:${user.scoreCountShow!}分</p>
+            </li>
+
+        </ul>
+    </div>
+    <div class="mT20"><a class="btn-submit" href="#" onclick="submitForm()">确认</a></div>
+    </form>
+</div>
+</body>
+</html>

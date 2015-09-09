@@ -626,7 +626,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 
 	@Override
 	public void saveCheckToUser(Integer userId,Content bean) {
-		CmsUser user = cmsUserMng.findById(userId);
+		CmsUser user = cmsUserMng.findById(Integer.valueOf(bean.getOrigin()));
 		user.setEmail(bean.getAttr().get("contactEmail"));
 		if (user.getCheckStatus() == null || user.getCheckStatus() == 0){
 			user.setCheckStatus((byte) 1);
@@ -634,7 +634,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			if (user.getScoreCount() == null){
 				user.setScoreCount(ScoreUtils.strToInt("200"));
 			} else {
-				user.setScoreCount(user.getScoreCount() + 200);
+				user.setScoreCount(user.getScoreCount() + ScoreUtils.strToInt("200"));
 			}
 			cmsScoreRecordMng.save(new CmsScoreRecord(CmsScoreRecord.ScoreTypeEnum.CHARGE_SCORE.getValue().byteValue(),200 ,user,cmsUserMng.findById(1)));
 		}

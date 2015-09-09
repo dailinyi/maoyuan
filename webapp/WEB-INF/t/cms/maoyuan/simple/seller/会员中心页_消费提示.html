@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+</head>
+<script type="application/javascript">
+
+    function submitForm(){
+
+        $('#tableForm').submit();
+    }
+
+
+
+</script>
+
+<body>
+<div class="register-bg my-bg">
+    <div>会员快速消费</div>
+</div>
+<div class="main-box">
+    <form action="preConsume.jspx" method="post">
+        <div class="player-info">
+            <ul>
+                [#if error??]
+                <li>
+                    <p class="fL"> ${message!"系统异常,请重新操作!"}</p>
+                </li>
+
+                [#else]
+                <li>
+                    <p class="fL"> 请确认:</p>
+                </li>
+                <li>
+                    <p class="fL">用户姓名</p>
+                    <p class="fR">
+                        ${(consumeDetail.buyer.realname)!(consumeDetail.buyer.username)!}
+                    </p>
+                </li>
+                <li>
+                    <p class="fL">用户消费金额</p>
+                    <p class="fR">
+                        ${consumeDetail.priceShow!}
+                    </p>
+                </li>
+                <li>
+                    <p class="fL">用户使用积分</p>
+                    <p class="fR">
+                        ${consumeDetail.useScoreShow!}
+                    </p>
+                </li>
+                <li>
+                    <p class="fL">返还用户积分</p>
+                    <p class="fR">
+                        ${consumeDetail.returnScoreShow!}
+                    </p>
+                </li>
+
+
+                [#if consumeDetail.returnSellerScoreShow??]
+                <li>
+                    <p class="fL">返还用户推荐人积分</p>
+                    <p class="fR">
+                        ${consumeDetail.returnSellerScoreShow!}
+                    </p>
+                </li>
+                <li>
+                    <p class="fL">返还比例:${user.rate!}%</p>
+                    <p class="fR">剩余积分:${user.scoreCountShow!}分</p>
+                </li>
+                <div class="mT20"><a class="btn-submit" href="#" onclick="submitForm()">确认</a></div>
+                [/#if]
+                <div class="mT20"><a class="btn-submit" href="#" onclick="javascript:history.back();">返回</a></div>
+                [/#if]
+
+            </ul>
+        </div>
+        <!--<div class="mT20"><a class="btn-submit" href="#" onclick="submitForm()">确认</a></div>-->
+    </form>
+</div>
+</body>
+</html>

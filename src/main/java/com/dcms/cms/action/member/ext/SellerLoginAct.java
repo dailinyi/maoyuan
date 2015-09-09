@@ -65,6 +65,7 @@ public class SellerLoginAct {
 		if (!StringUtils.isBlank(message)) {
 			model.addAttribute(MESSAGE, message);
 		}
+
 		String returnUrl = RequestUtils.getQueryParam(request, RETURN_URL);
 		model.addAttribute("returnUrl",returnUrl);
 		return FrontUtils.getTplPath(request, sol, TPLDIR_SELLER_MEMBER, LOGIN_INPUT);

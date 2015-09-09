@@ -50,4 +50,5 @@
     <bean id="buyerImageUploadAct" class="com.dcms.cms.action.member.ext.BuyerImageUploadAct"/>
     <bean id="sellerImageUploadAct" class="com.dcms.cms.action.member.ext.SellerImageUploadAct"/>
     <bean id="sellerAuthAct" class="com.dcms.cms.action.member.ext.SellerAuthAct"/>
+    <bean id="consumeAct" class="com.dcms.cms.action.member.ext.ConsumeAct"/>
 </beans>

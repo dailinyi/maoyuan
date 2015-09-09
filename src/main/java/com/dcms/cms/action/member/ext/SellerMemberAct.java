@@ -2,10 +2,12 @@ package com.dcms.cms.action.member.ext;
 
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
+import com.dcms.cms.entity.main.Content;
 import com.dcms.cms.entity.main.MemberConfig;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsUserExtMng;
 import com.dcms.cms.manager.main.CmsUserMng;
+import com.dcms.cms.manager.main.ContentMng;
 import com.dcms.cms.statistic.QRMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static com.dcms.cms.Constants.TPLDIR_SELLER_MEMBER;
 
@@ -61,6 +64,12 @@ public class SellerMemberAct {
         if (user == null) {
             return FrontUtils.showLogin(request, model, site);
         }
+        Integer channelId = Integer.valueOf(cmsDictionaryMng.findValue("sellerCheck","栏目ID").getValue());
+        List<Content> unfinishedCheck = contentMng.findUnfinishCheck(user.getId(),channelId);
+        if (unfinishedCheck != null && unfinishedCheck.size() > 0){
+            model.addAttribute("uncheck",true);
+        }
+
         return FrontUtils.getTplPath(request, site.getSolutionPath(),
                 TPLDIR_SELLER_MEMBER, MEMBER_CENTER);
     }
@@ -206,4 +215,6 @@ public class SellerMemberAct {
 
     @Autowired
     private CmsDictionaryMng cmsDictionaryMng;
+    @Autowired
+    private ContentMng contentMng;
 }
