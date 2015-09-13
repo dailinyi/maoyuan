@@ -2,7 +2,7 @@ package com.dcms.cms.entity.main;
 
 import com.dcms.cms.entity.assist.CmsJobApply;
 import com.dcms.cms.entity.main.base.BaseCmsUser;
-import com.dcms.cms.statistic.ScoreUtils;
+import com.dcms.cms.statistic.utils.ScoreUtils;
 import com.dcms.common.hibernate3.PriorityInterface;
 import com.dcms.common.util.DateUtils;
 import com.dcms.core.entity.UnifiedUser;

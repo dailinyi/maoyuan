@@ -3,7 +3,7 @@ package com.dcms.cms.action.member.ext;
 import com.dcms.cms.entity.main.*;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsUserMng;
-import com.dcms.cms.statistic.QRMng;
+import com.dcms.cms.statistic.utils.QRMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
 import com.dcms.cms.web.WebErrors;

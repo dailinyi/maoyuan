@@ -8,14 +8,12 @@ import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsUserExtMng;
 import com.dcms.cms.manager.main.CmsUserMng;
 import com.dcms.cms.manager.main.ContentMng;
-import com.dcms.cms.statistic.QRMng;
+import com.dcms.cms.statistic.utils.QRMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
 import com.dcms.cms.web.WebErrors;
 import com.dcms.common.web.ResponseUtils;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,11 +32,8 @@ import static com.dcms.cms.Constants.TPLDIR_SELLER_MEMBER;
  */
 @Controller
 public class SellerMemberAct {
-    private static final Logger log = LoggerFactory.getLogger(SellerMemberAct.class);
     public static final String MEMBER_CENTER = "tpl.memberCenter";
     public static final String PROMOTION_QR = "tpl.memberPromotionQr";
-    public static final String MEMBER_INFO = "tpl.memberInfo";
-    public static final String MEMBER_AUTH = "tpl.memberAuth";
     public static final String MEMBER_PASSWORD = "tpl.memberPassword";
     /**
      * 会员中心页

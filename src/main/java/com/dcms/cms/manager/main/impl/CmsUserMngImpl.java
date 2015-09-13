@@ -207,6 +207,11 @@ public class CmsUserMngImpl implements CmsUserMng {
 		unifiedUserMng.update(id, password);
 	}
 
+	@Override
+	public Pagination getRecommendUserPage(String userName, Integer userId, int pageNo, int pageSize) {
+		return dao.getRecommendUserPage( userName,  userId,  pageNo,  pageSize);
+	}
+
 	public CmsUser saveAdmin(String username, String email, String password,
 			String ip, boolean viewOnly, boolean selfAdmin, int rank,
 			Integer groupId, Integer[] roleIds, Integer[] channelIds,

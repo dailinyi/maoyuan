@@ -51,4 +51,7 @@
     <bean id="sellerImageUploadAct" class="com.dcms.cms.action.member.ext.SellerImageUploadAct"/>
     <bean id="sellerAuthAct" class="com.dcms.cms.action.member.ext.SellerAuthAct"/>
     <bean id="consumeAct" class="com.dcms.cms.action.member.ext.ConsumeAct"/>
+    <bean id="sellerOrderAct" class="com.dcms.cms.action.member.ext.SellerOrderAct"/>
+    <bean id="sellerRecommendUserAct" class="com.dcms.cms.action.member.ext.SellerRecommendUserAct"/>
+    <bean id="sellerContributeAct" class="com.dcms.cms.action.member.ext.SellerContributeAct"/>
 </beans>

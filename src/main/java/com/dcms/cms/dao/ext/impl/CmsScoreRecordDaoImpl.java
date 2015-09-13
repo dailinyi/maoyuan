@@ -8,6 +8,8 @@ import com.dcms.common.page.Pagination;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by dailinyi on 15/8/18.
  */
@@ -68,5 +70,13 @@ public class CmsScoreRecordDaoImpl extends HibernateBaseDao<CmsScoreRecord, Inte
 
         finder.append(" order by bean.id desc ");
         return find(finder,cpn,pageSize);
+    }
+
+    @Override
+    public List<CmsScoreRecord> findByOrderId(String orderId) {
+        Finder finder = Finder.create("from CmsScoreRecord bean where bean.order.id = :orderId");
+        finder.setParam("orderId",orderId);
+
+        return find(finder);
     }
 }

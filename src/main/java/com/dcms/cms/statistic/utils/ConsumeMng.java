@@ -1,4 +1,4 @@
-package com.dcms.cms.statistic;
+package com.dcms.cms.statistic.utils;
 
 import com.dcms.cms.entity.ext.CmsConsumeDetail;
 import com.dcms.cms.entity.main.CmsUser;

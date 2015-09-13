@@ -1,4 +1,4 @@
-package com.dcms.cms.statistic;
+package com.dcms.cms.statistic.utils;
 
 import com.dcms.common.upload.FileRepository;
 import com.dcms.common.upload.UploadUtils;

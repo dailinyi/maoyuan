@@ -1,4 +1,4 @@
-package com.dcms.cms.statistic;
+package com.dcms.cms.statistic.utils;
 
 import com.dcms.cms.entity.main.Content;
 import com.dcms.cms.manager.assist.CmsDictionaryMng;

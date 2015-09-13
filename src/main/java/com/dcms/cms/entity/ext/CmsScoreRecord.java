@@ -2,7 +2,7 @@ package com.dcms.cms.entity.ext;
 
 import com.dcms.cms.entity.ext.base.BaseCmsScoreRecord;
 import com.dcms.cms.entity.main.CmsUser;
-import com.dcms.cms.statistic.ScoreUtils;
+import com.dcms.cms.statistic.utils.ScoreUtils;
 
 import java.util.Date;
 

@@ -19,21 +19,19 @@
 
 <body>
 <div class="register-bg my-bg">
-    <div>会员快速消费</div>
+    <div>请确认</div>
 </div>
 <div class="main-box">
-    <form action="preConsume.jspx" method="post">
+    <form id="tableForm" action="consume.jspx" method="post">
         <div class="player-info">
             <ul>
                 [#if error??]
                 <li>
-                    <p class="fL"> ${message!"系统异常,请重新操作!"}</p>
+                    <p class="fL"> ${error!"系统异常,请重新操作!"}</p>
                 </li>
 
                 [#else]
-                <li>
-                    <p class="fL"> 请确认:</p>
-                </li>
+
                 <li>
                     <p class="fL">用户姓名</p>
                     <p class="fR">
@@ -71,9 +69,12 @@
                     <p class="fL">返还比例:${user.rate!}%</p>
                     <p class="fR">剩余积分:${user.scoreCountShow!}分</p>
                 </li>
+                <input type="hidden"  name="useScore" value="${consumeDetail.useScoreShow!}">
+                <input type="hidden"  name="price" value="${consumeDetail.priceShow!}">
+                <input type="hidden" name="buyerName" value="${(consumeDetail.buyer.username)!}">
                 <div class="mT20"><a class="btn-submit" href="#" onclick="submitForm()">确认</a></div>
                 [/#if]
-                <div class="mT20"><a class="btn-submit" href="#" onclick="javascript:history.back();">返回</a></div>
+                <div class="mT20"><a class="btn-submit" href="${base}/seller/consume.jspx" >返回</a></div>
                 [/#if]
 
             </ul>

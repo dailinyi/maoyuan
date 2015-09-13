@@ -1,7 +1,7 @@
 package com.dcms.cms.entity.ext;
 
 import com.dcms.cms.entity.main.CmsUser;
-import com.dcms.cms.statistic.ScoreUtils;
+import com.dcms.cms.statistic.utils.ScoreUtils;
 
 /**
  * Created by Daily on 2015/9/9.

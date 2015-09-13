@@ -4,8 +4,9 @@ import com.dcms.cms.entity.ext.CmsConsumeDetail;
 import com.dcms.cms.entity.main.CmsSite;
 import com.dcms.cms.entity.main.CmsUser;
 import com.dcms.cms.entity.main.MemberConfig;
+import com.dcms.cms.manager.ext.CmsConsumeMng;
 import com.dcms.cms.manager.main.CmsUserMng;
-import com.dcms.cms.statistic.ConsumeMng;
+import com.dcms.cms.statistic.utils.ConsumeMng;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import static com.dcms.cms.Constants.TPLDIR_SELLER_MEMBER;
 
@@ -80,7 +82,7 @@ public class ConsumeAct {
     }
 
     @RequestMapping(value = "/seller/consume.jspx"  , method = RequestMethod.POST)
-    public String consume(String buyerName ,String price, String useScore ,HttpServletRequest request,ModelMap model){
+    public String consume(String buyerName ,String price, String useScore ,HttpServletRequest request,HttpServletResponse response,ModelMap model){
         CmsSite site = CmsUtils.getSite(request);
         CmsUser user = CmsUtils.getUser(request);
         FrontUtils.frontData(request, model, site);
@@ -108,16 +110,18 @@ public class ConsumeAct {
                     TPLDIR_SELLER_MEMBER, MEMBER_AJAX);
         }
 
+        cmsConsumeMng.consume(user.getId(),buyer.getId(),result);
 
-
-        model.addAttribute("consumeDetail",result);
-
-        return FrontUtils.getTplPath(request, site.getSolutionPath(),
-                TPLDIR_SELLER_MEMBER, MEMBER_AJAX);
+        model.addAttribute("success",true);
+        return cmsSellerMemberAct.index(request,response,model);
     }
 
     @Resource
     private CmsUserMng cmsUserMng;
     @Resource
     private ConsumeMng consumeMng;
+    @Resource
+    private CmsConsumeMng cmsConsumeMng;
+    @Resource
+    private SellerMemberAct cmsSellerMemberAct;
 }

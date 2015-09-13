@@ -37,4 +37,6 @@ public interface CmsUserDao{
 	public CmsUser deleteById(Integer id);
 
 	CmsUser getUserByRecommendCode(String recommendCode);
+
+	Pagination getRecommendUserPage(String userName, Integer userId, int pageNo, int pageSize);
 }

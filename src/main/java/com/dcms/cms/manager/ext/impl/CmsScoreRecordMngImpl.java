@@ -7,6 +7,7 @@ import com.dcms.common.page.Pagination;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by dailinyi on 15/8/19.
@@ -31,5 +32,10 @@ public class CmsScoreRecordMngImpl implements CmsScoreRecordMng {
     public Pagination getPageByUser(String queryOrderId, Integer id, int pageNo, int pageSize) {
         return dao.getPageByUser(queryOrderId, id, pageNo, pageSize);
 }
+
+    @Override
+    public List<CmsScoreRecord> findByOrderId(String orderId) {
+        return dao.findByOrderId(orderId);
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.dcms.cms.statistic;
+package com.dcms.cms.statistic.utils;
 
 import org.springframework.stereotype.Service;
 

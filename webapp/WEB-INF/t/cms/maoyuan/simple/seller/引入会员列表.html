@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+</head>
+
+<body class="body-bg">
+<div class="register-bg my-bg">
+    <div>引入会员</div>
+</div>
+<div class="main-box">
+    <form id="table1Form" action="${base}/seller/recommendUserList.jspx" method="get">
+    <div class="search-box">
+        <div class="player-info">
+            <ul>
+                <li>
+                    <p class="fL" style="color:#333">会员手机号</p>
+                    <p class="fR">
+                        <input type="text" name="username" placeholder="请输入" value="${username!}">
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class="mT10"><a class="btn-1" href="###" onclick="submitForm()">查询</a></div>
+    </div>
+    </form>
+    <div class="order-list">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="center"><strong>姓名</strong></td>
+                <td align="center"><strong>性别</strong></td>
+                <td align="center"><strong>电话</strong></td>
+            </tr>
+            [#list pagination.list as c]
+            <tr>
+                <td align="center">${c.realname!}</td>
+                <td align="center">
+                    [#if c.gender?? && c.gender]
+                    男
+                    [#elseif c.gender?? && !c.gender]
+                    女
+                    [#else]
+                    保密
+                    [/#if]
+                </td>
+                <td align="center">${c.mobile!c.username!}</td>
+            </tr>
+            [/#list]
+            共 ${pagination.totalCount} 条&nbsp;
+            每页 ${pagination.pageSize} 条&nbsp;
+            <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+            <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+            <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
+            <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
+            当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" style="width:50px" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}"/>页
+            <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if]/>
+            <form action="scoreList.jspx" method="get" id="tableForm">
+                <input type="hidden" name="pageNo" value="${pagination.pageNo!}"/>
+            </form>
+
+        </table>
+        <div class="mT10"><a class="btn-1" href="${base}/seller/promotion.jspx">引入新会员</a></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    function submitForm(){
+        $('#table1Form').submit();
+    }
+    function _gotoPage(pageNo) {
+        try{
+            var tableForm = document.getElementById("tableForm");
+            $("input[name=pageNo]").val(pageNo);
+            tableForm.action="scoreList.jspx";
+            tableForm.onsubmit=null;
+            tableForm.submit();
+        } catch(e) {
+            alert('_gotoPage(pageNo)方法出错');
+        }
+    }
+    var h = parseFloat($(document).height());
+    $("#div_mask").css("height", h + "px");
+    $("#div_mask").hide();
+    function maskShow(){
+        $("#div_mask").show();
+    }
+    function maskHide(){
+        $("#div_mask").hide();
+    }
+</script>
+</html>

@@ -5,7 +5,7 @@ import com.dcms.cms.manager.assist.CmsDictionaryMng;
 import com.dcms.cms.manager.main.CmsModelMng;
 import com.dcms.cms.manager.main.ContentMng;
 import com.dcms.cms.manager.main.ContentTypeMng;
-import com.dcms.cms.statistic.DateUtils;
+import com.dcms.cms.statistic.utils.DateUtils;
 import com.dcms.cms.web.CmsUtils;
 import com.dcms.cms.web.FrontUtils;
 import com.dcms.cms.web.WebErrors;

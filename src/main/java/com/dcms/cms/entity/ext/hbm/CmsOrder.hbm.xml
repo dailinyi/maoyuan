@@ -4,12 +4,12 @@
 	<class name="CmsOrder" table="jc_ext_order">
 		<meta attribute="sync-DAO">false</meta>
 		<cache usage="read-write"/>
-		<id name="id" type="integer" column="order_id"><generator class="identity"/></id>
-        <property name="orderTime" column="order_time" type="timestamp" not-null="true" length="19"/>
-        <property name="lastUpdateTime" column="last_update_time" type="timestamp"  length="19"/>
+		<id name="id" type="string" column="id"><generator class="assigned"/></id>
+        <property name="orderTime" column="order_time" type="timestamp" />
+        <property name="lastUpdateTime" column="last_update_time" type="timestamp"  />
 		<property name="price" column="price" type="integer" not-null="false" length="11"/>
 		<property name="rate" column="rate" type="byte" not-null="false" length="5"/>
-		<property name="key" column="key" type="string" not-null="false" length="32"/>
+		<property name="key" column="order_key" type="string" not-null="false" length="32"/>
 		<property name="score" column="score" type="int" not-null="false" length="11"/>
 		<many-to-one name="buyer" column="buyer_id" class="com.dcms.cms.entity.main.CmsUser" not-null="false"></many-to-one>
 		<many-to-one name="seller" column="seller_id" class="com.dcms.cms.entity.main.CmsUser" not-null="false"></many-to-one>

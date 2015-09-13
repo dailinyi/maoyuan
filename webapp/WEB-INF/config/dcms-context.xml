@@ -255,10 +255,11 @@
     <bean class="com.dcms.cms.manager.ext.impl.CmsActivityRecordMngImpl" id="cmsActivityRecordMng"/>
     <bean class="com.dcms.cms.manager.ext.impl.CmsScoreRecordMngImpl" id="cmsScoreRecordMng"/>
     <bean class="com.dcms.cms.manager.ext.impl.CmsOrderMngImpl" id="cmsOrderMng"/>
-    <bean class="com.dcms.cms.statistic.GiftPoolMng" id="giftPoolMng"/>
-    <bean class="com.dcms.cms.statistic.QRMng" id="qrMng"/>
-    <bean class="com.dcms.cms.statistic.ShopCodeMng" id="shopCodeMng"/>
-    <bean class="com.dcms.cms.statistic.ConsumeMng" id="consumeMng"/>
+    <bean class="com.dcms.cms.manager.ext.impl.CmsConsumeMngImpl" id="cmsConsumeMng"/>
+    <bean class="com.dcms.cms.statistic.utils.GiftPoolMng" id="giftPoolMng"/>
+    <bean class="com.dcms.cms.statistic.utils.QRMng" id="qrMng"/>
+    <bean class="com.dcms.cms.statistic.utils.ShopCodeMng" id="shopCodeMng"/>
+    <bean class="com.dcms.cms.statistic.utils.ConsumeMng" id="consumeMng"/>
 
     <!-- ext DAO -->
     <bean class="com.dcms.cms.dao.ext.impl.CmsOrderDaoImpl" id="cmsOrderDao"/>

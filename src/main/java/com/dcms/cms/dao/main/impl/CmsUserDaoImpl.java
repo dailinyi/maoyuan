@@ -172,6 +172,19 @@ public class CmsUserDaoImpl extends HibernateBaseDao<CmsUser, Integer>
 	}
 
 	@Override
+	public Pagination getRecommendUserPage(String userName, Integer userId, int pageNo, int pageSize) {
+		Finder finder = Finder.create("from CmsUser bean where bean.recommendUser.id= :userId ");
+		finder.setParam("userId",userId);
+
+		if (StringUtils.isNotBlank(userName)){
+			finder.append(" and bean.username like :userName");
+			finder.setParam("userName",userName);
+		}
+
+		return find(finder,pageNo,pageSize);
+	}
+
+	@Override
 	protected Class<CmsUser> getEntityClass() {
 		return CmsUser.class;
 	}

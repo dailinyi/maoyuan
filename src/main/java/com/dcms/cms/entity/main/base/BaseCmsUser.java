@@ -589,7 +589,7 @@ public abstract class BaseCmsUser  implements Serializable {
     }
 
     public Integer getScoreCount() {
-        return scoreCount;
+        return scoreCount == null ? 0 :scoreCount;
     }
 
     public void setScoreCount(Integer scoreCount) {

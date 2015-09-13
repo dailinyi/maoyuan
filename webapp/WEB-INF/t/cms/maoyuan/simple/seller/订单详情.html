@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+    <title></title>
+    [#include "../include/库.html"/]
+</head>
+
+<body class="body-bg">
+<div class="register-bg my-bg">
+    <div>订单流水单</div>
+</div>
+<div class="main-box">
+    <div class="player-info">
+        <ui>
+            <li>订单ID : ${order.id!}</li>
+            <li>订单时间 : ${(order.orderTime?string('yyyy-MM-dd HH:mm:ss'))!}</li>
+            <li>购买人 : ${(order.buyer.realname)!} (${(order.buyer.username)!})</li>
+            <li>消费金额：${order.priceShow!}元</li>
+            <li>用户使用积分：${order.scoreShow!}分</li>
+            <li>返现比率：${order.rate!}%</li>
+        </ui>
+    </div>
+    [#list records as c]
+    <div class="order-list">
+        <ul>
+            <li>操作类型 :
+                [#if c.recordType?? ]
+                [#if c.recordType == 1] 充值
+                [#elseif c.recordType == 2]购买商品返积分
+                [#elseif c.recordType == 3]购买商品返推荐人积分
+                [#elseif c.recordType == 4]退回商品退还积分
+                [#elseif c.recordType == 5]退回商品退回推荐人积分
+                [#elseif c.recordType == 6]砸蛋活动抽奖消耗
+                [#elseif c.recordType == 7]砸蛋活动抽奖奖励
+                [#else]常规
+                [/#if]
+                [/#if]
+            </li>
+            <li>操作时间 : ${(c.recordTime?string('yyyy-MM-dd HH:mm:ss'))!}</li>
+            <li>积分流向 : ${(c.sendUser.realname)!} (${(c.sendUser.username)!}) -> ${(c.receiveUser.realname)!} (${(c.receiveUser.username)!})</li>
+            <li class="clear">总积分数：${c.scoreNoShow!}</li>
+        </ul>
+
+    </div>
+    [/#list]
+
+
+</div>
+</body>
+</html>

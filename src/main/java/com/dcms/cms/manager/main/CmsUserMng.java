@@ -89,4 +89,5 @@ public interface CmsUserMng {
 
 	void updatePwd(Integer id, String newPwd);
 
+	Pagination getRecommendUserPage(String userName, Integer userId, int pageNo, int pageSize);
 }

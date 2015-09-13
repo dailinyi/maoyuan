@@ -8,7 +8,6 @@ import java.util.Date;
  * Created by dailinyi on 15/8/18.
  */
 public class BaseCmsOrder {
-    private String id;
     private Date orderTime;
     private Date lastUpdateTime;
     private Integer price;
@@ -16,15 +15,10 @@ public class BaseCmsOrder {
     private String key;
     private CmsUser buyer;
     private CmsUser seller;
-    private CmsUser score;
+    private Integer score;
+    private String id;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Date getOrderTime() {
         return orderTime;
@@ -82,12 +76,21 @@ public class BaseCmsOrder {
         this.seller = seller;
     }
 
-    public CmsUser getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public BaseCmsOrder setScore(CmsUser score) {
+    public BaseCmsOrder setScore(Integer score) {
         this.score = score;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public BaseCmsOrder setId(String id) {
+        this.id = id;
         return this;
     }
 
@@ -114,7 +117,7 @@ public class BaseCmsOrder {
     public BaseCmsOrder() {
     }
 
-    public BaseCmsOrder(String id, Date orderTime, Date lastUpdateTime, Integer price, Byte rate, String key, CmsUser buyer, CmsUser seller, CmsUser score) {
+    public BaseCmsOrder(String id, Date orderTime, Date lastUpdateTime, Integer price, Byte rate, String key, CmsUser buyer, CmsUser seller, Integer score) {
         this.id = id;
         this.orderTime = orderTime;
         this.lastUpdateTime = lastUpdateTime;
